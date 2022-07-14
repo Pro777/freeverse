@@ -2,7 +2,11 @@
 
 Some of his poems do not have titles, and are known by their first line or first few words. The more colloquial titles (phrases, as opposed to the whole first line, which is a scholarly tic) are used here.
 
-Online sources:
+---
+
+## Other Sources
+
+Online:
 
  * [Poetry Foundation bio](https://www.poetryfoundation.org/poets/gerard-manley-hopkins) and [listing](https://www.poetryfoundation.org/poets/gerard-manley-hopkins)
  * [HopkinsPoetry.com](https://hopkinspoetry.com/poems/)
