@@ -4,6 +4,9 @@ author: "Gerard Manley Hopkins"
 tags: religious devotional rhyming sprung-rhythm
 ---
 
+'My own heart let me more have pity on'
+---------------------------------------
+
 My own heart let me more have pity on; let  
 Me live to my sad self hereafter kind,  
 Charitable; not live this tormented mind  

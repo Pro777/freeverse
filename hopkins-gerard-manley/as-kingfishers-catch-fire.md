@@ -4,6 +4,9 @@ author: "Gerard Manley Hopkins"
 tags: religious devotional rhyming sprung-rhythm
 ---
 
+'As kingfishers catch fire'
+---------------------------
+
 As kingfishers catch fire, dragonflies draw flame;  
 As tumbled over rim in roundy wells  
 Stones ring; like each tucked string tells, each hung bell's  

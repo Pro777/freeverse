@@ -6,7 +6,7 @@ His work is largely religious (Hopkins being a Catholic convert and a Jesuit), q
 
 He was born in 1844, and died in 1889. He would have escaped the world's notice if not for his friend and fellow poet Robert Bridges, who published Hopkins's work thirty years after his early death.
 
-Note: Some of his poems do not have titles, and are known by their first line or first few words. The more colloquial titles (phrases, as opposed to the whole first line, which is a scholarly tic) are used here.
+*Note:* Some of his poems do not have titles, and are known by their first line or first few words. The more colloquial titles (phrases, as opposed to the whole first line, which is a scholarly tic) are used here.
 
 ## Other Sources
 
