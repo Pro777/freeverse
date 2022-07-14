@@ -2,7 +2,6 @@
 title: "God's Grandeur"
 author: "Gerard Manley Hopkins"
 tags: religious devotional rhyming sprung-rhythm
-source: "Gerard Manley Hopkins: Poems and Prose (Penguin Classics, 1985), via PoetryFoundation.org"
 ---
 
 God's Grandeur
