@@ -10,7 +10,7 @@ Pied Beauty
 Glory be to God for dappled things —  
    For skies of couple-colour as a brinded cow;  
       For rose-moles all in stipple upon trout that swim;  
-Fresh-firecoal chestnut-falls; finches’ wings;  
+Fresh-firecoal chestnut-falls; finches' wings;  
    Landscape plotted and pieced – fold, fallow, and plough;  
       And áll trádes, their gear and tackle and trim.
 

@@ -12,7 +12,7 @@ Groom, and grace you, bride, your bed
 With lissome scions, sweet scions,  
 Out of hallowed bodies bred.
 
-Each be other’s comfort kind:  
+Each be other's comfort kind:  
 Déep, déeper than divined,  
 Divine charity, dear charity,  
 Fast you ever, fast bind.
