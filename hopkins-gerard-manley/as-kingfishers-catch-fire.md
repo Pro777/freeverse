@@ -1,7 +1,7 @@
 ---
 title: "'As kingfishers catch fire'"
 author: "Gerard Manley Hopkins"
-tags: religious devotional rhyming sprung-rhythm
+tags: religious devotional rhyming sprung-rhythm metrical
 ---
 
 'As kingfishers catch fire'

@@ -1,7 +1,7 @@
 ---
 title: "Carrion Comfort"
 author: "Gerard Manley Hopkins"
-tags: religious devotional rhyming sprung-rhythm
+tags: religious devotional rhyming sprung-rhythm metrical
 ---
 
 Carrion Comfort

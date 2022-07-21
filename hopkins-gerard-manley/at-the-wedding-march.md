@@ -1,7 +1,7 @@
 ---
 title: "At the Wedding March"
 author: "Gerard Manley Hopkins"
-tags: religious devotional rhyming sprung-rhythm
+tags: religious devotional rhyming sprung-rhythm metrical
 ---
 
 At the Wedding March

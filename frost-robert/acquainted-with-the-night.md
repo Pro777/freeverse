@@ -1,14 +1,14 @@
 ---
 title: "Acquainted with the Night"
 author: "Robert Frost"
-tags: rhyming American
+tags: rhyming American metrical
 ---
 
 Acquainted with the Night
 -------------------------
 
 I have been one acquainted with the night.  
-I have walked out in rain—and back in rain.  
+I have walked out in rain — and back in rain.  
 I have outwalked the furthest city light.
 
 I have looked down the saddest city lane.  

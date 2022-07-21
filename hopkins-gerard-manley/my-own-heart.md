@@ -1,7 +1,7 @@
 ---
 title: "'My own heart let me more have pity on'"
 author: "Gerard Manley Hopkins"
-tags: religious devotional rhyming sprung-rhythm
+tags: religious devotional rhyming sprung-rhythm metrical
 ---
 
 'My own heart let me more have pity on'

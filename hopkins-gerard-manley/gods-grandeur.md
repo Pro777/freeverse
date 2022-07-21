@@ -1,7 +1,7 @@
 ---
 title: "God's Grandeur"
 author: "Gerard Manley Hopkins"
-tags: religious devotional rhyming sprung-rhythm
+tags: religious devotional rhyming sprung-rhythm metrical
 ---
 
 God's Grandeur

@@ -1,7 +1,7 @@
 ---
 title: "Good-by and Keep Cold"
 author: "Robert Frost"
-tags: rhyming American
+tags: rhyming American metrical
 ---
 
 Good-by and Keep Cold

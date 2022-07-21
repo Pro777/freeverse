@@ -1,7 +1,7 @@
 ---
 title: "'No worst, there is none'"
 author: "Gerard Manley Hopkins"
-tags: religious devotional rhyming sprung-rhythm
+tags: religious devotional rhyming sprung-rhythm metrical
 ---
 
 No worst, there is none. Pitched past pitch of grief,  

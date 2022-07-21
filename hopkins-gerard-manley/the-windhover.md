@@ -1,7 +1,7 @@
 ---
 title: "The Windhover"
 author: "Gerard Manley Hopkins"
-tags: religious devotional rhyming sprung-rhythm
+tags: religious devotional rhyming sprung-rhythm metrical
 ---
 
 The Windhover
