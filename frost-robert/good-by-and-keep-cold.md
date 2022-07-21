@@ -29,7 +29,7 @@ Dread fifty above more than fifty below."
 I have to be gone for a season or so.  
 My business awhile is with different trees,  
 Less carefully nourished, less fruitful than these,  
-And such as is done to their wood with an ax—  
+And such as is done to their wood with an ax —  
 Maples and birches and tamaracks.  
 I wish I could promise to lie in the night  
 And think of an orchard's arboreal plight  
