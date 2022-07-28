@@ -3,8 +3,9 @@
 ## Formatting Poetry
 
  1. Include spaces (not tabs) for indentations. It should look correct in a text editor, even if Markdown does not respect these spaces (yet).
- 2. Remember that Markdown requires two spaces at the end of a line to see a line break.
- 3. Currently avoiding curly quotation marks and apostrophes, but open to reversing that.
+ 2. Do not break lines. If you're not sure if a source (a printed book especially) is breaking the line, compare to another source.
+ 3. Remember that Markdown requires two spaces at the end of a line to see a line break.
+ 4. Currently avoiding curly quotation marks and apostrophes, but open to reversing that.
 
 ## Poets and Poetry Selection
 
