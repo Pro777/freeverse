@@ -1,5 +1,10 @@
 ---
+import { loadFeaturedPoem, loadFirstStanza } from "../lib/poems";
+
 const base = import.meta.env.BASE_URL;
+
+const featured = await loadFeaturedPoem();
+const featuredStanza = featured ? await loadFirstStanza(featured) : undefined;
 ---
 
 <html lang="en">
@@ -30,12 +35,31 @@ const base = import.meta.env.BASE_URL;
       <div class="row">
         <div class="card" style="flex: 1 1 22rem;">
           <h2 style="margin: 0 0 0.5rem; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase;">Featured</h2>
-          <p class="muted" style="margin: 0;">(Coming next: render featured poem via metadata.)</p>
+
+          {featured ? (
+            <>
+              <p style="margin: 0 0 0.25rem;"><strong>{featured.title}</strong></p>
+              <p class="muted" style="margin: 0 0 0.75rem;">{featured.author}</p>
+              {featuredStanza ? (
+                <pre style="margin: 0 0 0.75rem; white-space: pre-wrap; font-family: inherit; line-height: 1.6;">{featuredStanza}</pre>
+              ) : (
+                <p class="muted" style="margin: 0 0 0.75rem;">(Preview unavailable.)</p>
+              )}
+              <p style="margin: 0;">
+                <a href={`${base}browse`}>Browse all poems →</a>
+              </p>
+            </>
+          ) : (
+            <p class="muted" style="margin: 0;">(No featured poem set.)</p>
+          )}
         </div>
 
         <div class="card" style="flex: 1 1 22rem;">
           <h2 style="margin: 0 0 0.5rem; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase;">Browse</h2>
-          <p class="muted" style="margin: 0;">(Coming next: author list → poems.)</p>
+          <p style="margin: 0;">
+            <a href={`${base}browse`}>Browse poems →</a>
+          </p>
+          <p class="muted" style="margin: 0.5rem 0 0;">(More filters coming soon.)</p>
         </div>
       </div>
     </main>

@@ -1,0 +1,54 @@
+---
+import { loadPoemMetas } from "../../lib/poems";
+
+const base = import.meta.env.BASE_URL;
+const poems = await loadPoemMetas();
+
+poems.sort((a, b) => {
+  const author = a.author.localeCompare(b.author);
+  if (author !== 0) return author;
+  return a.title.localeCompare(b.title);
+});
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="icon" href={`${base}favicon.ico`} />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Browse · Freeverse</title>
+    <style>
+      :root { color-scheme: light; }
+      body { margin: 0; font-family: ui-serif, Georgia, "Times New Roman", Times, serif; color: #111; background: #fafafa; }
+      main { max-width: 48rem; margin: 0 auto; padding: 3rem 1.25rem; }
+      h1 { font-size: 2.25rem; margin: 0 0 0.75rem; }
+      p { line-height: 1.6; }
+      ul { padding-left: 1.25rem; }
+      li { margin: 0.5rem 0; }
+      .muted { color: #555; }
+      a { color: inherit; }
+      .topbar { margin: 0 0 1.5rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="topbar">
+        <a href={`${base}`}>← Home</a>
+      </div>
+
+      <h1>Browse</h1>
+      <p class="muted" style="margin: 0 0 1.5rem;">Poems discovered from <code>meta/*.yml</code>.</p>
+
+      <ul>
+        {poems.map((p) => (
+          <li>
+            <strong>{p.title}</strong> — {p.author}
+            <span class="muted"> (link coming soon)</span>
+          </li>
+        ))}
+      </ul>
+    </main>
+  </body>
+</html>
