@@ -57,12 +57,23 @@ export async function loadFeaturedPoem(): Promise<PoemMeta | undefined> {
 }
 
 export async function loadFirstStanza(poem: PoemMeta): Promise<string | undefined> {
-  if (!poem.text_in_repo || !poem.text_path) return undefined;
-
-  const poemPath = path.join(repoRootPath(), poem.text_path);
-  const raw = await fs.readFile(poemPath, 'utf8');
+  const raw = await loadPoemText(poem);
+  if (!raw) return undefined;
 
   // First stanza: everything up to the first blank line.
   const stanza = raw.split(/\r?\n\s*\r?\n/)[0]?.trim();
   return stanza || undefined;
+}
+
+export async function loadPoemText(poem: PoemMeta): Promise<string | undefined> {
+  if (!poem.text_in_repo || !poem.text_path) return undefined;
+
+  const poemPath = path.join(repoRootPath(), poem.text_path);
+  const raw = await fs.readFile(poemPath, 'utf8');
+  return raw.trim() || undefined;
+}
+
+export async function loadPoemById(id: string): Promise<PoemMeta | undefined> {
+  const metas = await loadPoemMetas();
+  return metas.find((m) => m.id === id);
 }
