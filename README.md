@@ -7,6 +7,9 @@ Public-domain poetry, with a clean reader UI and stable line-span permalinks.
 - Provide a fast, clean static reader UI (not GitHub’s file viewer).
 - Support shareable links to specific lines/spans (`#L12-L27`).
 
+## Live site
+- GitHub Pages: https://pro777.github.io/freeverse/
+
 ## Repo layout
 - `poems/` — public-domain poem text files (curated)
 - `meta/` — provenance + metadata per poem (see `meta/SCHEMA.md`)
