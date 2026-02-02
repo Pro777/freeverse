@@ -110,10 +110,45 @@ const canonicalPath = `${base}poem/${poem.id}/`;
 
         let startLine = null;
 
-        const setHash = (start, end) => {
+        const toast = (() => {
+          let el = document.getElementById('toast');
+          if (!el) {
+            el = document.createElement('div');
+            el.id = 'toast';
+            el.className = 'toast';
+            el.setAttribute('role', 'status');
+            el.setAttribute('aria-live', 'polite');
+            document.body.appendChild(el);
+          }
+
+          let t;
+          return (msg) => {
+            el.textContent = msg;
+            el.classList.add('is-visible');
+            clearTimeout(t);
+            t = setTimeout(() => el.classList.remove('is-visible'), 1200);
+          };
+        })();
+
+        const copyUrl = async () => {
+          const url = location.href;
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(url);
+              toast('Link copied');
+            } else {
+              toast('Link ready (copy from address bar)');
+            }
+          } catch {
+            toast('Link ready (copy from address bar)');
+          }
+        };
+
+        const setHash = async (start, end) => {
           const fragment = start === end ? `#l${start}` : `#l${start}-l${end}`;
           history.replaceState(null, '', fragment);
           applyFromHash();
+          await copyUrl();
         };
 
         document.addEventListener('click', (e) => {
@@ -128,10 +163,10 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           if (!Number.isFinite(n)) return;
 
           if (e.shiftKey && startLine != null) {
-            setHash(startLine, n);
+            void setHash(startLine, n);
           } else {
             startLine = n;
-            setHash(n, n);
+            void setHash(n, n);
           }
         });
       })();
