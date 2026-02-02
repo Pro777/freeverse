@@ -391,12 +391,12 @@ main {
   display: grid;
   grid-template-columns: 1.6rem 1fr;
   gap: 0.55rem;
-  padding: 0.48rem 0.9rem 0.48rem 0.75rem;
-  border-bottom: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  padding: 0.42rem 0.9rem 0.42rem 0.75rem;
+  border-bottom: none;
 }
 
 .poem-lines li:hover {
-  background: color-mix(in oklab, var(--accent) 8%, var(--card-bg));
+  background: color-mix(in oklab, var(--ink) 4%, var(--card-bg));
 }
 
 .poem-lines li:target,
@@ -408,6 +408,7 @@ main {
   box-shadow:
     inset 3px 0 0 color-mix(in oklab, var(--accent) 70%, transparent),
     inset 0 0 0 1px color-mix(in oklab, var(--accent) 18%, transparent);
+  border-radius: 10px;
 }
 
 .poem-lines li:last-child {
