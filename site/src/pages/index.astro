@@ -19,7 +19,7 @@ const featuredStanza = featured ? await loadFirstStanza(featured) : undefined;
   </section>
 
   <section class="grid">
-    <div class="card">
+    <div class="card card-link">
       <div class="kicker">
         <h2>Featured</h2>
         <span class="pill">A small daily delight</span>
@@ -27,6 +27,11 @@ const featuredStanza = featured ? await loadFirstStanza(featured) : undefined;
 
       {featured ? (
         <>
+          <a
+            class="card-overlay"
+            href={`${base}poem/${featured.id}/`}
+            aria-label={`Read featured poem: ${featured.title} by ${featured.author}`}
+          ></a>
           <p style="margin: 0.1rem 0 0.1rem;"><strong>{featured.title}</strong></p>
           <p class="muted" style="margin: 0 0 0.6rem;">{featured.author}</p>
           {featuredStanza ? (
@@ -35,8 +40,8 @@ const featuredStanza = featured ? await loadFirstStanza(featured) : undefined;
             <p class="muted">(Preview unavailable.)</p>
           )}
           <div class="actions">
-            <a class="action primary" href={`${base}browse/`}>Browse all poems</a>
-            <a class="action" href="https://github.com/Pro777/freeverse/tree/main/meta">View metadata</a>
+            <a class="action primary" href={`${base}poem/${featured.id}/`}>Read poem</a>
+            <a class="action" href={`${base}browse/`}>Explore poems</a>
           </div>
         </>
       ) : (
@@ -46,14 +51,14 @@ const featuredStanza = featured ? await loadFirstStanza(featured) : undefined;
 
     <div class="card">
       <div class="kicker">
-        <h2>Browse</h2>
+        <h2>Explore poems</h2>
         <span class="pill">By author, title (more soon)</span>
       </div>
       <p class="muted">
-        Start with a calm list of what we’ve discovered in <code>meta/*.yml</code>.
+        Start with a calm catalog of what we’ve discovered in <code>meta/*.yml</code>.
       </p>
       <div class="actions">
-        <a class="action primary" href={`${base}browse/`}>Open the catalog</a>
+        <a class="action primary" href={`${base}browse/`}>Explore poems</a>
         <a class="action" href="https://github.com/Pro777/freeverse">Project repo</a>
       </div>
     </div>
