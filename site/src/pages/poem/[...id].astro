@@ -42,7 +42,7 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           const id = `l${n}`;
           return (
             <li id={id}>
-              <a class="line-anchor" href={`${canonicalPath}#${id}`} aria-label={`Link to line ${n}`}>{n}</a>
+              <a class="line-anchor" href={`${canonicalPath}#${id}`} aria-label={`Link to line ${n}`}>¶</a>
               <span class="line-text">{line === "" ? "\u00A0" : line}</span>
             </li>
           );
