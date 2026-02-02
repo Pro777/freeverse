@@ -430,6 +430,40 @@ main {
   line-height: 1.8;
 }
 
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%) translateY(10px);
+  opacity: 0;
+  pointer-events: none;
+  padding: 0.55rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--border) 75%, transparent);
+  background: color-mix(in oklab, var(--paper) 88%, transparent);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  box-shadow: var(--shadow);
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+
+:root[data-theme="dark"] .toast {
+  background: color-mix(in oklab, var(--paper) 92%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .toast {
+    background: color-mix(in oklab, var(--paper) 92%, transparent);
+  }
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; }
+  .toast { transition: none; }
 }
