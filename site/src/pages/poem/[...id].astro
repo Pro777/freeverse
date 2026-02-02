@@ -1,0 +1,70 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { loadPoemMetas, loadPoemText, type PoemMeta } from "../../lib/poems";
+
+export async function getStaticPaths() {
+  const poems = await loadPoemMetas();
+  return poems.map((p) => ({
+    // For rest params, Astro expects a single string that may contain slashes.
+    params: { id: p.id },
+    props: { poem: p },
+  }));
+}
+
+type Props = { poem: PoemMeta };
+
+const { poem } = Astro.props;
+const raw = await loadPoemText(poem);
+const lines = raw ? raw.split(/\r?\n/) : [];
+
+const title = `${poem.title} · Freeverse`;
+const description = `Read ${poem.title} by ${poem.author}.`;
+
+const base = import.meta.env.BASE_URL;
+const canonicalPath = `${base}poem/${poem.id}/`;
+---
+
+<BaseLayout title={title} description={description} currentPath={""}>
+  <article class="reader">
+    <header class="reader-head">
+      <h1 class="reader-title">{poem.title}</h1>
+      <p class="reader-byline">
+        <span class="muted">by</span> <strong>{poem.author}</strong>
+        <span class="muted" style="margin: 0 0.35rem;">·</span>
+        <a class="muted" href={`${base}browse/`}>Explore poems</a>
+      </p>
+    </header>
+
+    {raw ? (
+      <ol class="poem-lines">
+        {lines.map((line, idx) => {
+          const n = idx + 1;
+          const id = `l${n}`;
+          return (
+            <li id={id}>
+              <a class="line-anchor" href={`${canonicalPath}#${id}`} aria-label={`Link to line ${n}`}>#</a>
+              <span class="line-text">{line === "" ? "\u00A0" : line}</span>
+            </li>
+          );
+        })}
+      </ol>
+    ) : (
+      <div class="card">
+        <p class="muted" style="margin:0;">
+          Poem text isn’t in the repository yet.
+          {poem.source_url ? (
+            <>
+              {" "}Try the source: <a href={poem.source_url}>{poem.source_label ?? poem.source_url}</a>.
+            </>
+          ) : null}
+        </p>
+      </div>
+    )}
+
+    <footer class="reader-foot muted">
+      <p style="margin:0.9rem 0 0;">
+        Tip: click a <code>#</code> to copy/share a link to a specific line.
+      </p>
+    </footer>
+  </article>
+</BaseLayout>
