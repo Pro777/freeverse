@@ -1,6 +1,16 @@
-title: "Because I could not stop for Death"
+id: "emily-dickinson/because-i-could-not-stop-for-death"
+slug: "because-i-could-not-stop-for-death"
 author: "Emily Dickinson"
-source: "TBD (public-domain source link)"
-public_domain: "TBD (explain why/where sourced)"
-license: "Public Domain"
+author_slug: "emily-dickinson"
+title: "Because I could not stop for Death"
+century: 19
+
+text_in_repo: true
+text_path: "poems/emily-dickinson/because-i-could-not-stop-for-death.txt"
+
+source_label: "TBD"
+source_url: "TBD"
+public_domain_rationale: "TBD"
+
+featured: true
 notes: "Seed file for UI development; replace with verified PD text and provenance."

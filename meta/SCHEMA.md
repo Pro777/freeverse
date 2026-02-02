@@ -11,7 +11,9 @@ slug: "because-i-could-not-stop-for-death"
 author: "Emily Dickinson"
 author_slug: "emily-dickinson"
 title: "Because I could not stop for Death"
-text_path: "poems/emily-dickinson/because-i-could-not-stop-for-death.txt" # optional when text_in_repo=false
+century: 19
+
+text_path: "poems/emily-dickinson/because-i-could-not-stop-for-death.txt" # omit when text_in_repo=false
 text_in_repo: true
 
 source_label: "Project Gutenberg" # or Wikisource, etc.
@@ -19,6 +21,7 @@ source_url: "https://..."
 public_domain_rationale: "Public domain (author died 1886; source distributed as PD)."
 
 # Optional but recommended
+featured: false
 collection_title: "TBD"
 collection_source_url: "https://..."
 notes: "Any special formatting notes, alternate titles, etc."
