@@ -1,0 +1,39 @@
+---
+type Props = {
+  currentPath?: string;
+};
+
+const { currentPath } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+const nav = [
+  { href: `${base}`, label: "Home", key: "/" },
+  { href: `${base}browse/`, label: "Browse", key: "/browse" },
+];
+
+const normalized = (p?: string) => {
+  if (!p) return "";
+  // remove trailing slash (except root)
+  if (p.length > 1 && p.endsWith("/")) return p.slice(0, -1);
+  return p;
+};
+
+const here = normalized(currentPath);
+---
+
+<header class="header">
+  <div class="brand">
+    <a href={`${base}`}>
+      <div class="brand-title">Freeverse</div>
+      <div class="brand-subtitle">Public-domain poetry, pleasantly readable</div>
+    </a>
+  </div>
+
+  <nav class="nav" aria-label="Primary">
+    {nav.map((item) => (
+      <a href={item.href} aria-current={here === item.key ? "page" : undefined}>
+        {item.label}
+      </a>
+    ))}
+  </nav>
+</header>
