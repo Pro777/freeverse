@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { loadPoemMetas } from "../../lib/poems";
+
+const poems = await loadPoemMetas();
+
+poems.sort((a, b) => {
+  const author = a.author.localeCompare(b.author);
+  if (author !== 0) return author;
+  return a.title.localeCompare(b.title);
+});
+---
+
+<BaseLayout title="Browse · Freeverse" description="Browse poems discovered from meta/*.yml." currentPath="/browse">
+  <section class="hero">
+    <h1>Browse</h1>
+    <p class="lede">
+      Poems discovered from <code>meta/*.yml</code>. (Individual poem pages coming soon.)
+    </p>
+  </section>
+
+  <div class="card">
+    <div class="kicker">
+      <h2>Catalog</h2>
+      <span class="pill">{poems.length} poems</span>
+    </div>
+
+    <ul class="list">
+      {poems.map((p) => (
+        <li>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:baseline;">
+            <strong>{p.title}</strong>
+            <span class="muted">— {p.author}</span>
+          </div>
+          <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
+            Link coming soon.
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</BaseLayout>
