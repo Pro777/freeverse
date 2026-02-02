@@ -1,17 +1,43 @@
 ---
-
+const base = import.meta.env.BASE_URL;
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="icon" href={`${base}favicon.ico`} />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Freeverse</title>
+    <style>
+      :root { color-scheme: light; }
+      body { margin: 0; font-family: ui-serif, Georgia, "Times New Roman", Times, serif; color: #111; background: #fafafa; }
+      main { max-width: 48rem; margin: 0 auto; padding: 3rem 1.25rem; }
+      h1 { font-size: 2.25rem; margin: 0 0 0.75rem; }
+      p { line-height: 1.6; }
+      .muted { color: #555; }
+      .card { border: 1px solid #e5e5e5; background: white; border-radius: 14px; padding: 1rem 1.25rem; }
+      .row { display: flex; gap: 1rem; flex-wrap: wrap; }
+      a { color: inherit; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Freeverse</h1>
+      <p class="muted">Public-domain poetry. A clean reader. Shareable line links.</p>
+
+      <div class="row">
+        <div class="card" style="flex: 1 1 22rem;">
+          <h2 style="margin: 0 0 0.5rem; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase;">Featured</h2>
+          <p class="muted" style="margin: 0;">(Coming next: render featured poem via metadata.)</p>
+        </div>
+
+        <div class="card" style="flex: 1 1 22rem;">
+          <h2 style="margin: 0 0 0.5rem; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase;">Browse</h2>
+          <p class="muted" style="margin: 0;">(Coming next: author list → poems.)</p>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>
