@@ -405,10 +405,9 @@ main {
 }
 
 .poem-lines li.is-selected {
-  box-shadow:
-    inset 3px 0 0 color-mix(in oklab, var(--accent) 70%, transparent),
-    inset 0 0 0 1px color-mix(in oklab, var(--accent) 18%, transparent);
-  border-radius: 10px;
+  /* Contiguous highlight: no per-line “pill” boxes */
+  box-shadow: inset 3px 0 0 color-mix(in oklab, var(--accent) 70%, transparent);
+  border-radius: 0;
 }
 
 .poem-lines li:last-child {
