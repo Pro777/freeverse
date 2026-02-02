@@ -416,29 +416,13 @@ main {
 }
 
 .line-anchor {
-  font-family: var(--serif);
-  font-size: 0.95rem;
-  line-height: 1;
-  color: color-mix(in oklab, var(--muted) 90%, transparent);
-  text-decoration: none;
-  opacity: 0;
-  transform: translateX(-2px);
-  transition: opacity 120ms ease, transform 120ms ease;
-  text-align: center;
-  padding-top: 0.2rem;
+  /* Intentionally blank gutter: keeps alignment, but avoids “PR review” vibes */
+  display: block;
+  width: 1.2rem;
 }
 
-.poem-lines li:hover .line-anchor,
-.poem-lines li:focus-within .line-anchor,
-.poem-lines li:target .line-anchor,
-.poem-lines li.is-selected .line-anchor {
-  opacity: 0.95;
-  transform: translateX(0);
-  color: color-mix(in oklab, var(--ink) 88%, var(--muted));
-}
-
-.line-anchor:hover {
-  color: color-mix(in oklab, var(--accent) 75%, var(--ink));
+.poem-lines li {
+  cursor: pointer;
 }
 
 .line-text {

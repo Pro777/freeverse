@@ -41,8 +41,8 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           const n = idx + 1;
           const id = `l${n}`;
           return (
-            <li id={id}>
-              <a class="line-anchor" href={`${canonicalPath}#${id}`} aria-label={`Link to line ${n}`}>¶</a>
+            <li id={id} data-line={n}>
+              <span class="line-anchor" aria-hidden="true"></span>
               <span class="line-text">{line === "" ? "\u00A0" : line}</span>
             </li>
           );
@@ -63,7 +63,7 @@ const canonicalPath = `${base}poem/${poem.id}/`;
 
     <footer class="reader-foot muted">
       <p style="margin:0.9rem 0 0;">
-        Tip: click a line number to share that line — or shift-click another line to share a range.
+        Tip: click a line to share it — or shift-click another line to share a range.
       </p>
     </footer>
 
@@ -115,14 +115,12 @@ const canonicalPath = `${base}poem/${poem.id}/`;
         };
 
         document.addEventListener('click', (e) => {
-          const a = e.target && e.target.closest ? e.target.closest('a.line-anchor') : null;
-          if (!a) return;
-
-          const li = a.closest('li');
+          const li = e.target && e.target.closest ? e.target.closest('.poem-lines li[id^="l"]') : null;
           if (!li || !li.id) return;
 
-          // Prevent default so we can control the hash format (single vs range).
-          e.preventDefault();
+          // Don’t hijack clicks on real links inside the poem (if we add any later).
+          const isLink = e.target && e.target.closest ? e.target.closest('a') : null;
+          if (isLink) return;
 
           const n = Number(li.id.replace(/^l/, ''));
           if (!Number.isFinite(n)) return;
