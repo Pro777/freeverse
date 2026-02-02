@@ -1,0 +1,14 @@
+id: "walt-whitman/o-captain-my-captain"
+slug: "o-captain-my-captain"
+author: "Walt Whitman"
+author_slug: "walt-whitman"
+title: "O Captain! My Captain!"
+century: 19
+text_in_repo: true
+text_path: "poems/walt-whitman/o-captain-my-captain.txt"
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/1322"
+public_domain_rationale: "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text)."
+collection_title: "Leaves of Grass"
+collection_source_url: "https://www.gutenberg.org/ebooks/1322"
+featured: false
