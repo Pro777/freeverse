@@ -380,10 +380,14 @@ main {
 
 .poem-lines li {
   display: grid;
-  grid-template-columns: 2.2rem 1fr;
-  gap: 0.5rem;
+  grid-template-columns: 3.1rem 1fr;
+  gap: 0.55rem;
   padding: 0.45rem 0.75rem;
   border-bottom: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+}
+
+.poem-lines li:target {
+  background: color-mix(in oklab, var(--accent) 12%, var(--card-bg));
 }
 
 .poem-lines li:last-child {
@@ -392,14 +396,18 @@ main {
 
 .line-anchor {
   font-family: var(--mono);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--muted);
   text-decoration: none;
-  opacity: 0.65;
+  opacity: 0.55;
+  text-align: right;
+  padding-right: 0.2rem;
 }
 
-.poem-lines li:hover .line-anchor {
+.poem-lines li:hover .line-anchor,
+.poem-lines li:target .line-anchor {
   opacity: 1;
+  color: color-mix(in oklab, var(--ink) 85%, var(--muted));
 }
 
 .line-text {
