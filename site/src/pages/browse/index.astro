@@ -1,7 +1,7 @@
 ---
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import { loadPoemMetas } from "../../lib/poems";
 
-const base = import.meta.env.BASE_URL;
 const poems = await loadPoemMetas();
 
 poems.sort((a, b) => {
@@ -11,44 +11,32 @@ poems.sort((a, b) => {
 });
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
-    <link rel="icon" href={`${base}favicon.ico`} />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Browse · Freeverse</title>
-    <style>
-      :root { color-scheme: light; }
-      body { margin: 0; font-family: ui-serif, Georgia, "Times New Roman", Times, serif; color: #111; background: #fafafa; }
-      main { max-width: 48rem; margin: 0 auto; padding: 3rem 1.25rem; }
-      h1 { font-size: 2.25rem; margin: 0 0 0.75rem; }
-      p { line-height: 1.6; }
-      ul { padding-left: 1.25rem; }
-      li { margin: 0.5rem 0; }
-      .muted { color: #555; }
-      a { color: inherit; }
-      .topbar { margin: 0 0 1.5rem; }
-    </style>
-  </head>
-  <body>
-    <main>
-      <div class="topbar">
-        <a href={`${base}`}>← Home</a>
-      </div>
+<BaseLayout title="Browse · Freeverse" description="Browse poems discovered from meta/*.yml." currentPath="/browse">
+  <section class="hero">
+    <h1>Browse</h1>
+    <p class="lede">
+      Poems discovered from <code>meta/*.yml</code>. (Individual poem pages coming soon.)
+    </p>
+  </section>
 
-      <h1>Browse</h1>
-      <p class="muted" style="margin: 0 0 1.5rem;">Poems discovered from <code>meta/*.yml</code>.</p>
+  <div class="card">
+    <div class="kicker">
+      <h2>Catalog</h2>
+      <span class="pill">{poems.length} poems</span>
+    </div>
 
-      <ul>
-        {poems.map((p) => (
-          <li>
-            <strong>{p.title}</strong> — {p.author}
-            <span class="muted"> (link coming soon)</span>
-          </li>
-        ))}
-      </ul>
-    </main>
-  </body>
-</html>
+    <ul class="list">
+      {poems.map((p) => (
+        <li>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:baseline;">
+            <strong>{p.title}</strong>
+            <span class="muted">— {p.author}</span>
+          </div>
+          <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
+            Link coming soon.
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</BaseLayout>

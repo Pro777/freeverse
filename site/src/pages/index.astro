@@ -1,4 +1,5 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
 import { loadFeaturedPoem, loadFirstStanza } from "../lib/poems";
 
 const base = import.meta.env.BASE_URL;
@@ -7,61 +8,54 @@ const featured = await loadFeaturedPoem();
 const featuredStanza = featured ? await loadFirstStanza(featured) : undefined;
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
-    <link rel="icon" href={`${base}favicon.ico`} />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Freeverse</title>
-    <style>
-      :root { color-scheme: light; }
-      body { margin: 0; font-family: ui-serif, Georgia, "Times New Roman", Times, serif; color: #111; background: #fafafa; }
-      main { max-width: 48rem; margin: 0 auto; padding: 3rem 1.25rem; }
-      h1 { font-size: 2.25rem; margin: 0 0 0.75rem; }
-      p { line-height: 1.6; }
-      .muted { color: #555; }
-      .card { border: 1px solid #e5e5e5; background: white; border-radius: 14px; padding: 1rem 1.25rem; }
-      .row { display: flex; gap: 1rem; flex-wrap: wrap; }
-      a { color: inherit; }
-    </style>
-  </head>
-  <body>
-    <main>
-      <h1>Freeverse</h1>
-      <p class="muted">Public-domain poetry. A clean reader. Shareable line links.</p>
+<BaseLayout
+  title="Freeverse"
+  description="Public-domain poetry — a clean reader with shareable line links."
+  currentPath="/"
+>
+  <section class="hero">
+    <h1>Freeverse</h1>
+    <p class="lede">Public-domain poetry. A clean reader. Shareable line links.</p>
+  </section>
 
-      <div class="row">
-        <div class="card" style="flex: 1 1 22rem;">
-          <h2 style="margin: 0 0 0.5rem; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase;">Featured</h2>
-
-          {featured ? (
-            <>
-              <p style="margin: 0 0 0.25rem;"><strong>{featured.title}</strong></p>
-              <p class="muted" style="margin: 0 0 0.75rem;">{featured.author}</p>
-              {featuredStanza ? (
-                <pre style="margin: 0 0 0.75rem; white-space: pre-wrap; font-family: inherit; line-height: 1.6;">{featuredStanza}</pre>
-              ) : (
-                <p class="muted" style="margin: 0 0 0.75rem;">(Preview unavailable.)</p>
-              )}
-              <p style="margin: 0;">
-                <a href={`${base}browse`}>Browse all poems →</a>
-              </p>
-            </>
-          ) : (
-            <p class="muted" style="margin: 0;">(No featured poem set.)</p>
-          )}
-        </div>
-
-        <div class="card" style="flex: 1 1 22rem;">
-          <h2 style="margin: 0 0 0.5rem; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase;">Browse</h2>
-          <p style="margin: 0;">
-            <a href={`${base}browse`}>Browse poems →</a>
-          </p>
-          <p class="muted" style="margin: 0.5rem 0 0;">(More filters coming soon.)</p>
-        </div>
+  <section class="grid">
+    <div class="card">
+      <div class="kicker">
+        <h2>Featured</h2>
+        <span class="pill">A small daily delight</span>
       </div>
-    </main>
-  </body>
-</html>
+
+      {featured ? (
+        <>
+          <p style="margin: 0.1rem 0 0.1rem;"><strong>{featured.title}</strong></p>
+          <p class="muted" style="margin: 0 0 0.6rem;">{featured.author}</p>
+          {featuredStanza ? (
+            <pre class="poem-preview">{featuredStanza}</pre>
+          ) : (
+            <p class="muted">(Preview unavailable.)</p>
+          )}
+          <div class="actions">
+            <a class="action primary" href={`${base}browse/`}>Browse all poems</a>
+            <a class="action" href="https://github.com/Pro777/freeverse/tree/main/meta">View metadata</a>
+          </div>
+        </>
+      ) : (
+        <p class="muted">(No featured poem set.)</p>
+      )}
+    </div>
+
+    <div class="card">
+      <div class="kicker">
+        <h2>Browse</h2>
+        <span class="pill">By author, title (more soon)</span>
+      </div>
+      <p class="muted">
+        Start with a calm list of what we’ve discovered in <code>meta/*.yml</code>.
+      </p>
+      <div class="actions">
+        <a class="action primary" href={`${base}browse/`}>Open the catalog</a>
+        <a class="action" href="https://github.com/Pro777/freeverse">Project repo</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
