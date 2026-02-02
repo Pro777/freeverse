@@ -42,7 +42,7 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           const id = `l${n}`;
           return (
             <li id={id}>
-              <a class="line-anchor" href={`${canonicalPath}#${id}`} aria-label={`Link to line ${n}`}>#</a>
+              <a class="line-anchor" href={`${canonicalPath}#${id}`} aria-label={`Link to line ${n}`}>{n}</a>
               <span class="line-text">{line === "" ? "\u00A0" : line}</span>
             </li>
           );
@@ -63,7 +63,7 @@ const canonicalPath = `${base}poem/${poem.id}/`;
 
     <footer class="reader-foot muted">
       <p style="margin:0.9rem 0 0;">
-        Tip: click a <code>#</code> to copy/share a link to a specific line.
+        Tip: click a line number to copy/share a link to a specific line.
       </p>
     </footer>
   </article>
