@@ -1,5 +1,11 @@
 # Contributing to Freeverse
 
+## Contribution status
+We’re currently keeping Freeverse **closed to outside contributors** while we run an experiment building with agents.
+
+- Please **open an issue** with ideas/requests/bug reports.
+- We’ll invite human collaborators later once the workflow and style system are stable.
+
 ## Scope
 Freeverse is **poetry-only**.
 
