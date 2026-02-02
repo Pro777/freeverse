@@ -63,8 +63,78 @@ const canonicalPath = `${base}poem/${poem.id}/`;
 
     <footer class="reader-foot muted">
       <p style="margin:0.9rem 0 0;">
-        Tip: click a line number to copy/share a link to a specific line.
+        Tip: click a line number to share that line — or shift-click another line to share a range.
       </p>
     </footer>
+
+    <script is:inline>
+      (() => {
+        const lines = Array.from(document.querySelectorAll('.poem-lines li'));
+        if (!lines.length) return;
+
+        const clear = () => {
+          lines.forEach((li) => li.classList.remove('is-selected'));
+        };
+
+        const parseHash = () => {
+          const h = (location.hash || '').replace(/^#/, '');
+          if (!h) return null;
+
+          const m = h.match(/^l(\d+)(?:-l(\d+))?$/);
+          if (!m) return null;
+
+          const a = Number(m[1]);
+          const b = m[2] ? Number(m[2]) : a;
+          if (!Number.isFinite(a) || !Number.isFinite(b)) return null;
+
+          const start = Math.min(a, b);
+          const end = Math.max(a, b);
+          return { start, end };
+        };
+
+        const applyFromHash = () => {
+          clear();
+          const r = parseHash();
+          if (!r) return;
+          for (let n = r.start; n <= r.end; n++) {
+            const el = document.getElementById(`l${n}`);
+            if (el) el.classList.add('is-selected');
+          }
+        };
+
+        // Keep UI in sync when navigating back/forward.
+        window.addEventListener('hashchange', applyFromHash);
+        applyFromHash();
+
+        let startLine = null;
+
+        const setHash = (start, end) => {
+          const fragment = start === end ? `#l${start}` : `#l${start}-l${end}`;
+          history.replaceState(null, '', fragment);
+          applyFromHash();
+        };
+
+        document.addEventListener('click', (e) => {
+          const a = e.target && e.target.closest ? e.target.closest('a.line-anchor') : null;
+          if (!a) return;
+
+          const li = a.closest('li');
+          if (!li || !li.id) return;
+
+          // Prevent default so we can control the hash format (single vs range).
+          e.preventDefault();
+
+          const n = Number(li.id.replace(/^l/, ''));
+          if (!Number.isFinite(n)) return;
+
+          if (e.shiftKey && startLine != null) {
+            setHash(startLine, n);
+          } else {
+            startLine = n;
+            setHash(n, n);
+          }
+        });
+      })();
+    </script>
   </article>
 </BaseLayout>

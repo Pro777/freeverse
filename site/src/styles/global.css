@@ -386,8 +386,13 @@ main {
   border-bottom: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
 }
 
-.poem-lines li:target {
+.poem-lines li:target,
+.poem-lines li.is-selected {
   background: color-mix(in oklab, var(--accent) 12%, var(--card-bg));
+}
+
+.poem-lines li.is-selected {
+  box-shadow: inset 3px 0 0 color-mix(in oklab, var(--accent) 65%, transparent);
 }
 
 .poem-lines li:last-child {
@@ -405,7 +410,8 @@ main {
 }
 
 .poem-lines li:hover .line-anchor,
-.poem-lines li:target .line-anchor {
+.poem-lines li:target .line-anchor,
+.poem-lines li.is-selected .line-anchor {
   opacity: 1;
   color: color-mix(in oklab, var(--ink) 85%, var(--muted));
 }
