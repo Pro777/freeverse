@@ -31,9 +31,11 @@ npm run preview
 - `site/` — static site (Astro)
 
 ## Policies
+- **US public domain only (for now)**.
 - Poetry-only. We may extract individual poems from poetry books.
 - We are not trying to mirror Project Gutenberg.
 
 See:
+- `PROVENANCE.md`
 - `CONTENT_LICENSE.md`
 - `CONTRIBUTING.md`
