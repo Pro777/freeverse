@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Rowan avatar">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#fbf7ee"/>
+      <stop offset="1" stop-color="#f3efe6"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="42%" r="45%">
+      <stop offset="0" stop-color="#f5d36a" stop-opacity="1"/>
+      <stop offset="1" stop-color="#f5d36a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+
+  <!-- subtle lamplit glow -->
+  <circle cx="256" cy="210" r="170" fill="url(#glow)"/>
+
+  <!-- cabin outline -->
+  <path d="M140 284 L256 198 L372 284 V390 H140 Z" fill="#2a2333" opacity="0.92"/>
+  <path d="M160 284 L256 212 L352 284" fill="none" stroke="#2a2333" stroke-width="18" stroke-linecap="round"/>
+
+  <!-- window (lamp) -->
+  <rect x="222" y="292" width="68" height="68" rx="10" fill="#f5d36a"/>
+  <path d="M234 340 H278" stroke="#2a2333" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
+  <path d="M256 292 V360" stroke="#2a2333" stroke-width="8" stroke-linecap="round" opacity="0.35"/>
+
+  <!-- rain lines -->
+  <g stroke="#2a2333" stroke-opacity="0.14" stroke-width="6" stroke-linecap="round">
+    <path d="M98 120 L78 154"/>
+    <path d="M144 88 L124 122"/>
+    <path d="M416 110 L396 144"/>
+    <path d="M454 150 L434 184"/>
+    <path d="M78 206 L58 240"/>
+    <path d="M460 230 L440 264"/>
+  </g>
+
+  <!-- tiny label -->
+  <text x="256" y="452" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system" font-size="28" fill="#5b5750">Rowan</text>
+</svg>
