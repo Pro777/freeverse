@@ -12,6 +12,10 @@ const { title, description, currentPath } = Astro.props;
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
+
+const site = Astro.site;
+const canonicalUrl = site ? new URL(Astro.url.pathname, site).toString() : undefined;
+const ogImageUrl = site ? new URL(`${base}og.png`, site).toString() : undefined;
 ---
 
 <html lang="en">
@@ -33,6 +37,22 @@ const base = import.meta.env.BASE_URL.endsWith("/")
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     {description ? <meta name="description" content={description} /> : null}
+
+    {canonicalUrl ? <link rel="canonical" href={canonicalUrl} /> : null}
+
+    {/* Social previews (site-level default; poem pages override title/description via props). */}
+    <meta property="og:site_name" content="Freeverse" />
+    <meta property="og:type" content="website" />
+    {canonicalUrl ? <meta property="og:url" content={canonicalUrl} /> : null}
+    <meta property="og:title" content={title} />
+    {description ? <meta property="og:description" content={description} /> : null}
+    {ogImageUrl ? <meta property="og:image" content={ogImageUrl} /> : null}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    {description ? <meta name="twitter:description" content={description} /> : null}
+    {ogImageUrl ? <meta name="twitter:image" content={ogImageUrl} /> : null}
+
     <title>{title}</title>
   </head>
   <body>
