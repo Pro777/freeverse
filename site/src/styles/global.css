@@ -357,76 +357,79 @@ main {
 }
 
 .reader {
-  max-width: 46rem;
+  /* Readable measure for poetry (tighter than prose, but not narrow) */
+  max-width: 44rem;
 }
 
 .reader-head {
-  margin-bottom: 1.1rem;
+  margin: 0.25rem 0 1.4rem;
 }
 
 .reader-title {
   margin: 0;
-  font-size: clamp(1.9rem, 1.6rem + 1.4vw, 2.6rem);
+  font-size: clamp(2.05rem, 1.65rem + 1.7vw, 2.75rem);
 }
 
 .reader-byline {
-  margin: 0.4rem 0 0;
+  margin: 0.55rem 0 0;
   font-family: var(--sans);
 }
 
 .poem-lines {
+  /* Make the poem feel like a page, not a widget */
   list-style: none;
   padding: 0;
-  margin: 0.95rem 0 0;
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius);
-  background:
-    linear-gradient(180deg, color-mix(in oklab, var(--paper) 55%, transparent), transparent 42%),
-    var(--card-bg);
-  box-shadow: var(--shadow);
-  overflow: clip;
+  margin: 1.15rem 0 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .poem-lines li {
   display: grid;
-  grid-template-columns: 1.6rem 1fr;
-  gap: 0.55rem;
-  padding: 0.42rem 0.9rem 0.42rem 0.75rem;
-  border-bottom: none;
+  grid-template-columns: 1.5rem 1fr;
+  gap: 0.65rem;
+  padding: 0.22rem 0;
 }
 
-.poem-lines li:hover {
-  background: color-mix(in oklab, var(--ink) 4%, var(--card-bg));
+.poem-lines li:not(.is-blank) {
+  cursor: pointer;
+}
+
+.poem-lines li.is-blank {
+  /* stanza separation */
+  padding: 0.65rem 0;
 }
 
 .poem-lines li:target,
 .poem-lines li.is-selected {
-  background: color-mix(in oklab, var(--accent) 14%, var(--card-bg));
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
 }
 
 .poem-lines li.is-selected {
-  /* Contiguous highlight: no per-line “pill” boxes */
+  /* Subtle left rule for contiguous selection */
   box-shadow: inset 3px 0 0 color-mix(in oklab, var(--accent) 70%, transparent);
-  border-radius: 0;
-}
-
-.poem-lines li:last-child {
-  border-bottom: none;
 }
 
 .line-anchor {
-  /* Intentionally blank gutter: keeps alignment, but avoids “PR review” vibes */
   display: block;
   width: 1.2rem;
 }
 
-.poem-lines li {
-  cursor: pointer;
-}
-
 .line-text {
   white-space: pre-wrap;
-  line-height: 1.8;
+  font-size: clamp(1.05rem, 1.01rem + 0.35vw, 1.18rem);
+  line-height: 1.95;
+  letter-spacing: 0.005em;
+}
+
+/* De-emphasize the empty gutter on small screens */
+@media (max-width: 480px) {
+  .poem-lines li {
+    grid-template-columns: 1.1rem 1fr;
+    gap: 0.5rem;
+  }
 }
 
 .toast {
