@@ -1,0 +1,86 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { loadPoemMetas, loadPoemText, type PoemMeta } from "../../../lib/poems";
+
+// Generate selection-aware share pages for contiguous ranges up to this length.
+// Keeps the site static while giving meaningful social previews.
+
+function parseRangeParam(range: string) {
+  const m = range.match(/^(\d+)-(\d+)$/);
+  if (!m) return null;
+  const a = Number(m[1]);
+  const b = Number(m[2]);
+  if (!Number.isFinite(a) || !Number.isFinite(b) || a <= 0 || b <= 0) return null;
+  const start = Math.min(a, b);
+  const end = Math.max(a, b);
+  return { start, end };
+}
+
+function excerptLines(lines: string[], start: number, end: number) {
+  const chunk = lines.slice(start - 1, end).filter((l) => l.trim() !== "");
+  // Join with newlines (OG parsers will often collapse, but it reads well).
+  const s = chunk.join("\n").trim();
+  // Keep it short-ish for previews.
+  return s.length > 260 ? s.slice(0, 257) + "…" : s;
+}
+
+export async function getStaticPaths() {
+  const MAX_RANGE_LEN = 12;
+  const poems = await loadPoemMetas();
+
+  const paths = [] as Array<{ params: { id: string; range: string }; props: { poem: PoemMeta; start: number; end: number } }>;
+
+  for (const poem of poems) {
+    const raw = await loadPoemText(poem);
+    const lines = raw ? raw.split(/\r?\n/) : [];
+    const n = lines.length;
+    if (!n) continue;
+
+    for (let start = 1; start <= n; start++) {
+      for (let end = start; end <= Math.min(n, start + MAX_RANGE_LEN - 1); end++) {
+        paths.push({
+          params: { id: poem.id, range: `${start}-${end}` },
+          props: { poem, start, end },
+        });
+      }
+    }
+  }
+
+  return paths;
+}
+
+type Props = { poem: PoemMeta; start: number; end: number };
+
+const { poem, start, end } = Astro.props;
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+
+const poemUrl = `${base}poem/${poem.id}/#l${start}-l${end}`;
+
+const raw = await loadPoemText(poem);
+const lines = raw ? raw.split(/\r?\n/) : [];
+const selectedExcerpt = raw ? excerptLines(lines, start, end) : "";
+
+const title = `${poem.author} — ${poem.title} (lines ${start}–${end}) · Freeverse`;
+const description = selectedExcerpt
+  ? selectedExcerpt
+  : `Read ${poem.title} by ${poem.author} (lines ${start}–${end}).`;
+---
+
+<BaseLayout title={title} description={description} currentPath={""}>
+  <section class="card">
+    <h1 style="margin: 0 0 0.5rem;">{poem.title}</h1>
+    <p class="muted" style="margin: 0 0 0.75rem;">{poem.author} · lines {start}–{end}</p>
+
+    {selectedExcerpt ? (
+      <pre style="white-space: pre-wrap; margin: 0; font-family: var(--serif); line-height: 1.8;">{selectedExcerpt}</pre>
+    ) : (
+      <p class="muted" style="margin:0;">(Excerpt unavailable.)</p>
+    )}
+
+    <p class="muted" style="margin-top: 1rem;">
+      Open the reader: <a href={poemUrl}>{poemUrl}</a>
+    </p>
+  </section>
+</BaseLayout>

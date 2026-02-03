@@ -18,7 +18,7 @@ const { poem } = Astro.props;
 const raw = await loadPoemText(poem);
 const lines = raw ? raw.split(/\r?\n/) : [];
 
-const title = `${poem.title} · Freeverse`;
+const title = `${poem.author} — ${poem.title} · Freeverse`;
 const description = `Read ${poem.title} by ${poem.author}.`;
 
 const base = import.meta.env.BASE_URL.endsWith("/")
@@ -142,8 +142,15 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           };
         })();
 
-        const copyUrl = async () => {
-          const url = location.href;
+        const buildShareUrl = (start, end) => {
+          const s = Math.min(start, end);
+          const e = Math.max(start, end);
+          // Selection-aware, crawler-visible URL (static prebuilt for short ranges).
+          return `${location.origin}${base}share/${encodeURIComponent(poem.id)}/${s}-${e}/`;
+        };
+
+        const copyUrl = async (start, end) => {
+          const url = (start && end) ? buildShareUrl(start, end) : location.href;
           try {
             if (navigator.clipboard && navigator.clipboard.writeText) {
               await navigator.clipboard.writeText(url);
@@ -160,7 +167,7 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           const fragment = start === end ? `#l${start}` : `#l${start}-l${end}`;
           history.replaceState(null, '', fragment);
           applyFromHash();
-          await copyUrl();
+          await copyUrl(start, end);
         };
 
         document.addEventListener('click', (e) => {
