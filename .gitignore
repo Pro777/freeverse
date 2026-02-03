@@ -5,3 +5,7 @@ site/dist/
 .vscode/
 site/.vscode/
 tmp/
+
+# Testing artifacts
+site/test-results/
+site/playwright-report/
