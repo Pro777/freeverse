@@ -99,6 +99,10 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           clear();
           const r = parseHash();
           if (!r) return;
+
+          // Make shift-click extend the current selection, even after refresh/back/forward.
+          startLine = r.start;
+
           for (let n = r.start; n <= r.end; n++) {
             const el = document.getElementById(`l${n}`);
             if (el) el.classList.add('is-selected');
@@ -164,12 +168,19 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           const n = Number(li.id.replace(/^l/, ''));
           if (!Number.isFinite(n)) return;
 
-          if (e.shiftKey && startLine != null) {
-            void setHash(startLine, n);
-          } else {
-            startLine = n;
-            void setHash(n, n);
+          if (e.shiftKey) {
+            if (startLine == null) {
+              const r = parseHash();
+              if (r) startLine = r.start;
+            }
+            if (startLine != null) {
+              void setHash(startLine, n);
+              return;
+            }
           }
+
+          startLine = n;
+          void setHash(n, n);
         });
       })();
     </script>
