@@ -261,6 +261,18 @@ code, pre { font-family: var(--mono); }
   color: var(--muted);
 }
 
+.brand-motto {
+  margin-top: 0.15rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: color-mix(in oklab, var(--muted) 92%, var(--ink));
+}
+
+.brand-motto a {
+  text-decoration-color: color-mix(in oklab, var(--accent) 45%, transparent);
+}
+
 .nav {
   display: flex;
   gap: 0.5rem;
