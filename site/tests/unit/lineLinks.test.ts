@@ -27,4 +27,11 @@ describe('lineLinks', () => {
     expect(buildLineHash(12, 17)).toBe('#l12-l17');
     expect(buildLineHash(17, 12)).toBe('#l12-l17');
   });
+
+  it('refuses invalid inputs', () => {
+    expect(buildLineHash(0, 1)).toBe('');
+    expect(buildLineHash(-1, 2)).toBe('');
+    expect(buildLineHash(Number.NaN as any, 2)).toBe('');
+    expect(buildLineHash(1.5 as any, 2)).toBe('');
+  });
 });

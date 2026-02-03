@@ -22,6 +22,10 @@ export function parseLineHash(hash: string): LineRange | null {
 export function buildLineHash(start: number, end: number): string {
   const a = Number(start);
   const b = Number(end);
+
+  // Mirror parseLineHash: only allow positive integers.
+  if (!Number.isSafeInteger(a) || !Number.isSafeInteger(b) || a <= 0 || b <= 0) return "";
+
   const s = Math.min(a, b);
   const e = Math.max(a, b);
   return s === e ? `#l${s}` : `#l${s}-l${e}`;
