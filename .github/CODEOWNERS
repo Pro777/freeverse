@@ -1,0 +1,5 @@
+# CODEOWNERS
+# Default: John owns everything.
+# (Requires branch protection + require code owner reviews to enforce.)
+
+* @Pro777
