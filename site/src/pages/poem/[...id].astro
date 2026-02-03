@@ -116,11 +116,11 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           }
         };
 
+        let startLine = null;
+
         // Keep UI in sync when navigating back/forward.
         window.addEventListener('hashchange', applyFromHash);
         applyFromHash();
-
-        let startLine = null;
 
         const toast = (() => {
           let el = document.getElementById('toast');
