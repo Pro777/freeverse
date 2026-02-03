@@ -53,3 +53,8 @@ Make “read and point” frictionless.
   - Test on narrow viewport (responsive gutter).
 - `npm run build` in `site/`:
   - Ensure Astro builds without warnings/errors.
+
+## Ideas / next
+- Search: add keyboard navigation + highlight matches; consider excerpt/first-line search once meta index exists.
+- Author pages: /author/<slug> with bio + poem list (link from byline).
+- Gutenberg ingest: Shakespeare sonnets first; US-PD provenance + dedupe variants.
