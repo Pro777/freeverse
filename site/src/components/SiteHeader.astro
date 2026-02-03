@@ -11,6 +11,7 @@ const base = import.meta.env.BASE_URL.endsWith("/")
 const nav = [
   { href: `${base}`, label: "Home", key: "/" },
   { href: `${base}browse/`, label: "Explore poems", key: "/browse" },
+  { href: `${base}search/`, label: "Search", key: "/search" },
 ];
 
 const normalized = (p?: string) => {

@@ -1,0 +1,101 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { loadPoemMetas } from "../lib/poems";
+
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+
+const poems = await loadPoemMetas();
+const docs = poems.map((p) => ({
+  id: p.id,
+  title: p.title,
+  author: p.author,
+  century: p.century,
+  url: `${base}poem/${p.id}/`,
+}));
+---
+
+<BaseLayout title="Search · Freeverse" description="Search poems by title or author." currentPath="/search">
+  <section class="hero">
+    <h1>Search</h1>
+    <p class="lede">Type a title or author. Instant results. No server.</p>
+  </section>
+
+  <div class="card">
+    <div style="display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap;">
+      <input
+        id="q"
+        type="search"
+        placeholder="Search titles and authors…"
+        autocomplete="off"
+        style="flex: 1 1 18rem; padding: 0.6rem 0.75rem; border-radius: 12px; border: 1px solid var(--card-border); background: color-mix(in oklab, var(--paper) 92%, transparent); font-family: var(--sans); font-size: 1rem;"
+      />
+      <span class="pill" id="count">{docs.length} poems</span>
+    </div>
+
+    <ul class="list" id="results" style="margin-top: 0.75rem;"></ul>
+  </div>
+
+  <script type="module">
+    import MiniSearch from 'minisearch';
+
+    const docs = JSON.parse(document.getElementById('search-data').textContent);
+
+    const mini = new MiniSearch({
+      fields: ['title', 'author'],
+      storeFields: ['id', 'title', 'author', 'url', 'century'],
+      searchOptions: {
+        boost: { title: 2 },
+        fuzzy: 0.2,
+        prefix: true,
+      },
+    });
+    mini.addAll(docs);
+
+    const input = document.getElementById('q');
+    const resultsEl = document.getElementById('results');
+    const countEl = document.getElementById('count');
+
+    const render = (items) => {
+      resultsEl.innerHTML = '';
+      countEl.textContent = `${items.length} result${items.length === 1 ? '' : 's'}`;
+
+      for (const r of items) {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:baseline;">
+            <a class="list-title" href="${r.url}"><strong>${r.title}</strong></a>
+            <span class="muted">— ${r.author}</span>
+          </div>
+          <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
+            ${r.century}th century
+          </div>
+        `;
+        resultsEl.appendChild(li);
+      }
+
+      if (!items.length) {
+        const li = document.createElement('li');
+        li.innerHTML = `<span class="muted">No matches.</span>`;
+        resultsEl.appendChild(li);
+      }
+    };
+
+    const run = () => {
+      const q = input.value.trim();
+      if (!q) {
+        countEl.textContent = `${docs.length} poems`;
+        resultsEl.innerHTML = '';
+        return;
+      }
+      const hits = mini.search(q, { combineWith: 'AND' }).slice(0, 50).map(h => h);
+      render(hits);
+    };
+
+    input.addEventListener('input', run);
+    input.focus();
+  </script>
+
+  <script id="search-data" type="application/json">{JSON.stringify(docs)}</script>
+</BaseLayout>
