@@ -28,13 +28,22 @@ This document captures design decisions plus a small set of next shippable steps
   - Larger top/bottom margins
   - Optional centered title page styling
 
-## Next 3 shippable features (low complexity / high value)
+## Killer feature: shareable line ranges (wedge vs Poetry Foundation)
+Make “read and point” frictionless.
+
+### Next shippable improvements (focus)
+- [ ] **Share toast quality**: “Copied link to lines 12–17” (not just “Link copied”).
+- [ ] **Deep-link polish**: on load of `#lA-lB`, auto-scroll selection to ~30% from top.
+- [ ] **Copy button (optional)**: show a small “Copy link” button when a range is selected.
+- [ ] **Discoverability**: subtle gutter affordance on hover/focus; keep default view calm.
+
+## Next 3 general features (low complexity / high value)
+- [ ] **Author pages**: `/author/<slug>/` listing poems by author; make author names clickable.
 - [ ] **Search on Browse**: title/author substring filter (client-side).
 - [ ] **Favorites**: star poems with `localStorage` (no backend).
-- [ ] **Random poem**: one-click “daily delight” button.
 
 ## Onboarding copy
-- [ ] Add a subtle hint on poem pages: “Click a line to link; shift-click for a range.”
+- [ ] Keep the hint, but make it smaller and contextual: “Click a line to link · shift‑click for a range.”
 
 ## Local testing checklist
 - `npm run dev` in `site/`:
