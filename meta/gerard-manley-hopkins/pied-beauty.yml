@@ -1,0 +1,16 @@
+id: "gerard-manley-hopkins/pied-beauty"
+slug: "pied-beauty"
+author: "Gerard Manley Hopkins"
+author_slug: "gerard-manley-hopkins"
+title: "Pied Beauty"
+century: 19
+
+text_path: "poems/gerard-manley-hopkins/pied-beauty.txt"
+text_in_repo: true
+
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/22403"
+public_domain_rationale: "Public domain (published 1918; Project Gutenberg distribution)."
+
+featured: false
+notes: "Text taken from the first edition (Robert Bridges, ed.), via Project Gutenberg."
