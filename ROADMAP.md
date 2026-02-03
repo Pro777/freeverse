@@ -1,6 +1,10 @@
 # Freeverse Roadmap
 
-This document captures **local design decisions** made while iterating on the “reader” experience.
+This document captures design decisions plus a small set of next shippable steps.
+
+## Principles
+- Never expose internal implementation details in user-facing copy (e.g. don’t mention `meta/*.yml`).
+- Poetry should feel like a page: calm typography, low chrome, stable links.
 
 ## Readability-first reader (poem page)
 
@@ -23,6 +27,14 @@ This document captures **local design decisions** made while iterating on the �
 - Consider a more “book-like” mode:
   - Larger top/bottom margins
   - Optional centered title page styling
+
+## Next 3 shippable features (low complexity / high value)
+- [ ] **Search on Browse**: title/author substring filter (client-side).
+- [ ] **Favorites**: star poems with `localStorage` (no backend).
+- [ ] **Random poem**: one-click “daily delight” button.
+
+## Onboarding copy
+- [ ] Add a subtle hint on poem pages: “Click a line to link; shift-click for a range.”
 
 ## Local testing checklist
 - `npm run dev` in `site/`:
