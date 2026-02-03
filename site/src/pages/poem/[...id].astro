@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { loadPoemMetas, loadPoemText, type PoemMeta } from "../../lib/poems";
+// (tests) line-link hash logic is unit-tested separately in src/lib/lineLinks.ts
 
 export async function getStaticPaths() {
   const poems = await loadPoemMetas();
@@ -71,6 +72,9 @@ const canonicalPath = `${base}poem/${poem.id}/`;
     </footer>
 
     <script is:inline>
+      // NOTE: URL fragment helpers are unit-tested in site/src/lib/lineLinks.ts.
+      // This inline script intentionally keeps its own lightweight parsing/building
+      // to avoid bundling surprises in the static output.
       (() => {
         const lines = Array.from(document.querySelectorAll('.poem-lines li'));
         if (!lines.length) return;
