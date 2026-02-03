@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { loadPoemMetas, loadPoemText, type PoemMeta } from "../../lib/poems";
+// (tests) line-link hash logic is unit-tested separately in src/lib/lineLinks.ts
 
 export async function getStaticPaths() {
   const poems = await loadPoemMetas();

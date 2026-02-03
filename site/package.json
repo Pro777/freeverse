@@ -6,10 +6,17 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
     "astro": "astro"
   },
   "dependencies": {
     "astro": "^5.17.1",
     "js-yaml": "^4.1.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.1",
+    "vitest": "^4.0.18"
   }
 }
