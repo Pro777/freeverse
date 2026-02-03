@@ -29,15 +29,16 @@ const featuredStanza = featured ? await loadFirstStanza(featured) : undefined;
 
       {featured ? (
         <>
-          <a
-            class="card-overlay"
-            href={`${base}poem/${featured.id}/`}
-            aria-label={`Read featured poem: ${featured.title} by ${featured.author}`}
-          ></a>
-          <p style="margin: 0.1rem 0 0.1rem;"><strong>{featured.title}</strong></p>
+          <p style="margin: 0.1rem 0 0.1rem;">
+            <a class="featured-title" href={`${base}poem/${featured.id}/`}>
+              <strong>{featured.title}</strong>
+            </a>
+          </p>
           <p class="muted" style="margin: 0 0 0.6rem;">{featured.author}</p>
           {featuredStanza ? (
-            <pre class="poem-preview">{featuredStanza}</pre>
+            <a class="poem-preview-link" href={`${base}poem/${featured.id}/`} aria-label={`Read featured poem: ${featured.title} by ${featured.author}`}>
+              <pre class="poem-preview">{featuredStanza}</pre>
+            </a>
           ) : (
             <p class="muted">(Preview unavailable.)</p>
           )}
