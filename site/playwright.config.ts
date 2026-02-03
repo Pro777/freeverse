@@ -1,7 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
 const PLAYWRIGHT_BASE_URL =
-  process.env.PLAYWRIGHT_BASE_URL ?? 'http://127.0.0.1:4323/freeverse/';
+  process.env.PLAYWRIGHT_BASE_URL ?? 'http://127.0.0.1:4323/';
 
 export default defineConfig({
   testDir: './tests/e2e',
