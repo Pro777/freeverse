@@ -474,6 +474,8 @@ main {
 .reader-title {
   margin: 0;
   font-size: clamp(2.05rem, 1.65rem + 1.7vw, 2.75rem);
+  text-wrap: balance;
+  hyphens: auto;
 }
 
 .reader-byline {

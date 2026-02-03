@@ -32,7 +32,10 @@ const canonicalPath = `${base}poem/${poem.id}/`;
     <header class="reader-head">
       <h1 class="reader-title">{poem.title}</h1>
       <p class="reader-byline">
-        <span class="muted">by</span> <strong>{poem.author}</strong>
+        <span class="muted">by</span>{' '}
+        <a href={`${base}browse/?author=${encodeURIComponent(poem.author)}`}>
+          <strong>{poem.author}</strong>
+        </a>
         <span class="muted" style="margin: 0 0.35rem;">·</span>
         <a class="muted" href={`${base}browse/`}>Explore poems</a>
       </p>
