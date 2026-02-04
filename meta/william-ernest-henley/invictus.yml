@@ -1,0 +1,13 @@
+id: "william-ernest-henley/invictus"
+slug: "invictus"
+author: "William Ernest Henley"
+author_slug: "william-ernest-henley"
+title: "Invictus"
+century: 19
+
+text_path: "poems/william-ernest-henley/invictus.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Oxford_Book_of_English_Verse_1250-1900/Invictus"
+public_domain_rationale: "Public domain in the United States: published in an anthology (pre-1929) on Wikisource; Henley died 1903."

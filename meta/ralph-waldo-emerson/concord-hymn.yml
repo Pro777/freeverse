@@ -1,0 +1,15 @@
+id: "ralph-waldo-emerson/concord-hymn"
+slug: "concord-hymn"
+author: "Ralph Waldo Emerson"
+author_slug: "ralph-waldo-emerson"
+title: "Concord Hymn"
+century: 19
+
+text_path: "poems/ralph-waldo-emerson/concord-hymn.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Poems_(Emerson,_1847)/Hymn"
+public_domain_rationale: "Public domain in the United States: published in an 1847 volume (pre-1929) on Wikisource; Emerson died 1882."
+
+notes: "The source prints the longer original title as a subtitle; omitted from poem text."

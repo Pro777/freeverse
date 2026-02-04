@@ -1,0 +1,15 @@
+id: "alfred-tennyson/the-charge-of-the-light-brigade"
+slug: "the-charge-of-the-light-brigade"
+author: "Alfred Tennyson"
+author_slug: "alfred-tennyson"
+title: "The Charge of the Light Brigade"
+century: 19
+
+text_path: "poems/alfred-tennyson/the-charge-of-the-light-brigade.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Maud,_and_other_poems/The_Charge_of_the_Light_Brigade"
+public_domain_rationale: "Public domain in the United States: published in an 1855 collection (pre-1929) on Wikisource; Tennyson died 1892."
+
+notes: "Wikisource transcription includes ‘THE END.’ and printer info; omitted here."
