@@ -9,6 +9,8 @@
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
+    "lint:poems": "node scripts/lint-poems.mjs",
+    "candidates:poems": "node scripts/generate-candidates.mjs",
     "astro": "astro"
   },
   "dependencies": {
