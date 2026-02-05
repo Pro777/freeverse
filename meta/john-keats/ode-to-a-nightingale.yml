@@ -1,0 +1,13 @@
+id: "john-keats/ode-to-a-nightingale"
+slug: "ode-to-a-nightingale"
+author: "John Keats"
+author_slug: "john-keats"
+title: "Ode to a Nightingale"
+century: 19
+
+text_path: "poems/john-keats/ode-to-a-nightingale.txt"
+text_in_repo: true
+
+source_label: "Project Gutenberg"
+source_url: "https://gutenberg.org/cache/epub/23684/pg23684.txt"
+public_domain_rationale: "Public domain in the United States: originally published 1819 (pre-1929); text via Project Gutenberg eBook #23684."

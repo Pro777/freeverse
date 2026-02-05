@@ -1,0 +1,13 @@
+id: "edgar-allan-poe/the-bells"
+slug: "the-bells"
+author: "Edgar Allan Poe"
+author_slug: "edgar-allan-poe"
+title: "The Bells"
+century: 19
+
+text_path: "poems/edgar-allan-poe/the-bells.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/The_Works_of_the_Late_Edgar_Allan_Poe_(1859)/Volume_2/The_Bells"
+public_domain_rationale: "Public domain in the United States: published in a 1859 edition (pre-1929) on Wikisource; Poe died 1849."

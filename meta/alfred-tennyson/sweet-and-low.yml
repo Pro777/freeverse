@@ -1,0 +1,14 @@
+id: alfred-tennyson/sweet-and-low
+slug: sweet-and-low
+author: Alfred Tennyson
+author_slug: alfred-tennyson
+title: Sweet and Low
+century: 19
+text_in_repo: true
+text_path: poems/alfred-tennyson/sweet-and-low.txt
+source_label: Wikisource
+source_url: https://en.wikisource.org/wiki/Poems_That_Every_Child_Should_Know/Sweet_and_Low
+public_domain_rationale: Public domain in the United States (published 1904; pre-1929).
+collection_title: Poems That Every Child Should Know (1904)
+collection_source_url: https://en.wikisource.org/wiki/Poems_That_Every_Child_Should_Know
+featured: false

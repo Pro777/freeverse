@@ -1,0 +1,16 @@
+id: "george-gordon-byron/childe-harolds-pilgrimage"
+slug: "childe-harolds-pilgrimage"
+author: "George Gordon Byron"
+author_slug: "george-gordon-byron"
+title: "Childe Harold's Pilgrimage"
+century: 19
+
+text_path: "poems/george-gordon-byron/childe-harolds-pilgrimage.txt"
+text_in_repo: true
+
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/5131"
+public_domain_rationale: "Public domain (author died 1824; Project Gutenberg edition distributed as public domain in the US)."
+
+featured: false
+notes: "Ingested from Project Gutenberg plain-text source; header/footer removed; line breaks preserved."

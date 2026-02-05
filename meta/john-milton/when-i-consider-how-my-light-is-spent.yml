@@ -1,0 +1,15 @@
+id: "john-milton/when-i-consider-how-my-light-is-spent"
+slug: "when-i-consider-how-my-light-is-spent"
+author: "John Milton"
+author_slug: "john-milton"
+title: "When I consider how my light is spent"
+century: 17
+
+text_path: "poems/john-milton/when-i-consider-how-my-light-is-spent.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Poems_&c._Upon_Several_Occasions/When_I_consider_how_my_light_is_spent"
+public_domain_rationale: "Public domain in the United States: published 1673 (pre-1929) on Wikisource; Milton died 1674."
+
+notes: "Often known as ‘On His Blindness’."

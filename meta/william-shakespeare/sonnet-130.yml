@@ -1,0 +1,13 @@
+id: "william-shakespeare/sonnet-130"
+slug: "sonnet-130"
+author: "William Shakespeare"
+author_slug: "william-shakespeare"
+title: "Sonnet 130"
+century: 16
+
+text_path: "poems/william-shakespeare/sonnet-130.txt"
+text_in_repo: true
+
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/cache/epub/1041/pg1041.txt"
+public_domain_rationale: "Public domain in the United States: originally published 1609 (pre-1929); text via Project Gutenberg eBook #1041."
