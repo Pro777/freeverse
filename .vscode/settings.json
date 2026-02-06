@@ -1,0 +1,66 @@
+{
+  "window.title": "📜 freeverse — ${gitBranch} ${activeEditorShort}",
+
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#2B2A26",
+    "titleBar.activeForeground": "#F6F2E9",
+    "titleBar.inactiveBackground": "#23221F",
+    "titleBar.inactiveForeground": "#CFC8B6",
+
+    "activityBar.background": "#23221F",
+    "activityBar.foreground": "#EDE7D8",
+    "activityBar.inactiveForeground": "#A9A393",
+    "activityBarBadge.background": "#355FB3",
+    "activityBarBadge.foreground": "#F6F2E9",
+
+    "sideBar.background": "#1E1D1A",
+    "sideBar.foreground": "#E4DECF",
+    "sideBar.border": "#35332D",
+    "sideBarSectionHeader.background": "#262521",
+    "sideBarSectionHeader.foreground": "#F0EADB",
+
+    "editorGroupHeader.tabsBackground": "#1E1D1A",
+    "tab.activeBackground": "#2A2824",
+    "tab.activeForeground": "#F6F2E9",
+    "tab.inactiveBackground": "#1E1D1A",
+    "tab.inactiveForeground": "#B9B3A4",
+    "tab.border": "#35332D",
+
+    "statusBar.background": "#262521",
+    "statusBar.foreground": "#EDE7D8",
+    "statusBar.border": "#35332D",
+    "statusBar.debuggingBackground": "#355FB3",
+    "statusBar.debuggingForeground": "#F6F2E9",
+
+    "editor.background": "#1F1E1B",
+    "editor.foreground": "#F6F2E9",
+    "editorLineNumber.foreground": "#8E887A",
+    "editorLineNumber.activeForeground": "#D6CFBE",
+    "editorCursor.foreground": "#C9A44C",
+    "editor.selectionBackground": "#3A372F",
+    "editor.inactiveSelectionBackground": "#2E2B25",
+    "editor.lineHighlightBackground": "#272622",
+
+    "editor.findMatchBackground": "#355FB3",
+    "editor.findMatchHighlightBackground": "#243A63",
+    "editorBracketMatch.background": "#3A372F",
+    "editorBracketMatch.border": "#C9A44C",
+
+    "focusBorder": "#355FB3",
+    "selection.background": "#3A372F",
+
+    "list.activeSelectionBackground": "#2F2D27",
+    "list.activeSelectionForeground": "#F6F2E9",
+    "list.hoverBackground": "#262521",
+    "list.highlightForeground": "#C9A44C",
+
+    "terminal.background": "#1F1E1B",
+    "terminal.foreground": "#EDE7D8",
+    "terminalCursor.foreground": "#C9A44C",
+
+    "gitDecoration.addedResourceForeground": "#6BAF8F",
+    "gitDecoration.modifiedResourceForeground": "#C9A44C",
+    "gitDecoration.deletedResourceForeground": "#C77A7A",
+    "gitDecoration.untrackedResourceForeground": "#355FB3"
+  }
+}

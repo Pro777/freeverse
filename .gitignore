@@ -3,6 +3,10 @@ node_modules/
 site/node_modules/
 site/dist/
 .vscode/
+!.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
 site/.vscode/
 tmp/
 
