@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'site/**'
+      - 'meta/**'
+      - 'poems/**'
       - '.github/workflows/ci.yml'
   workflow_dispatch:
 

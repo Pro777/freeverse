@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { loadPoemMetas, type PoemMeta } from "../../lib/poems";
+import poemIndex from "../../generated/poem-index.json";
+import type { PoemMeta } from "../../lib/poems";
 
 type AuthorPageProps = {
   author: string;
@@ -13,7 +14,7 @@ const base = import.meta.env.BASE_URL.endsWith("/")
   : `${import.meta.env.BASE_URL}/`;
 
 export async function getStaticPaths() {
-  const poems = await loadPoemMetas();
+  const poems = poemIndex;
   const byAuthor = new Map<string, { author: string; poems: PoemMeta[] }>();
 
   for (const poem of poems) {
