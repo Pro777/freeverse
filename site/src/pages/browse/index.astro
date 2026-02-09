@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { loadPoemMetas } from "../../lib/poems";
+import { authorPath } from "../../lib/url";
 
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
@@ -15,8 +16,28 @@ poemsAll.sort((a, b) => {
 });
 
 const authorFilter = Astro.url.searchParams.get('author');
-const poems = authorFilter
-  ? poemsAll.filter((p) => p.author === authorFilter)
+const authorSlugFilter = Astro.url.searchParams.get('author_slug');
+const authors = Array.from(
+  poemsAll.reduce((acc, poem) => {
+    const key = poem.author_slug;
+    const current = acc.get(key);
+    if (current) {
+      current.count += 1;
+    } else {
+      acc.set(key, { name: poem.author, slug: key, count: 1 });
+    }
+    return acc;
+  }, new Map<string, { name: string; slug: string; count: number }>())
+).map(([, value]) => value).sort((a, b) => a.name.localeCompare(b.name));
+
+const selectedAuthor = authorSlugFilter
+  ? authors.find((a) => a.slug === authorSlugFilter)
+  : authorFilter
+    ? authors.find((a) => a.name === authorFilter)
+    : undefined;
+
+const poems = selectedAuthor
+  ? poemsAll.filter((p) => p.author_slug === selectedAuthor.slug)
   : poemsAll;
 ---
 
@@ -25,14 +46,34 @@ const poems = authorFilter
     <h1>Explore poems</h1>
     <p class="lede">
       A growing library of public-domain poetry. Click any title to read.
-      {authorFilter ? (
+      {selectedAuthor ? (
         <>
-          {' '}Showing only <strong>{authorFilter}</strong>.{' '}
+          {' '}Showing only <strong>{selectedAuthor.name}</strong>.{' '}
           <a class="muted" href={`${base}browse/`}>Clear filter</a>.
         </>
       ) : null}
     </p>
   </section>
+
+  <div class="card" style="margin-bottom: 1rem;">
+    <div class="kicker">
+      <h2>Authors</h2>
+      <span class="pill">{authors.length} total</span>
+    </div>
+
+    <ul class="list">
+      {authors.map((a) => (
+        <li>
+          <a class="list-title" href={authorPath(base, a.slug)}>
+            <strong>{a.name}</strong>
+          </a>
+          <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
+            {a.count} poem{a.count === 1 ? "" : "s"}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
 
   <div class="card">
     <div class="kicker">
@@ -49,7 +90,7 @@ const poems = authorFilter
             </a>
             <span class="muted">
               —{' '}
-              <a class="muted" href={`${base}browse/?author=${encodeURIComponent(p.author)}`}>
+              <a class="muted" href={authorPath(base, p.author_slug)}>
                 {p.author}
               </a>
             </span>

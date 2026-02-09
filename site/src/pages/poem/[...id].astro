@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { loadPoemMetas, loadPoemText, type PoemMeta } from "../../lib/poems";
+import { authorPath } from "../../lib/url";
 // (tests) line-link hash logic is unit-tested separately in src/lib/lineLinks.ts
 
 export async function getStaticPaths() {
@@ -33,7 +34,7 @@ const canonicalPath = `${base}poem/${poem.id}/`;
       <h1 class="reader-title">{poem.title}</h1>
       <p class="reader-byline">
         <span class="muted">by</span>{' '}
-        <a href={`${base}browse/?author=${encodeURIComponent(poem.author)}`}>
+        <a href={authorPath(base, poem.author_slug)}>
           <strong>{poem.author}</strong>
         </a>
         <span class="muted" style="margin: 0 0.35rem;">·</span>
