@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+early_access: false
+
+tone_instructions: |
+  Be concise and concrete. Prefer small, actionable bullets.
+  Avoid hype. Avoid poems.
+
+reviews:
+  profile: "assertive"        # more feedback (can feel nitpicky)
+  request_changes_workflow: true
+  high_level_summary: true
+  poem: false
+  review_status: true
+  review_details: false
+  commit_status: true
+  fail_commit_status: true
+  collapse_walkthrough: true
+  changed_files_summary: true
+  sequence_diagrams: false
+  estimate_code_review_effort: true
+  auto_review:
+    enabled: true
+    drafts: false
+
+  # Ignore generated/vendor artifacts by default.
+  path_filters:
+    - "!**/node_modules/**"
+    - "!**/dist/**"
+    - "!**/build/**"
+    - "!**/out/**"
+    - "!**/.venv/**"
+    - "!**/vendor/**"
+    - "!**/*.min.*"
+
+chat:
+  auto_reply: true
