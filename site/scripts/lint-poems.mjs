@@ -66,7 +66,8 @@ function fuzzyTitleMatch(t1, t2) {
   const dist = levenshtein(a, b);
   const maxLen = Math.max(a.length, b.length) || 1;
   const sim = 1 - dist / maxLen;
-  return sim >= 0.9 || dist <= 2;
+  const allowedDist = Math.max(1, Math.floor(maxLen * 0.15));
+  return sim >= 0.9 || dist <= allowedDist;
 }
 
 function walk(dir) {
@@ -86,7 +87,13 @@ function present(v) {
 function changedMetaFiles(repoRoot) {
   // Prefer staged files; if none staged, use working-tree changes vs HEAD.
   const rels = [];
-  const run = (cmd) => execSync(cmd, { cwd: repoRoot, stdio: ['ignore', 'pipe', 'ignore'] }).toString('utf8');
+  const run = (cmd) => {
+    try {
+      return execSync(cmd, { cwd: repoRoot, stdio: ['ignore', 'pipe', 'ignore'] }).toString('utf8');
+    } catch {
+      return '';
+    }
+  };
 
   const staged = run('git diff --name-only --cached').trim().split(/\n/).filter(Boolean);
   const changed = staged.length ? staged : run('git diff --name-only HEAD').trim().split(/\n/).filter(Boolean);
@@ -189,8 +196,9 @@ function main() {
         author: String(data.author),
         title: String(data.title),
       });
-    } catch {
-      // ignore; parse errors handled above for linted subset
+    } catch (err) {
+      // Only suppress YAML parse errors; re-throw I/O failures
+      if (err.code) throw err;
     }
   }
 

@@ -52,11 +52,15 @@ function parseArgs(argv) {
 }
 
 async function fetchText(url) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30_000);
   const res = await fetch(url, {
     headers: {
       'user-agent': 'freeverse-candidate-generator/1.0',
     },
+    signal: controller.signal,
   });
+  clearTimeout(timeout);
   if (!res.ok) die(`Fetch failed ${res.status} for ${url}`);
   return await res.text();
 }
@@ -84,7 +88,9 @@ function toMarkdown(indexUrl, urls) {
   lines.push('');
   lines.push('One URL per line (ranked by appearance in the index HTML).');
   lines.push('');
-  urls.forEach((u, i) => lines.push(`${String(i + 1).padStart(3, '0')}. ${u}`));
+  for (const [i, u] of urls.entries()) {
+    lines.push(`${String(i + 1).padStart(3, '0')}. ${u}`);
+  }
   lines.push('');
   return lines.join('\n');
 }
