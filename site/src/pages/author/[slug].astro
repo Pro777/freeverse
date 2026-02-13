@@ -39,12 +39,18 @@ export async function getStaticPaths() {
   });
 }
 
-const { author, poems } = Astro.props as AuthorPageProps;
+const { author, authorSlug, poems } = Astro.props as AuthorPageProps;
 const title = `${author} · Freeverse`;
 const description = `Read public-domain poems by ${author}.`;
+
+const ordinal = (n: number) => {
+  const s = ["th", "st", "nd", "rd"];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+};
 ---
 
-<BaseLayout title={title} description={description} currentPath={""}>
+<BaseLayout title={title} description={description} currentPath={`author/${authorSlug}/`}>
   <section class="hero">
     <h1>{author}</h1>
     <p class="lede">
@@ -65,7 +71,7 @@ const description = `Read public-domain poems by ${author}.`;
             <strong>{p.title}</strong>
           </a>
           <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
-            {p.century}th century
+            {ordinal(p.century)} century
           </div>
         </li>
       ))}

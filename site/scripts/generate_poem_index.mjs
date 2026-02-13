@@ -4,6 +4,10 @@ import crypto from 'node:crypto';
 import yaml from 'js-yaml';
 
 const SITE_ROOT = process.cwd();
+if (!SITE_ROOT.endsWith('site') && !SITE_ROOT.endsWith('site/')) {
+  console.error('Script must be run from the site/ directory');
+  process.exit(1);
+}
 const REPO_ROOT = path.resolve(SITE_ROOT, '..');
 const META_ROOT = path.join(REPO_ROOT, 'meta');
 const OUTPUT_PATH = path.join(SITE_ROOT, 'src', 'generated', 'poem-index.json');
