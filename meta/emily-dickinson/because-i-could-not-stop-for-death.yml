@@ -8,9 +8,9 @@ century: 19
 text_in_repo: true
 text_path: "poems/emily-dickinson/because-i-could-not-stop-for-death.txt"
 
-source_label: "TBD"
-source_url: "TBD"
-public_domain_rationale: "TBD"
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/12242"
+public_domain_rationale: "Public domain in the United States (Emily Dickinson died in 1886; source distributed as public domain)."
 
 featured: true
-notes: "Seed file for UI development; replace with verified PD text and provenance."
+notes: "Source text aligned to Project Gutenberg edition."

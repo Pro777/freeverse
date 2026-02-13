@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { loadPoemMetas, loadPoemText, type PoemMeta } from "../../lib/poems";
+import { authorPath } from "../../lib/url";
 // (tests) line-link hash logic is unit-tested separately in src/lib/lineLinks.ts
 
 export async function getStaticPaths() {
@@ -33,7 +34,7 @@ const canonicalPath = `${base}poem/${poem.id}/`;
       <h1 class="reader-title">{poem.title}</h1>
       <p class="reader-byline">
         <span class="muted">by</span>{' '}
-        <a href={`${base}browse/?author=${encodeURIComponent(poem.author)}`}>
+        <a href={authorPath(base, poem.author_slug)}>
           <strong>{poem.author}</strong>
         </a>
         <span class="muted" style="margin: 0 0.35rem;">·</span>
@@ -150,11 +151,17 @@ const canonicalPath = `${base}poem/${poem.id}/`;
         };
 
         const copyUrl = async (start, end) => {
-          const url = (start && end) ? buildShareUrl(start, end) : location.href;
+          const hasRange = Number.isFinite(start) && Number.isFinite(end);
+          const url = hasRange ? buildShareUrl(start, end) : location.href;
+          const s = hasRange ? Math.min(start, end) : null;
+          const e = hasRange ? Math.max(start, end) : null;
+          const selectionLabel = hasRange
+            ? (s === e ? `line ${s}` : `lines ${s}-${e}`)
+            : 'link';
           try {
             if (navigator.clipboard && navigator.clipboard.writeText) {
               await navigator.clipboard.writeText(url);
-              toast('Link copied');
+              toast(`Copied link to ${selectionLabel}`);
             } else {
               toast('Link ready (copy from address bar)');
             }

@@ -1,0 +1,85 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import poemIndex from "../../generated/poem-index.json";
+import type { PoemMeta } from "../../lib/poems";
+
+type AuthorPageProps = {
+  author: string;
+  authorSlug: string;
+  poems: PoemMeta[];
+};
+
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+
+export async function getStaticPaths() {
+  const poems = poemIndex;
+  const byAuthor = new Map<string, { author: string; poems: PoemMeta[] }>();
+
+  for (const poem of poems) {
+    const entry = byAuthor.get(poem.author_slug);
+    if (entry) {
+      entry.poems.push(poem);
+    } else {
+      byAuthor.set(poem.author_slug, { author: poem.author, poems: [poem] });
+    }
+  }
+
+  return Array.from(byAuthor.entries()).map(([slug, group]) => {
+    const poemsSorted = [...group.poems].sort((a, b) => a.title.localeCompare(b.title));
+    return {
+      params: { slug },
+      props: {
+        author: group.author,
+        authorSlug: slug,
+        poems: poemsSorted,
+      },
+    };
+  });
+}
+
+const { author, authorSlug, poems } = Astro.props as AuthorPageProps;
+const title = `${author} · Freeverse`;
+const description = `Read public-domain poems by ${author}.`;
+
+const ordinal = (n: number) => {
+  const s = ["th", "st", "nd", "rd"];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+};
+---
+
+<BaseLayout title={title} description={description} currentPath={`author/${authorSlug}/`}>
+  <section class="hero">
+    <h1>{author}</h1>
+    <p class="lede">
+      {poems.length} poem{poems.length === 1 ? "" : "s"} in the collection.
+    </p>
+  </section>
+
+  <div class="card">
+    <div class="kicker">
+      <h2>Poems</h2>
+      <span class="pill">{poems.length} total</span>
+    </div>
+
+    <ul class="list">
+      {poems.map((p) => (
+        <li>
+          <a class="list-title" href={`${base}poem/${p.id}/`}>
+            <strong>{p.title}</strong>
+          </a>
+          <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
+            {ordinal(p.century)} century
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <div class="actions" style="margin-top:1rem;">
+      <a class="action" href={`${base}browse/`}>Back to Browse</a>
+      <a class="action" href={`${base}search/`}>Search</a>
+    </div>
+  </div>
+</BaseLayout>

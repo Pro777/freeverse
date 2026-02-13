@@ -1,0 +1,14 @@
+id: "walt-whitman/beat-beat-drums"
+slug: "beat-beat-drums"
+author: "Walt Whitman"
+author_slug: "walt-whitman"
+title: "Beat! Beat! Drums!"
+century: 19
+text_in_repo: true
+text_path: "poems/walt-whitman/beat-beat-drums.txt"
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/1322"
+public_domain_rationale: "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text)."
+collection_title: "Leaves of Grass"
+collection_source_url: "https://www.gutenberg.org/ebooks/1322"
+featured: false

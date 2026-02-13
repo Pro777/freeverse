@@ -3,6 +3,10 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "generate:index": "node scripts/generate_poem_index.mjs",
+    "predev": "npm run generate:index",
+    "prebuild": "npm run generate:index",
+    "pretest:e2e": "npm run generate:index",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
