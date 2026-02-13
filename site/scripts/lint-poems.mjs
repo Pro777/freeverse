@@ -105,7 +105,9 @@ function main() {
   const strict = process.argv.includes('--strict');
   let lintingAll = false;
   if (filesFromArgs.length) {
-    metaFiles = filesFromArgs.map((p) => path.resolve(process.cwd(), p));
+    metaFiles = filesFromArgs.map((p) =>
+      path.isAbsolute(p) ? p : path.resolve(repoRoot, p)
+    );
   } else {
     const changed = changedMetaFiles(repoRoot);
     if (changed.length) metaFiles = changed;

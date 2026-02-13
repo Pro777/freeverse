@@ -66,8 +66,9 @@ function extractSubpages(html, indexUrl) {
   const m = indexUrl.match(/\/wiki\/(.+)$/);
   if (!m) die(`Index URL must look like https://.../wiki/<Title>: ${indexUrl}`);
   const baseTitle = m[1];
+  const escapedTitle = baseTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-  const re = new RegExp(`/wiki/${baseTitle}/[^"#? ]+`, 'g');
+  const re = new RegExp(`/wiki/${escapedTitle}/[^"#? ]+`, 'g');
   const hits = html.match(re) || [];
   const urls = Array.from(new Set(hits))
     .map((p) => `https://en.wikisource.org${p}`)

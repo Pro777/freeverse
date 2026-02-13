@@ -127,15 +127,17 @@ const html = `<!doctype html>
 </html>`;
 
 const browser = await chromium.launch();
-const page = await browser.newPage({ viewport: { width: WIDTH, height: HEIGHT }, deviceScaleFactor: 1 });
+try {
+  const page = await browser.newPage({ viewport: { width: WIDTH, height: HEIGHT }, deviceScaleFactor: 1 });
 
-await page.setContent(html, { waitUntil: 'load' });
-await page.waitForTimeout(50);
+  await page.setContent(html, { waitUntil: 'load' });
+  await page.waitForTimeout(50);
 
-// Screenshot only the body; it is fixed-size.
-await page.screenshot({ path: outPath, type: 'png' });
-
-await browser.close();
+  // Screenshot only the body; it is fixed-size.
+  await page.screenshot({ path: outPath, type: 'png' });
+} finally {
+  await browser.close();
+}
 
 // Quick sanity: ensure file exists and is non-trivial.
 const stat = await fs.stat(outPath);
