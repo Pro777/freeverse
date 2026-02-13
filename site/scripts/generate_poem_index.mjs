@@ -177,7 +177,11 @@ for (const meta of metas) {
 
   let rawText = '';
   if (meta.text_in_repo && meta.text_path) {
-    const textPath = path.join(REPO_ROOT, meta.text_path);
+    const textPath = path.resolve(REPO_ROOT, meta.text_path);
+    if (!textPath.startsWith(REPO_ROOT + path.sep)) {
+      errors.push(`${meta.id}: text_path escapes repo root`);
+      continue;
+    }
     try {
       rawText = await fs.readFile(textPath, 'utf8');
       if (!rawText.trim()) {
