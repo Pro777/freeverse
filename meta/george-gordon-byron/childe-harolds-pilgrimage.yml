@@ -10,7 +10,7 @@ text_in_repo: true
 
 source_label: "Project Gutenberg"
 source_url: "https://www.gutenberg.org/ebooks/5131"
-public_domain_rationale: "Public domain (author died 1824; Project Gutenberg edition distributed as public domain in the US)."
+public_domain_rationale: "Public domain in the United States: author died 1824 (pre-1929); text via Project Gutenberg eBook #5131."
 
 featured: false
 notes: "Ingested from Project Gutenberg plain-text source; header/footer removed; line breaks preserved."

@@ -15,6 +15,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
+import { execSync } from 'node:child_process';
 import yaml from 'js-yaml';
 
 function repoRootFromSite() {
@@ -81,8 +82,6 @@ function walk(dir) {
 function present(v) {
   return v !== undefined && v !== null && String(v).trim() !== '';
 }
-
-import { execSync } from 'node:child_process';
 
 function changedMetaFiles(repoRoot) {
   // Prefer staged files; if none staged, use working-tree changes vs HEAD.
