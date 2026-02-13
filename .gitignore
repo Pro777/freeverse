@@ -9,3 +9,6 @@ tmp/
 # Testing artifacts
 site/test-results/
 site/playwright-report/
+
+# local ops
+inbox
