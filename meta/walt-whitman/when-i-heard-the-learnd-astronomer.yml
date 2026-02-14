@@ -1,0 +1,15 @@
+id: "walt-whitman/when-i-heard-the-learnd-astronomer"
+slug: "when-i-heard-the-learnd-astronomer"
+author: "Walt Whitman"
+author_slug: "walt-whitman"
+title: "When I Heard the Learn'd Astronomer"
+century: 19
+
+text_path: "poems/walt-whitman/when-i-heard-the-learnd-astronomer.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/When_I_Heard_the_Learn%27d_Astronomer"
+public_domain_rationale: "Public domain in the United States: published 1897 (pre-1929) on Wikisource; Whitman died 1892."
+
+notes: "Wikisource page includes a publication note about McClure’s Magazine; omitted from poem text."

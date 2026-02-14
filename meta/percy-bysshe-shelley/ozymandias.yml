@@ -1,0 +1,13 @@
+id: "percy-bysshe-shelley/ozymandias"
+slug: "ozymandias"
+author: "Percy Bysshe Shelley"
+author_slug: "percy-bysshe-shelley"
+title: "Ozymandias"
+century: 19
+
+text_path: "poems/percy-bysshe-shelley/ozymandias.txt"
+text_in_repo: true
+
+source_label: "Project Gutenberg"
+source_url: "https://gutenberg.org/cache/epub/4798/pg4798.txt"
+public_domain_rationale: "Public domain in the United States: first published 1818 (pre-1929); text via Project Gutenberg eBook #4798."
