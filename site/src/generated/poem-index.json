@@ -1,0 +1,347 @@
+[
+  {
+    "id": "emily-dickinson/because-i-could-not-stop-for-death",
+    "slug": "because-i-could-not-stop-for-death",
+    "author": "Emily Dickinson",
+    "author_slug": "emily-dickinson",
+    "title": "Because I could not stop for Death",
+    "century": 19,
+    "text_in_repo": true,
+    "text_path": "poems/emily-dickinson/because-i-could-not-stop-for-death.txt",
+    "source_label": "Project Gutenberg",
+    "source_url": "https://www.gutenberg.org/ebooks/12242",
+    "public_domain_rationale": "Public domain in the United States (Emily Dickinson died in 1886; source distributed as public domain).",
+    "featured": true,
+    "notes": "Source text aligned to Project Gutenberg edition.",
+    "text_sha256": "cdeda5c69d977beef843296ad8a67c9593653b987594b9ec0f3356475724b452",
+    "normalized_sha256": "dafa4c6a9e824f201e87f289b14d667b437da8b8da84a05f5f625bf34986814b",
+    "canonical_source": {
+      "type": "gutenberg",
+      "id": "gutenberg:12242",
+      "url": "https://www.gutenberg.org/ebooks/12242"
+    },
+    "sources": [
+      {
+        "label": "Project Gutenberg",
+        "url": "https://www.gutenberg.org/ebooks/12242"
+      }
+    ],
+    "canonical_id": "emily-dickinson/because-i-could-not-stop-for-death",
+    "variant_group": "emily-dickinson/because-i-could-not-stop-for-death",
+    "is_canonical": true
+  },
+  {
+    "id": "gerard-manley-hopkins/pied-beauty",
+    "slug": "pied-beauty",
+    "author": "Gerard Manley Hopkins",
+    "author_slug": "gerard-manley-hopkins",
+    "title": "Pied Beauty",
+    "century": 19,
+    "text_path": "poems/gerard-manley-hopkins/pied-beauty.txt",
+    "text_in_repo": true,
+    "source_label": "Project Gutenberg",
+    "source_url": "https://www.gutenberg.org/ebooks/22403",
+    "public_domain_rationale": "Public domain (published 1918; Project Gutenberg distribution).",
+    "featured": false,
+    "notes": "Text taken from the first edition (Robert Bridges, ed.), via Project Gutenberg.",
+    "text_sha256": "d5924acc1d340259d5f2cd4bc08e39231b92f729aaca63f31840f6fd7fae4f70",
+    "normalized_sha256": "e5ff4c35ab7829a2a5343c38926ff7fff9d1768be6f82fb1d76472b07fe7c33a",
+    "canonical_source": {
+      "type": "gutenberg",
+      "id": "gutenberg:22403",
+      "url": "https://www.gutenberg.org/ebooks/22403"
+    },
+    "sources": [
+      {
+        "label": "Project Gutenberg",
+        "url": "https://www.gutenberg.org/ebooks/22403"
+      }
+    ],
+    "canonical_id": "gerard-manley-hopkins/pied-beauty",
+    "variant_group": "gerard-manley-hopkins/pied-beauty",
+    "is_canonical": true
+  },
+  {
+    "id": "horace/odes-3-30-exegi-monumentum",
+    "slug": "odes-3-30-exegi-monumentum",
+    "author": "Horace",
+    "author_slug": "horace",
+    "title": "Odes 3.30 (Exegi monumentum)",
+    "century": -1,
+    "text_path": "poems/horace/odes-3-30-exegi-monumentum.txt",
+    "text_in_repo": true,
+    "source_label": "Liber Latinus (public-domain Latin text)",
+    "source_url": "https://liberlatinus.wordpress.com/2017/06/25/horace-odes-3-30/",
+    "public_domain_rationale": "Public domain (Quintus Horatius Flaccus died 8 BC).",
+    "notes": "Motto source line: ‘non omnis moriar’ (line 6).",
+    "featured": false,
+    "text_sha256": "e602ce2e90cde1065d22eace4837782db3bc7941132bd7cd915b86f7f1c0c46c",
+    "normalized_sha256": "2522f96e15bde7866221ae544f88f51c3df934d988602ae6d74969553c338e00",
+    "canonical_source": {
+      "type": "reference",
+      "id": "liberlatinus.wordpress.com/2017/06/25/horace-odes-3-30",
+      "url": "https://liberlatinus.wordpress.com/2017/06/25/horace-odes-3-30/"
+    },
+    "sources": [
+      {
+        "label": "Liber Latinus (public-domain Latin text)",
+        "url": "https://liberlatinus.wordpress.com/2017/06/25/horace-odes-3-30/"
+      }
+    ],
+    "canonical_id": "horace/odes-3-30-exegi-monumentum",
+    "variant_group": "horace/odes-3-30-exegi-monumentum",
+    "is_canonical": true
+  },
+  {
+    "id": "walt-whitman/a-clear-midnight",
+    "slug": "a-clear-midnight",
+    "author": "Walt Whitman",
+    "author_slug": "walt-whitman",
+    "title": "A Clear Midnight",
+    "century": 19,
+    "text_in_repo": true,
+    "text_path": "poems/walt-whitman/a-clear-midnight.txt",
+    "source_label": "Project Gutenberg",
+    "source_url": "https://www.gutenberg.org/ebooks/1322",
+    "public_domain_rationale": "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text).",
+    "collection_title": "Leaves of Grass",
+    "collection_source_url": "https://www.gutenberg.org/ebooks/1322",
+    "featured": false,
+    "text_sha256": "41232be3ad3de14a9f0c4751d9dbde7510193c77686a755df1e5c22f27c95d0a",
+    "normalized_sha256": "d5980e0d4b98f88a166183700d424bc43dda6f0b6e034360a8ec64937e82638c",
+    "canonical_source": {
+      "type": "gutenberg",
+      "id": "gutenberg:1322",
+      "url": "https://www.gutenberg.org/ebooks/1322"
+    },
+    "sources": [
+      {
+        "label": "Project Gutenberg",
+        "url": "https://www.gutenberg.org/ebooks/1322"
+      },
+      {
+        "label": "Project Gutenberg (collection)",
+        "url": "https://www.gutenberg.org/ebooks/1322"
+      }
+    ],
+    "canonical_id": "walt-whitman/a-clear-midnight",
+    "variant_group": "walt-whitman/a-clear-midnight",
+    "is_canonical": true
+  },
+  {
+    "id": "walt-whitman/a-noiseless-patient-spider",
+    "slug": "a-noiseless-patient-spider",
+    "author": "Walt Whitman",
+    "author_slug": "walt-whitman",
+    "title": "A Noiseless Patient Spider",
+    "century": 19,
+    "text_in_repo": true,
+    "text_path": "poems/walt-whitman/a-noiseless-patient-spider.txt",
+    "source_label": "Project Gutenberg",
+    "source_url": "https://www.gutenberg.org/ebooks/1322",
+    "public_domain_rationale": "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text).",
+    "collection_title": "Leaves of Grass",
+    "collection_source_url": "https://www.gutenberg.org/ebooks/1322",
+    "featured": false,
+    "text_sha256": "30bf81e70fe3e388e3fbb23c7f560af63811d9dc98c2d2170c0b4e35087acffd",
+    "normalized_sha256": "2a2e1d11098e4a3864cce36508b63f1cdd45fad1db563bbd2598d64b69e2d93d",
+    "canonical_source": {
+      "type": "gutenberg",
+      "id": "gutenberg:1322",
+      "url": "https://www.gutenberg.org/ebooks/1322"
+    },
+    "sources": [
+      {
+        "label": "Project Gutenberg",
+        "url": "https://www.gutenberg.org/ebooks/1322"
+      },
+      {
+        "label": "Project Gutenberg (collection)",
+        "url": "https://www.gutenberg.org/ebooks/1322"
+      }
+    ],
+    "canonical_id": "walt-whitman/a-noiseless-patient-spider",
+    "variant_group": "walt-whitman/a-noiseless-patient-spider",
+    "is_canonical": true
+  },
+  {
+    "id": "walt-whitman/beat-beat-drums",
+    "slug": "beat-beat-drums",
+    "author": "Walt Whitman",
+    "author_slug": "walt-whitman",
+    "title": "Beat! Beat! Drums!",
+    "century": 19,
+    "text_in_repo": true,
+    "text_path": "poems/walt-whitman/beat-beat-drums.txt",
+    "source_label": "Project Gutenberg",
+    "source_url": "https://www.gutenberg.org/ebooks/1322",
+    "public_domain_rationale": "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text).",
+    "collection_title": "Leaves of Grass",
+    "collection_source_url": "https://www.gutenberg.org/ebooks/1322",
+    "featured": false,
+    "text_sha256": "d95ad4ffeca962278ba16e204c735d1c0ca008e3b46a63a45bf8141d1bed5952",
+    "normalized_sha256": "41586ab6d45b3d08b3bcf7313f6b5a701476f4afdfaf65be0fa2a3644f5dc172",
+    "canonical_source": {
+      "type": "gutenberg",
+      "id": "gutenberg:1322",
+      "url": "https://www.gutenberg.org/ebooks/1322"
+    },
+    "sources": [
+      {
+        "label": "Project Gutenberg",
+        "url": "https://www.gutenberg.org/ebooks/1322"
+      },
+      {
+        "label": "Project Gutenberg (collection)",
+        "url": "https://www.gutenberg.org/ebooks/1322"
+      }
+    ],
+    "canonical_id": "walt-whitman/beat-beat-drums",
+    "variant_group": "walt-whitman/beat-beat-drums",
+    "is_canonical": true
+  },
+  {
+    "id": "walt-whitman/i-hear-america-singing",
+    "slug": "i-hear-america-singing",
+    "author": "Walt Whitman",
+    "author_slug": "walt-whitman",
+    "title": "I Hear America Singing",
+    "century": 19,
+    "text_in_repo": true,
+    "text_path": "poems/walt-whitman/i-hear-america-singing.txt",
+    "source_label": "Project Gutenberg",
+    "source_url": "https://www.gutenberg.org/ebooks/1322",
+    "public_domain_rationale": "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text).",
+    "collection_title": "Leaves of Grass",
+    "collection_source_url": "https://www.gutenberg.org/ebooks/1322",
+    "featured": false,
+    "text_sha256": "651ef17b69b3f2f349171c2e6a42febee41d9766bd924e3c85bd66d724104671",
+    "normalized_sha256": "e5285860d5a8ed54d28c329ad72e0e9206f798f40e101cc2e7c4a954f0711e0c",
+    "canonical_source": {
+      "type": "gutenberg",
+      "id": "gutenberg:1322",
+      "url": "https://www.gutenberg.org/ebooks/1322"
+    },
+    "sources": [
+      {
+        "label": "Project Gutenberg",
+        "url": "https://www.gutenberg.org/ebooks/1322"
+      },
+      {
+        "label": "Project Gutenberg (collection)",
+        "url": "https://www.gutenberg.org/ebooks/1322"
+      }
+    ],
+    "canonical_id": "walt-whitman/i-hear-america-singing",
+    "variant_group": "walt-whitman/i-hear-america-singing",
+    "is_canonical": true
+  },
+  {
+    "id": "walt-whitman/o-captain-my-captain",
+    "slug": "o-captain-my-captain",
+    "author": "Walt Whitman",
+    "author_slug": "walt-whitman",
+    "title": "O Captain! My Captain!",
+    "century": 19,
+    "text_in_repo": true,
+    "text_path": "poems/walt-whitman/o-captain-my-captain.txt",
+    "source_label": "Project Gutenberg",
+    "source_url": "https://www.gutenberg.org/ebooks/1322",
+    "public_domain_rationale": "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text).",
+    "collection_title": "Leaves of Grass",
+    "collection_source_url": "https://www.gutenberg.org/ebooks/1322",
+    "featured": false,
+    "text_sha256": "0e1bf28e6bbb56b1f9ba7df8c6883c405982619a6642405b8fa459b9fa7a5937",
+    "normalized_sha256": "d05f7c60dbf57dfc31e66be95a133a3f77ab0c7e88684224be4c4337f69dde83",
+    "canonical_source": {
+      "type": "gutenberg",
+      "id": "gutenberg:1322",
+      "url": "https://www.gutenberg.org/ebooks/1322"
+    },
+    "sources": [
+      {
+        "label": "Project Gutenberg",
+        "url": "https://www.gutenberg.org/ebooks/1322"
+      },
+      {
+        "label": "Project Gutenberg (collection)",
+        "url": "https://www.gutenberg.org/ebooks/1322"
+      }
+    ],
+    "canonical_id": "walt-whitman/o-captain-my-captain",
+    "variant_group": "walt-whitman/o-captain-my-captain",
+    "is_canonical": true
+  },
+  {
+    "id": "walt-whitman/o-me-o-life",
+    "slug": "o-me-o-life",
+    "author": "Walt Whitman",
+    "author_slug": "walt-whitman",
+    "title": "O Me! O Life!",
+    "century": 19,
+    "text_in_repo": true,
+    "text_path": "poems/walt-whitman/o-me-o-life.txt",
+    "source_label": "Project Gutenberg",
+    "source_url": "https://www.gutenberg.org/ebooks/1322",
+    "public_domain_rationale": "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text).",
+    "collection_title": "Leaves of Grass",
+    "collection_source_url": "https://www.gutenberg.org/ebooks/1322",
+    "featured": false,
+    "text_sha256": "dea40c49da526867a9ab0b2042d35b069a0bdb87e77d75910768c3cbf1bc818e",
+    "normalized_sha256": "3a0c45d45ff7a9fa78cf1c6ea16d029081221a70309ca05dda45766f3c6ea3df",
+    "canonical_source": {
+      "type": "gutenberg",
+      "id": "gutenberg:1322",
+      "url": "https://www.gutenberg.org/ebooks/1322"
+    },
+    "sources": [
+      {
+        "label": "Project Gutenberg",
+        "url": "https://www.gutenberg.org/ebooks/1322"
+      },
+      {
+        "label": "Project Gutenberg (collection)",
+        "url": "https://www.gutenberg.org/ebooks/1322"
+      }
+    ],
+    "canonical_id": "walt-whitman/o-me-o-life",
+    "variant_group": "walt-whitman/o-me-o-life",
+    "is_canonical": true
+  },
+  {
+    "id": "walt-whitman/to-a-president",
+    "slug": "to-a-president",
+    "author": "Walt Whitman",
+    "author_slug": "walt-whitman",
+    "title": "To a President",
+    "century": 19,
+    "text_in_repo": true,
+    "text_path": "poems/walt-whitman/to-a-president.txt",
+    "source_label": "Project Gutenberg",
+    "source_url": "https://www.gutenberg.org/ebooks/1322",
+    "public_domain_rationale": "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text).",
+    "collection_title": "Leaves of Grass",
+    "collection_source_url": "https://www.gutenberg.org/ebooks/1322",
+    "featured": false,
+    "text_sha256": "f34528bfb547d23b3df2758dd40f50249f4ccc37b4e515238b1a32f1566d371f",
+    "normalized_sha256": "3eae9fee31b094288deeb61dafeaed7511f3868222a752565e9748ae177f0638",
+    "canonical_source": {
+      "type": "gutenberg",
+      "id": "gutenberg:1322",
+      "url": "https://www.gutenberg.org/ebooks/1322"
+    },
+    "sources": [
+      {
+        "label": "Project Gutenberg",
+        "url": "https://www.gutenberg.org/ebooks/1322"
+      },
+      {
+        "label": "Project Gutenberg (collection)",
+        "url": "https://www.gutenberg.org/ebooks/1322"
+      }
+    ],
+    "canonical_id": "walt-whitman/o-me-o-life",
+    "variant_group": "walt-whitman/o-me-o-life",
+    "is_canonical": false
+  }
+]
