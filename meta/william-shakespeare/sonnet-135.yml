@@ -1,11 +1,11 @@
-id: "william-shakespeare/sonnet-130"
-slug: "sonnet-130"
+id: "william-shakespeare/sonnet-135"
+slug: "sonnet-135"
 author: "William Shakespeare"
 author_slug: "william-shakespeare"
-title: "Sonnet 130"
+title: "Sonnet 135"
 century: 16
 text_in_repo: true
-text_path: "poems/william-shakespeare/sonnet-130.txt"
+text_path: "poems/william-shakespeare/sonnet-135.txt"
 source_label: "Project Gutenberg"
 source_url: "https://www.gutenberg.org/ebooks/1041"
 public_domain_rationale: "Public domain (author died 1616; distributed by Project Gutenberg as public-domain text)."
