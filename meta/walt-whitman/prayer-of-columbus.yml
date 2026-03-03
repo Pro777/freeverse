@@ -1,0 +1,14 @@
+id: "walt-whitman/prayer-of-columbus"
+slug: "prayer-of-columbus"
+author: "Walt Whitman"
+author_slug: "walt-whitman"
+title: "Prayer Of Columbus"
+century: 19
+text_in_repo: true
+text_path: "poems/walt-whitman/prayer-of-columbus.txt"
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/1322"
+public_domain_rationale: "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text)."
+collection_title: "Leaves of Grass"
+collection_source_url: "https://www.gutenberg.org/ebooks/1322"
+featured: false

@@ -1,64 +1,50 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const DICKINSON_TEXT_URL = "https://www.gutenberg.org/ebooks/12242.txt.utf-8";
-const DICKINSON_SOURCE_URL = "https://www.gutenberg.org/ebooks/12242";
+const TEXT_URL = "https://www.gutenberg.org/ebooks/1322.txt.utf-8";
+const SOURCE_URL = "https://www.gutenberg.org/ebooks/1322";
+const AUTHOR = "Walt Whitman";
+const AUTHOR_SLUG = "walt-whitman";
+const COLLECTION_TITLE = "Leaves of Grass";
 
-const TARGET_FIRST_LINES = [
-  "Hope is the thing with feathers",
-  "I'm Nobody! Who are you?",
-  "A Bird came down the Walk",
-  "I heard a Fly buzz — when I died",
-  "Tell all the truth but tell it slant",
-  "Wild nights — Wild nights!",
-  "The Soul selects her own Society",
-  "I felt a Funeral, in my Brain",
-  "Success is counted sweetest",
-  "There's a certain Slant of light",
-  "Because I could not stop for Death",
-  "I dwell in Possibility",
-  "I'm ceded - I've stopped being Theirs",
-  "This is my letter to the World",
-  "Much Madness is divinest Sense",
-  "Pain — has an Element of Blank",
-  "After great pain, a formal feeling comes",
-  "I died for Beauty — but was scarce",
-  "If I can stop one Heart from breaking",
-  "The Brain — is wider than the Sky",
-  "The Brain, within its Groove",
-  "I'm wife — I've finished that",
-  "My life closed twice before its close",
-  "A narrow Fellow in the Grass",
-  "Apparently with no surprise",
-  "A still — Volcano — Life",
-  "I reason, Earth is short",
-  "The Chariot",
-  "I had been hungry, all the Years",
-  "I never saw a Moor",
-  "A Route of Evanescence",
-  "My River runs to thee",
-  "As imperceptibly as Grief",
-  "The Grass so little has to do",
-  "I cannot live with You",
-  "I gave myself to Him",
-  "Heart, we will forget him",
-  "I know that He exists",
-  "Parting is all we know of heaven",
-  "A Day! Help! Help! Another Day!",
-  "The morns are meeker than they were",
-  "I taste a liquor never brewed",
-  "He fumbles at your Soul",
-  "Safe in their Alabaster Chambers",
-  "I cannot dance upon my Toes",
-  "A Death-blow is a Life-blow to Some",
-  "Of all the Sounds despatched abroad",
-  "I dreaded that first Robin so",
-  "A little Madness in the Spring",
-  "To make a prairie it takes a clover and one bee",
+const TARGET_TITLES = [
+  "SONG OF MYSELF",
+  "I SING THE BODY ELECTRIC",
+  "A WOMAN WAITS FOR ME",
+  "SPONTANEOUS ME",
+  "CROSSING BROOKLYN FERRY",
+  "SONG OF THE OPEN ROAD",
+  "OUT OF THE CRADLE ENDLESSLY ROCKING",
+  "AS I EBB'D WITH THE OCEAN OF LIFE",
+  "WHEN LILACS LAST IN THE DOORYARD BLOOM'D",
+  "PASSAGE TO INDIA",
+  "PRAYER OF COLUMBUS",
+  "BY BLUE ONTARIO'S SHORE",
+  "TO A LOCOMOTIVE IN WINTER",
+  "THE WOUND-DRESSER",
+  "VIGIL STRANGE I KEPT ON THE FIELD ONE NIGHT",
+  "RECONCILIATION",
+  "O ME! O LIFE!",
+  "THIS DUST WAS ONCE THE MAN",
+  "ONE'S-SELF I SING",
+  "AS I PONDER'D IN SILENCE",
+  "TO FOREIGN LANDS",
+  "TO A HISTORIAN",
+  "TO THEE OLD CAUSE",
+  "EIDOLONS",
+  "BEGINNING MY STUDIES",
+  "BEGINNERS",
+  "TO THE STATES",
+  "ON JOURNEYS THROUGH THE STATES",
+  "ME IMPERTURBE",
+  "SAVANTISM",
+  "THE SHIP STARTING",
+  "SONG OF THE BROAD-AXE",
+  "GOOD-BYE MY FANCY",
 ];
 
-function normalize(raw) {
-  return raw.replace(/\r\n?/g, "\n").replace(/[ \t]+$/gm, "");
+function normalizeText(value) {
+  return value.replace(/\r\n?/g, "\n").replace(/[ \t]+$/gm, "");
 }
 
 function stripBoilerplate(raw) {
@@ -69,152 +55,104 @@ function stripBoilerplate(raw) {
   return raw.slice(startIdx, endIdx).trim();
 }
 
+function key(value) {
+  return value.toLowerCase().replace(/['’]/g, "").replace(/[^a-z0-9]+/g, "");
+}
+
 function slugify(value) {
   return value
     .toLowerCase()
     .replace(/['’]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 100);
+    .replace(/^-+|-+$/g, "");
 }
 
-function normalizeKey(value) {
+function titleCase(value) {
   return value
     .toLowerCase()
-    .replace(/['’]/g, "")
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim()
-    .replace(/\s+/g, " ");
+    .replace(/\b([a-z])/g, (m) => m.toUpperCase())
+    .replace(/\bI\b/g, "I");
 }
 
-function extractPoemBlocks(lines) {
-  const starts = [];
-  for (let i = 0; i < lines.length; i += 1) {
-    if (/^(?:\d+|[IVXLCDM]+)\.$/.test(lines[i].trim())) starts.push(i);
-  }
-  const blocks = [];
-  for (let s = 0; s < starts.length; s += 1) {
-    const start = starts[s];
-    const end = s + 1 < starts.length ? starts[s + 1] : lines.length;
-    let poem = lines.slice(start + 1, end);
-
-    while (poem.length > 0 && poem[0].trim() === "") poem.shift();
-    while (poem.length > 0) {
-      const head = poem[0].trim();
-      if (head === "") {
-        poem.shift();
-        continue;
-      }
-      if (head.startsWith("[")) {
-        poem.shift();
-        while (poem.length > 0) {
-          const done = poem[0].includes("]");
-          poem.shift();
-          if (done) break;
-        }
-        continue;
-      }
-      if (!/[a-z]/.test(head)) {
-        poem.shift();
-        continue;
-      }
-      break;
-    }
-    while (poem.length > 0 && poem[0].trim() === "") poem.shift();
-    while (poem.length > 0 && poem[poem.length - 1].trim() === "") poem.pop();
-
-    const nonEmpty = poem.filter((l) => l.trim() !== "").length;
-    if (nonEmpty >= 3) {
-      blocks.push(poem);
-    }
-  }
-  return blocks;
-}
-
-function buildMeta({ slug, title }) {
+function buildMeta(slug, title) {
   return [
-    `id: "emily-dickinson/${slug}"`,
+    `id: "${AUTHOR_SLUG}/${slug}"`,
     `slug: "${slug}"`,
-    'author: "Emily Dickinson"',
-    'author_slug: "emily-dickinson"',
+    `author: "${AUTHOR}"`,
+    `author_slug: "${AUTHOR_SLUG}"`,
     `title: "${title.replace(/"/g, '\\"')}"`,
     "century: 19",
     "text_in_repo: true",
-    `text_path: "poems/emily-dickinson/${slug}.txt"`,
+    `text_path: "poems/${AUTHOR_SLUG}/${slug}.txt"`,
     'source_label: "Project Gutenberg"',
-    `source_url: "${DICKINSON_SOURCE_URL}"`,
-    'public_domain_rationale: "Public domain (author died 1886; distributed by Project Gutenberg as public-domain text)."',
-    'collection_title: "Poems by Emily Dickinson, Three Series, Complete"',
-    `collection_source_url: "${DICKINSON_SOURCE_URL}"`,
+    `source_url: "${SOURCE_URL}"`,
+    'public_domain_rationale: "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text)."',
+    `collection_title: "${COLLECTION_TITLE}"`,
+    `collection_source_url: "${SOURCE_URL}"`,
     "featured: false",
     "",
   ].join("\n");
 }
 
 async function main() {
-  const response = await fetch(DICKINSON_TEXT_URL);
-  if (!response.ok) throw new Error(`Fetch failed (${response.status})`);
-  const text = stripBoilerplate(normalize(await response.text()));
-  const lines = text.split("\n");
-  const blocks = extractPoemBlocks(lines);
-  if (process.argv.includes("--list")) {
-    for (const poem of blocks.slice(0, 140)) {
-      console.log(poem[0].trim());
-    }
-    return;
-  }
+  const poemsDir = path.join("poems", AUTHOR_SLUG);
+  const metaDir = path.join("meta", AUTHOR_SLUG);
+  await fs.mkdir(poemsDir, { recursive: true });
+  await fs.mkdir(metaDir, { recursive: true });
 
-  const outPoemsDir = path.join("poems", "emily-dickinson");
-  const outMetaDir = path.join("meta", "emily-dickinson");
-  await fs.mkdir(outPoemsDir, { recursive: true });
-  await fs.mkdir(outMetaDir, { recursive: true });
+  const existingSlugs = new Set(
+    (await fs.readdir(poemsDir))
+      .filter((name) => name.endsWith(".txt"))
+      .map((name) => name.replace(/\.txt$/, "")),
+  );
 
-  const existing = new Set(["because-i-could-not-stop-for-death"]);
-  let written = 0;
-  const used = new Set();
-  const targetKeys = TARGET_FIRST_LINES.map(normalizeKey);
-  const requiredAll = targetKeys.slice(0, 10);
-  const sourceKey = normalizeKey(text);
-  const requiredSet = new Set(requiredAll.filter((key) => sourceKey.includes(key)));
+  const response = await fetch(TEXT_URL);
+  if (!response.ok) throw new Error(`Failed to fetch source (${response.status})`);
+  const body = stripBoilerplate(normalizeText(await response.text()));
+  const lines = body.split("\n");
 
-  for (const key of targetKeys) {
-    const idx = blocks.findIndex((poem, i) => !used.has(i) && normalizeKey(poem[0]) === key);
-    if (idx === -1) continue;
-    const poem = blocks[idx];
-    used.add(idx);
-    const title = poem[0].trim();
-    const slug = slugify(title);
-    if (!slug || existing.has(slug)) continue;
-    existing.add(slug);
-    await fs.writeFile(path.join(outPoemsDir, `${slug}.txt`), `${poem.join("\n")}\n`, "utf8");
-    await fs.writeFile(path.join(outMetaDir, `${slug}.yml`), buildMeta({ slug, title }), "utf8");
-    written += 1;
-  }
-
-  if (written < 50) {
-    for (let i = 0; i < blocks.length && written < 50; i += 1) {
-      if (used.has(i)) continue;
-      const poem = blocks[i];
-      const title = poem[0].trim();
-      const slug = slugify(title);
-      if (!slug || existing.has(slug)) continue;
-      existing.add(slug);
-      await fs.writeFile(path.join(outPoemsDir, `${slug}.txt`), `${poem.join("\n")}\n`, "utf8");
-      await fs.writeFile(path.join(outMetaDir, `${slug}.yml`), buildMeta({ slug, title }), "utf8");
-      written += 1;
+  const titleKeyToTitle = new Map(TARGET_TITLES.map((title) => [key(title), title]));
+  const hits = [];
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = lines[i].trim();
+    const k = key(line);
+    if (titleKeyToTitle.has(k)) {
+      hits.push({ index: i, title: titleKeyToTitle.get(k) });
     }
   }
 
-  const foundRequired = new Set(blocks.map((poem) => normalizeKey(poem[0])).filter((k) => requiredSet.has(k)));
-  if (foundRequired.size !== requiredSet.size) {
-    const missing = [...requiredSet].filter((k) => !foundRequired.has(k));
-    throw new Error(`Missing required canonical poems (${foundRequired.size}/${requiredSet.size} found): ${missing.join(" | ")}`);
+  const uniqueByTitle = new Map();
+  for (const hit of hits) {
+    if (!uniqueByTitle.has(hit.title)) uniqueByTitle.set(hit.title, hit);
+  }
+  const ordered = [...uniqueByTitle.values()].sort((a, b) => a.index - b.index);
+  if (ordered.length < 20) {
+    throw new Error(`Too few titles found (${ordered.length})`);
   }
 
-  if (written < 50) {
-    throw new Error(`Too few poems extracted (${written}), expected at least 50`);
+  let created = 0;
+  for (let i = 0; i < ordered.length; i += 1) {
+    const current = ordered[i];
+    const nextIndex = i + 1 < ordered.length ? ordered[i + 1].index : lines.length;
+    let poem = lines.slice(current.index + 1, nextIndex);
+    while (poem.length > 0 && poem[0].trim() === "") poem.shift();
+    while (poem.length > 0 && poem[poem.length - 1].trim() === "") poem.pop();
+    if (poem.filter((line) => line.trim() !== "").length < 4) continue;
+
+    const slug = slugify(current.title);
+    if (!slug || existingSlugs.has(slug)) continue;
+    existingSlugs.add(slug);
+
+    const displayTitle = titleCase(current.title);
+    await fs.writeFile(path.join(poemsDir, `${slug}.txt`), `${poem.join("\n")}\n`, "utf8");
+    await fs.writeFile(path.join(metaDir, `${slug}.yml`), buildMeta(slug, displayTitle), "utf8");
+    created += 1;
   }
-  console.log(`Generated ${written} poems.`);
+
+  if (created < 20) {
+    throw new Error(`Generated too few poems (${created})`);
+  }
+  console.log(`Generated ${created} new Whitman poems.`);
 }
 
 main().catch((error) => {
