@@ -151,10 +151,16 @@ const canonicalPath = `${base}poem/${poem.id}/`;
 
         const copyUrl = async (start, end) => {
           const url = (start && end) ? buildShareUrl(start, end) : location.href;
+          const hasRange = Number.isFinite(start) && Number.isFinite(end);
+          const s = hasRange ? Math.min(start, end) : null;
+          const e = hasRange ? Math.max(start, end) : null;
+          const selectionLabel = (s && e)
+            ? (s === e ? `line ${s}` : `lines ${s}-${e}`)
+            : 'link';
           try {
             if (navigator.clipboard && navigator.clipboard.writeText) {
               await navigator.clipboard.writeText(url);
-              toast('Link copied');
+              toast(`Copied link to ${selectionLabel}`);
             } else {
               toast('Link ready (copy from address bar)');
             }
