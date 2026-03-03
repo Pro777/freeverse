@@ -1,0 +1,13 @@
+id: "william-wordsworth/i-wandered-lonely-as-a-cloud"
+slug: "i-wandered-lonely-as-a-cloud"
+author: "William Wordsworth"
+author_slug: "william-wordsworth"
+title: "I Wandered Lonely as a Cloud"
+century: 19
+
+text_path: "poems/william-wordsworth/i-wandered-lonely-as-a-cloud.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Poems,_in_Two_Volumes_(Wordsworth,_1807)/Volume_2/%22I_wandered_lonely_as_a_Cloud%22"
+public_domain_rationale: "Public domain in the United States: published 1807 (pre-1929) on Wikisource; Wordsworth died 1850."

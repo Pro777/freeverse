@@ -1,0 +1,15 @@
+id: "william-wordsworth/the-world-is-too-much-with-us"
+slug: "the-world-is-too-much-with-us"
+author: "William Wordsworth"
+author_slug: "william-wordsworth"
+title: "The world is too much with us; late and soon"
+century: 19
+
+text_path: "poems/william-wordsworth/the-world-is-too-much-with-us.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Poems,_in_Two_Volumes_(Wordsworth,_1807)/Volume_1/The_world_is_too_much_with_us;_late_and_soon"
+public_domain_rationale: "Public domain in the United States: published 1807 (pre-1929) on Wikisource; Wordsworth died 1850."
+
+notes: "Title follows the 1807 volume’s opening line."

@@ -1,0 +1,15 @@
+id: "emma-lazarus/the-new-colossus"
+slug: "the-new-colossus"
+author: "Emma Lazarus"
+author_slug: "emma-lazarus"
+title: "The New Colossus"
+century: 19
+
+text_path: "poems/emma-lazarus/the-new-colossus.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/The_New_Colossus"
+public_domain_rationale: "Public domain in the United States: dated 1883 (pre-1929) on Wikisource; Lazarus died 1887."
+
+notes: "Wikisource includes a date line ‘1883.’ and a note about the pedestal fund; omitted from the poem text here."

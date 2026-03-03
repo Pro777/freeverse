@@ -1,0 +1,13 @@
+id: "william-blake/the-lamb"
+slug: "the-lamb"
+author: "William Blake"
+author_slug: "william-blake"
+title: "The Lamb"
+century: 18
+
+text_path: "poems/william-blake/the-lamb.txt"
+text_in_repo: true
+
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/cache/epub/1934/pg1934.txt"
+public_domain_rationale: "Public domain in the United States: originally published 1789 (pre-1929); text via Project Gutenberg eBook #1934."
