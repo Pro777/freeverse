@@ -3,7 +3,9 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "predev": "node scripts/build-poem-index.mjs",
     "dev": "astro dev",
+    "prebuild": "node scripts/build-poem-index.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "test": "npm run test:unit && npm run test:e2e",

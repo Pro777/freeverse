@@ -8,9 +8,9 @@ century: 19
 text_in_repo: true
 text_path: "poems/emily-dickinson/because-i-could-not-stop-for-death.txt"
 
-source_label: "TBD"
-source_url: "TBD"
-public_domain_rationale: "TBD"
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Because_I_could_not_stop_for_Death"
+public_domain_rationale: "Public domain (author died 1886; source text is distributed as public domain)."
 
 featured: true
-notes: "Seed file for UI development; replace with verified PD text and provenance."
+notes: "Early seed file retained; provenance upgraded to canonical source."

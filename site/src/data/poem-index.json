@@ -1,0 +1,806 @@
+{
+  "generated_at": "2026-03-03T18:35:05.691Z",
+  "poems": [
+    {
+      "id": "alfred-tennyson/the-charge-of-the-light-brigade",
+      "slug": "the-charge-of-the-light-brigade",
+      "author": "Alfred Tennyson",
+      "author_slug": "alfred-tennyson",
+      "title": "The Charge of the Light Brigade",
+      "century": 19,
+      "text_path": "poems/alfred-tennyson/the-charge-of-the-light-brigade.txt",
+      "text_in_repo": true,
+      "source_label": "Wikisource",
+      "source_url": "https://en.wikisource.org/wiki/Maud,_and_other_poems/The_Charge_of_the_Light_Brigade",
+      "public_domain_rationale": "Public domain in the United States: published in an 1855 collection (pre-1929) on Wikisource; Tennyson died 1892.",
+      "notes": "Wikisource transcription includes ‘THE END.’ and printer info; omitted here.",
+      "canonical_source": {
+        "type": "wikisource",
+        "id": "wikisource:wiki/Maud,_and_other_poems/The_Charge_of_the_Light_Brigade",
+        "url": "https://en.wikisource.org/wiki/Maud,_and_other_poems/The_Charge_of_the_Light_Brigade"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: published in an 1855 collection (pre-1929) on Wikisource; Tennyson died 1892."
+      },
+      "text_sha256": "0f916555782776c4e52b7e8bbdc63156ae0393c8ff7c0520712cebde2fb2799a",
+      "normalized_sha256": "90ef99e3594fb614ba12a8578deddda47910a87cf4ec330108033d000ef9ff92",
+      "text_length": 1197
+    },
+    {
+      "id": "christina-rossetti/remember",
+      "slug": "remember",
+      "author": "Christina Rossetti",
+      "author_slug": "christina-rossetti",
+      "title": "Remember",
+      "century": 19,
+      "text_path": "poems/christina-rossetti/remember.txt",
+      "text_in_repo": true,
+      "source_label": "Project Gutenberg",
+      "source_url": "https://www.gutenberg.org/files/16950/16950.txt",
+      "public_domain_rationale": "Public domain in the United States: first published 1862 (pre-1929); text via Project Gutenberg eBook #16950.",
+      "canonical_source": {
+        "type": "gutenberg",
+        "id": "gutenberg:/files/16950/16950.txt",
+        "url": "https://www.gutenberg.org/files/16950/16950.txt"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: first published 1862 (pre-1929); text via Project Gutenberg eBook #16950."
+      },
+      "text_sha256": "97f4386865a4fa18088c2aeab0f5ef78a556ed310650b35ab881e8342c144010",
+      "normalized_sha256": "0a6e85ec9dca26c94bf9ac13d20dd5b6bf7f5ca53f1aeefb3474b4041650243e",
+      "text_length": 553
+    },
+    {
+      "id": "edgar-allan-poe/annabel-lee",
+      "slug": "annabel-lee",
+      "author": "Edgar Allan Poe",
+      "author_slug": "edgar-allan-poe",
+      "title": "Annabel Lee",
+      "century": 19,
+      "text_path": "poems/edgar-allan-poe/annabel-lee.txt",
+      "text_in_repo": true,
+      "source_label": "Wikisource",
+      "source_url": "https://en.wikisource.org/wiki/The_Works_of_the_Late_Edgar_Allan_Poe_(1859)/Volume_2/Annabel_Lee",
+      "public_domain_rationale": "Public domain in the United States: published in a 1859 edition (pre-1929) on Wikisource; Poe died 1849.",
+      "canonical_source": {
+        "type": "wikisource",
+        "id": "wikisource:wiki/The_Works_of_the_Late_Edgar_Allan_Poe_(1859)/Volume_2/Annabel_Lee",
+        "url": "https://en.wikisource.org/wiki/The_Works_of_the_Late_Edgar_Allan_Poe_(1859)/Volume_2/Annabel_Lee"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: published in a 1859 edition (pre-1929) on Wikisource; Poe died 1849."
+      },
+      "text_sha256": "c010cc19e41d0337ddb8e0c567c7366ac60a27bf0fe5836f747dbdc6a17866fe",
+      "normalized_sha256": "3db10ec10d79a05f8af2155d123d60ee7217c8139c69aee1f027019ee766404c",
+      "text_length": 1474
+    },
+    {
+      "id": "edgar-allan-poe/the-bells",
+      "slug": "the-bells",
+      "author": "Edgar Allan Poe",
+      "author_slug": "edgar-allan-poe",
+      "title": "The Bells",
+      "century": 19,
+      "text_path": "poems/edgar-allan-poe/the-bells.txt",
+      "text_in_repo": true,
+      "source_label": "Wikisource",
+      "source_url": "https://en.wikisource.org/wiki/The_Works_of_the_Late_Edgar_Allan_Poe_(1859)/Volume_2/The_Bells",
+      "public_domain_rationale": "Public domain in the United States: published in a 1859 edition (pre-1929) on Wikisource; Poe died 1849.",
+      "canonical_source": {
+        "type": "wikisource",
+        "id": "wikisource:wiki/The_Works_of_the_Late_Edgar_Allan_Poe_(1859)/Volume_2/The_Bells",
+        "url": "https://en.wikisource.org/wiki/The_Works_of_the_Late_Edgar_Allan_Poe_(1859)/Volume_2/The_Bells"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: published in a 1859 edition (pre-1929) on Wikisource; Poe died 1849."
+      },
+      "text_sha256": "c13afad1e1ea725988e55160dd2d6a26497a017425268be3c817b9cf14d5dee1",
+      "normalized_sha256": "561cf24dc07f034733ea2a9fef35487eae036c9d05d1da3ace5e7a091800e787",
+      "text_length": 3311
+    },
+    {
+      "id": "edgar-allan-poe/the-raven",
+      "slug": "the-raven",
+      "author": "Edgar Allan Poe",
+      "author_slug": "edgar-allan-poe",
+      "title": "The Raven",
+      "century": 19,
+      "text_path": "poems/edgar-allan-poe/the-raven.txt",
+      "text_in_repo": true,
+      "source_label": "Wikisource",
+      "source_url": "https://en.wikisource.org/wiki/The_Works_of_the_Late_Edgar_Allan_Poe_(1859)/Volume_2/The_Raven",
+      "public_domain_rationale": "Public domain in the United States: published in a 1859 edition (pre-1929) on Wikisource; Poe died 1849.",
+      "notes": "Wikisource text uses the spelling ‘visiter’.",
+      "canonical_source": {
+        "type": "wikisource",
+        "id": "wikisource:wiki/The_Works_of_the_Late_Edgar_Allan_Poe_(1859)/Volume_2/The_Raven",
+        "url": "https://en.wikisource.org/wiki/The_Works_of_the_Late_Edgar_Allan_Poe_(1859)/Volume_2/The_Raven"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: published in a 1859 edition (pre-1929) on Wikisource; Poe died 1849."
+      },
+      "text_sha256": "846b4b8c38712415bad398a5a3c181ce0a2395df45ead8b2c37ddb343a08567b",
+      "normalized_sha256": "a9d64cdcb31846d37e63312669ee1d174e5df49441aa0cb922b20bf0df03e248",
+      "text_length": 6239
+    },
+    {
+      "id": "elizabeth-barrett-browning/sonnet-43",
+      "slug": "sonnet-43",
+      "author": "Elizabeth Barrett Browning",
+      "author_slug": "elizabeth-barrett-browning",
+      "title": "Sonnet 43",
+      "century": 19,
+      "text_path": "poems/elizabeth-barrett-browning/sonnet-43.txt",
+      "text_in_repo": true,
+      "source_label": "Project Gutenberg",
+      "source_url": "https://www.gutenberg.org/files/2002/2002-0.txt",
+      "public_domain_rationale": "Public domain in the United States: first published 1850 (pre-1929); text via Project Gutenberg eBook #2002.",
+      "notes": "Often known by its opening line, ‘How do I love thee?’",
+      "canonical_source": {
+        "type": "gutenberg",
+        "id": "gutenberg:/files/2002/2002-0.txt",
+        "url": "https://www.gutenberg.org/files/2002/2002-0.txt"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: first published 1850 (pre-1929); text via Project Gutenberg eBook #2002."
+      },
+      "text_sha256": "703d73df3a643a9e51b4dffba15e9b51740d230dded9b7d7c778191d6dc33776",
+      "normalized_sha256": "6be9f3240a24c5aeacc2a687017fe449ae294e74817ec90722a89f7482cf0e2e",
+      "text_length": 620
+    },
+    {
+      "id": "emily-dickinson/because-i-could-not-stop-for-death",
+      "slug": "because-i-could-not-stop-for-death",
+      "author": "Emily Dickinson",
+      "author_slug": "emily-dickinson",
+      "title": "Because I could not stop for Death",
+      "century": 19,
+      "text_in_repo": true,
+      "text_path": "poems/emily-dickinson/because-i-could-not-stop-for-death.txt",
+      "source_label": "Wikisource",
+      "source_url": "https://en.wikisource.org/wiki/Because_I_could_not_stop_for_Death",
+      "public_domain_rationale": "Public domain (author died 1886; source text is distributed as public domain).",
+      "featured": true,
+      "notes": "Early seed file retained; provenance upgraded to canonical source.",
+      "canonical_source": {
+        "type": "wikisource",
+        "id": "wikisource:wiki/Because_I_could_not_stop_for_Death",
+        "url": "https://en.wikisource.org/wiki/Because_I_could_not_stop_for_Death"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain (author died 1886; source text is distributed as public domain)."
+      },
+      "text_sha256": "cdeda5c69d977beef843296ad8a67c9593653b987594b9ec0f3356475724b452",
+      "normalized_sha256": "f1e0e98653ec83190096e0bcb21a16b1847ae5908d146e841f1484a94efa6472",
+      "text_length": 730
+    },
+    {
+      "id": "emma-lazarus/the-new-colossus",
+      "slug": "the-new-colossus",
+      "author": "Emma Lazarus",
+      "author_slug": "emma-lazarus",
+      "title": "The New Colossus",
+      "century": 19,
+      "text_path": "poems/emma-lazarus/the-new-colossus.txt",
+      "text_in_repo": true,
+      "source_label": "Wikisource",
+      "source_url": "https://en.wikisource.org/wiki/The_New_Colossus",
+      "public_domain_rationale": "Public domain in the United States: dated 1883 (pre-1929) on Wikisource; Lazarus died 1887.",
+      "notes": "Wikisource includes a date line ‘1883.’ and a note about the pedestal fund; omitted from the poem text here.",
+      "canonical_source": {
+        "type": "wikisource",
+        "id": "wikisource:wiki/The_New_Colossus",
+        "url": "https://en.wikisource.org/wiki/The_New_Colossus"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: dated 1883 (pre-1929) on Wikisource; Lazarus died 1887."
+      },
+      "text_sha256": "bc1b670bc6df47ed7293c59b9eae2de9fef7fe4b38b64c71da05487941539416",
+      "normalized_sha256": "2427b3cb2a62bf797a5159275b4b2ad093e4e5ee3e16afda732a6d8f79dc890a",
+      "text_length": 633
+    },
+    {
+      "id": "george-gordon-byron/she-walks-in-beauty",
+      "slug": "she-walks-in-beauty",
+      "author": "George Gordon Byron",
+      "author_slug": "george-gordon-byron",
+      "title": "She Walks in Beauty",
+      "century": 19,
+      "text_path": "poems/george-gordon-byron/she-walks-in-beauty.txt",
+      "text_in_repo": true,
+      "source_label": "Project Gutenberg",
+      "source_url": "https://www.gutenberg.org/cache/epub/21811/pg21811.txt",
+      "public_domain_rationale": "Public domain in the United States: first published 1814 (pre-1929); text via Project Gutenberg eBook #21811.",
+      "canonical_source": {
+        "type": "gutenberg",
+        "id": "gutenberg:21811",
+        "url": "https://www.gutenberg.org/cache/epub/21811/pg21811.txt"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: first published 1814 (pre-1929); text via Project Gutenberg eBook #21811."
+      },
+      "text_sha256": "732e06068750ac552d95d470f1f17f5e3f712053b56af19fed4e35b91579871b",
+      "normalized_sha256": "abc8e5b5de8a498ceefbdc09325c472204deb3ded66d5db6b74f9081a9e34bdc",
+      "text_length": 653
+    },
+    {
+      "id": "george-gordon-byron/the-harp-the-monarch-minstrel-swept",
+      "slug": "the-harp-the-monarch-minstrel-swept",
+      "author": "George Gordon Byron",
+      "author_slug": "george-gordon-byron",
+      "title": "The Harp the Monarch Minstrel Swept",
+      "century": 19,
+      "text_path": "poems/george-gordon-byron/the-harp-the-monarch-minstrel-swept.txt",
+      "text_in_repo": true,
+      "source_label": "Project Gutenberg",
+      "source_url": "https://www.gutenberg.org/cache/epub/21811/pg21811.txt",
+      "public_domain_rationale": "Public domain in the United States: first published 1815 (pre-1929); text via Project Gutenberg eBook #21811.",
+      "canonical_source": {
+        "type": "gutenberg",
+        "id": "gutenberg:21811",
+        "url": "https://www.gutenberg.org/cache/epub/21811/pg21811.txt"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: first published 1815 (pre-1929); text via Project Gutenberg eBook #21811."
+      },
+      "text_sha256": "e652698fd905ca5373d23993e570a84b035ad2a156f654eb7021eacf0a963f7c",
+      "normalized_sha256": "9fee81b934fc328a9e112e0bde71b9233b549e86263649c4b1cdad8924e56e53",
+      "text_length": 757
+    },
+    {
+      "id": "gerard-manley-hopkins/pied-beauty",
+      "slug": "pied-beauty",
+      "author": "Gerard Manley Hopkins",
+      "author_slug": "gerard-manley-hopkins",
+      "title": "Pied Beauty",
+      "century": 19,
+      "text_path": "poems/gerard-manley-hopkins/pied-beauty.txt",
+      "text_in_repo": true,
+      "source_label": "Project Gutenberg",
+      "source_url": "https://www.gutenberg.org/ebooks/22403",
+      "public_domain_rationale": "Public domain (published 1918; Project Gutenberg distribution).",
+      "featured": false,
+      "notes": "Text taken from the first edition (Robert Bridges, ed.), via Project Gutenberg.",
+      "canonical_source": {
+        "type": "gutenberg",
+        "id": "gutenberg:22403",
+        "url": "https://www.gutenberg.org/ebooks/22403"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain (published 1918; Project Gutenberg distribution)."
+      },
+      "text_sha256": "d5924acc1d340259d5f2cd4bc08e39231b92f729aaca63f31840f6fd7fae4f70",
+      "normalized_sha256": "88fc8684dbae94895466e72e88354434c4165acc53987fa03fc74b8bf8b1af4c",
+      "text_length": 479
+    },
+    {
+      "id": "horace/odes-3-30-exegi-monumentum",
+      "slug": "odes-3-30-exegi-monumentum",
+      "author": "Horace",
+      "author_slug": "horace",
+      "title": "Odes 3.30 (Exegi monumentum)",
+      "century": -1,
+      "text_path": "poems/horace/odes-3-30-exegi-monumentum.txt",
+      "text_in_repo": true,
+      "source_label": "Wikisource",
+      "source_url": "https://en.wikisource.org/wiki/The_Odes_and_Carmen_Saeculare_of_Horace/Book_III/Ode_30",
+      "public_domain_rationale": "Public domain (author died 8 BC; source text distributed as public domain).",
+      "notes": "Motto source line: ‘non omnis moriar’ (line 6).",
+      "featured": false,
+      "canonical_source": {
+        "type": "wikisource",
+        "id": "wikisource:wiki/The_Odes_and_Carmen_Saeculare_of_Horace/Book_III/Ode_30",
+        "url": "https://en.wikisource.org/wiki/The_Odes_and_Carmen_Saeculare_of_Horace/Book_III/Ode_30"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain (author died 8 BC; source text distributed as public domain)."
+      },
+      "text_sha256": "e602ce2e90cde1065d22eace4837782db3bc7941132bd7cd915b86f7f1c0c46c",
+      "normalized_sha256": "2522f96e15bde7866221ae544f88f51c3df934d988602ae6d74969553c338e00",
+      "text_length": 569
+    },
+    {
+      "id": "john-keats/ode-to-a-nightingale",
+      "slug": "ode-to-a-nightingale",
+      "author": "John Keats",
+      "author_slug": "john-keats",
+      "title": "Ode to a Nightingale",
+      "century": 19,
+      "text_path": "poems/john-keats/ode-to-a-nightingale.txt",
+      "text_in_repo": true,
+      "source_label": "Project Gutenberg",
+      "source_url": "https://gutenberg.org/cache/epub/23684/pg23684.txt",
+      "public_domain_rationale": "Public domain in the United States: originally published 1819 (pre-1929); text via Project Gutenberg eBook #23684.",
+      "canonical_source": {
+        "type": "gutenberg",
+        "id": "gutenberg:23684",
+        "url": "https://gutenberg.org/cache/epub/23684/pg23684.txt"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: originally published 1819 (pre-1929); text via Project Gutenberg eBook #23684."
+      },
+      "text_sha256": "7d38a091577d762c5d9b815eef05fb60066535434d74e53825da4d965fdd79d4",
+      "normalized_sha256": "94b5c59f30a2532bf6aff38ebc661f9790537ed3a455b8101a58173454629b42",
+      "text_length": 3291
+    },
+    {
+      "id": "john-keats/to-autumn",
+      "slug": "to-autumn",
+      "author": "John Keats",
+      "author_slug": "john-keats",
+      "title": "To Autumn",
+      "century": 19,
+      "text_path": "poems/john-keats/to-autumn.txt",
+      "text_in_repo": true,
+      "source_label": "Project Gutenberg",
+      "source_url": "https://gutenberg.org/cache/epub/23684/pg23684.txt",
+      "public_domain_rationale": "Public domain in the United States: originally published 1819 (pre-1929); text via Project Gutenberg eBook #23684.",
+      "canonical_source": {
+        "type": "gutenberg",
+        "id": "gutenberg:23684",
+        "url": "https://gutenberg.org/cache/epub/23684/pg23684.txt"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: originally published 1819 (pre-1929); text via Project Gutenberg eBook #23684."
+      },
+      "text_sha256": "8a42c1a337a58039120968e70e830d47dd7d0563d636689967bdb114ba9d4f6a",
+      "normalized_sha256": "844949031fe5bdbfc3c93b0a21690ed6a3978b62ac89c5c553000edaba6bb24f",
+      "text_length": 1473
+    },
+    {
+      "id": "john-milton/when-i-consider-how-my-light-is-spent",
+      "slug": "when-i-consider-how-my-light-is-spent",
+      "author": "John Milton",
+      "author_slug": "john-milton",
+      "title": "When I consider how my light is spent",
+      "century": 17,
+      "text_path": "poems/john-milton/when-i-consider-how-my-light-is-spent.txt",
+      "text_in_repo": true,
+      "source_label": "Wikisource",
+      "source_url": "https://en.wikisource.org/wiki/Poems_&c._Upon_Several_Occasions/When_I_consider_how_my_light_is_spent",
+      "public_domain_rationale": "Public domain in the United States: published 1673 (pre-1929) on Wikisource; Milton died 1674.",
+      "notes": "Often known as ‘On His Blindness’.",
+      "canonical_source": {
+        "type": "wikisource",
+        "id": "wikisource:wiki/Poems_&c._Upon_Several_Occasions/When_I_consider_how_my_light_is_spent",
+        "url": "https://en.wikisource.org/wiki/Poems_&c._Upon_Several_Occasions/When_I_consider_how_my_light_is_spent"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: published 1673 (pre-1929) on Wikisource; Milton died 1674."
+      },
+      "text_sha256": "c85ab66b196db4ce570eefb24bc2db398108aab0b082d8e8337e132014866c82",
+      "normalized_sha256": "6175c814e397af7e6f50cdbf4aa84ff6aa8cd6db6106c1366f92019f0d197548",
+      "text_length": 612
+    },
+    {
+      "id": "percy-bysshe-shelley/ozymandias",
+      "slug": "ozymandias",
+      "author": "Percy Bysshe Shelley",
+      "author_slug": "percy-bysshe-shelley",
+      "title": "Ozymandias",
+      "century": 19,
+      "text_path": "poems/percy-bysshe-shelley/ozymandias.txt",
+      "text_in_repo": true,
+      "source_label": "Project Gutenberg",
+      "source_url": "https://gutenberg.org/cache/epub/4798/pg4798.txt",
+      "public_domain_rationale": "Public domain in the United States: first published 1818 (pre-1929); text via Project Gutenberg eBook #4798.",
+      "canonical_source": {
+        "type": "gutenberg",
+        "id": "gutenberg:4798",
+        "url": "https://gutenberg.org/cache/epub/4798/pg4798.txt"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: first published 1818 (pre-1929); text via Project Gutenberg eBook #4798."
+      },
+      "text_sha256": "b55e8d92a3c3495a735d2d7552600d23a0dc54ffc53abbb30de31016d779a7ba",
+      "normalized_sha256": "e7e52dbf4968fdb0ffd18039828c14dc1d548c4cd4244763db17ad259b6c05b7",
+      "text_length": 626
+    },
+    {
+      "id": "ralph-waldo-emerson/concord-hymn",
+      "slug": "concord-hymn",
+      "author": "Ralph Waldo Emerson",
+      "author_slug": "ralph-waldo-emerson",
+      "title": "Concord Hymn",
+      "century": 19,
+      "text_path": "poems/ralph-waldo-emerson/concord-hymn.txt",
+      "text_in_repo": true,
+      "source_label": "Wikisource",
+      "source_url": "https://en.wikisource.org/wiki/Poems_(Emerson,_1847)/Hymn",
+      "public_domain_rationale": "Public domain in the United States: published in an 1847 volume (pre-1929) on Wikisource; Emerson died 1882.",
+      "notes": "The source prints the longer original title as a subtitle; omitted from poem text.",
+      "canonical_source": {
+        "type": "wikisource",
+        "id": "wikisource:wiki/Poems_(Emerson,_1847)/Hymn",
+        "url": "https://en.wikisource.org/wiki/Poems_(Emerson,_1847)/Hymn"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: published in an 1847 volume (pre-1929) on Wikisource; Emerson died 1882."
+      },
+      "text_sha256": "dbd228116203fd3fd9569c081b3667d6a6d171014bd896eb61884af682d7f88f",
+      "normalized_sha256": "396226729f9bd8d735e9329928e63cd68a8cdf9ad666e07815f4fc959333ff16",
+      "text_length": 608
+    },
+    {
+      "id": "robert-browning/my-last-duchess",
+      "slug": "my-last-duchess",
+      "author": "Robert Browning",
+      "author_slug": "robert-browning",
+      "title": "My Last Duchess",
+      "century": 19,
+      "text_path": "poems/robert-browning/my-last-duchess.txt",
+      "text_in_repo": true,
+      "source_label": "Project Gutenberg",
+      "source_url": "https://www.gutenberg.org/cache/epub/4253/pg4253.txt",
+      "public_domain_rationale": "Public domain in the United States: first published 1842 (pre-1929); text via Project Gutenberg eBook #4253.",
+      "notes": "This is a dramatic monologue set in Ferrara.",
+      "canonical_source": {
+        "type": "gutenberg",
+        "id": "gutenberg:4253",
+        "url": "https://www.gutenberg.org/cache/epub/4253/pg4253.txt"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: first published 1842 (pre-1929); text via Project Gutenberg eBook #4253."
+      },
+      "text_sha256": "ce7c3b06bda6859fdb422f1766b8faf9bc7864087e63b5a7a34573ed676972f7",
+      "normalized_sha256": "929ecdfdefb7901910ef36dcea0b331635ba92f63e382b0109343be46011c4df",
+      "text_length": 2472
+    },
+    {
+      "id": "samuel-taylor-coleridge/kubla-khan",
+      "slug": "kubla-khan",
+      "author": "Samuel Taylor Coleridge",
+      "author_slug": "samuel-taylor-coleridge",
+      "title": "Kubla Khan",
+      "century": 18,
+      "text_path": "poems/samuel-taylor-coleridge/kubla-khan.txt",
+      "text_in_repo": true,
+      "source_label": "Wikisource",
+      "source_url": "https://en.wikisource.org/wiki/Christabel;_Kubla_Khan;_The_Pains_of_Sleep_(1816)/Kubla_Khan",
+      "public_domain_rationale": "Public domain in the United States: published 1816 (pre-1929) on Wikisource; Coleridge died 1834.",
+      "notes": "Wikisource page includes Coleridge’s prose preface; omitted here.",
+      "canonical_source": {
+        "type": "wikisource",
+        "id": "wikisource:wiki/Christabel;_Kubla_Khan;_The_Pains_of_Sleep_(1816)/Kubla_Khan",
+        "url": "https://en.wikisource.org/wiki/Christabel;_Kubla_Khan;_The_Pains_of_Sleep_(1816)/Kubla_Khan"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: published 1816 (pre-1929) on Wikisource; Coleridge died 1834."
+      },
+      "text_sha256": "58483e746c39c7e01b229b2add4da5b4dcafa740aaae5a8716d04f45186b14c9",
+      "normalized_sha256": "4ece6ee3909d7ac0bcdb97f7b612f762c127548e7e0790c6622940f64a7368fe",
+      "text_length": 1992
+    },
+    {
+      "id": "walt-whitman/a-noiseless-patient-spider",
+      "slug": "a-noiseless-patient-spider",
+      "author": "Walt Whitman",
+      "author_slug": "walt-whitman",
+      "title": "A Noiseless Patient Spider",
+      "century": 19,
+      "text_in_repo": true,
+      "text_path": "poems/walt-whitman/a-noiseless-patient-spider.txt",
+      "source_label": "Project Gutenberg",
+      "source_url": "https://www.gutenberg.org/ebooks/1322",
+      "public_domain_rationale": "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text).",
+      "collection_title": "Leaves of Grass",
+      "collection_source_url": "https://www.gutenberg.org/ebooks/1322",
+      "featured": false,
+      "canonical_source": {
+        "type": "gutenberg",
+        "id": "gutenberg:1322",
+        "url": "https://www.gutenberg.org/ebooks/1322"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text)."
+      },
+      "text_sha256": "30bf81e70fe3e388e3fbb23c7f560af63811d9dc98c2d2170c0b4e35087acffd",
+      "normalized_sha256": "2a2e1d11098e4a3864cce36508b63f1cdd45fad1db563bbd2598d64b69e2d93d",
+      "text_length": 578
+    },
+    {
+      "id": "walt-whitman/i-hear-america-singing",
+      "slug": "i-hear-america-singing",
+      "author": "Walt Whitman",
+      "author_slug": "walt-whitman",
+      "title": "I Hear America Singing",
+      "century": 19,
+      "text_in_repo": true,
+      "text_path": "poems/walt-whitman/i-hear-america-singing.txt",
+      "source_label": "Project Gutenberg",
+      "source_url": "https://www.gutenberg.org/ebooks/1322",
+      "public_domain_rationale": "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text).",
+      "collection_title": "Leaves of Grass",
+      "collection_source_url": "https://www.gutenberg.org/ebooks/1322",
+      "featured": false,
+      "canonical_source": {
+        "type": "gutenberg",
+        "id": "gutenberg:1322",
+        "url": "https://www.gutenberg.org/ebooks/1322"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text)."
+      },
+      "text_sha256": "651ef17b69b3f2f349171c2e6a42febee41d9766bd924e3c85bd66d724104671",
+      "normalized_sha256": "dad2a21a97e003d26537291f687f6b332253ce9be32875f987e026f95a790d8e",
+      "text_length": 893
+    },
+    {
+      "id": "walt-whitman/o-captain-my-captain",
+      "slug": "o-captain-my-captain",
+      "author": "Walt Whitman",
+      "author_slug": "walt-whitman",
+      "title": "O Captain! My Captain!",
+      "century": 19,
+      "text_in_repo": true,
+      "text_path": "poems/walt-whitman/o-captain-my-captain.txt",
+      "source_label": "Project Gutenberg",
+      "source_url": "https://www.gutenberg.org/ebooks/1322",
+      "public_domain_rationale": "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text).",
+      "collection_title": "Leaves of Grass",
+      "collection_source_url": "https://www.gutenberg.org/ebooks/1322",
+      "featured": false,
+      "canonical_source": {
+        "type": "gutenberg",
+        "id": "gutenberg:1322",
+        "url": "https://www.gutenberg.org/ebooks/1322"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text)."
+      },
+      "text_sha256": "0e1bf28e6bbb56b1f9ba7df8c6883c405982619a6642405b8fa459b9fa7a5937",
+      "normalized_sha256": "cdc9f95dd9b4cf441f8f64c2a31474d8c331d309ec993384d6124d959946833a",
+      "text_length": 1201
+    },
+    {
+      "id": "walt-whitman/when-i-heard-the-learnd-astronomer",
+      "slug": "when-i-heard-the-learnd-astronomer",
+      "author": "Walt Whitman",
+      "author_slug": "walt-whitman",
+      "title": "When I Heard the Learn'd Astronomer",
+      "century": 19,
+      "text_path": "poems/walt-whitman/when-i-heard-the-learnd-astronomer.txt",
+      "text_in_repo": true,
+      "source_label": "Wikisource",
+      "source_url": "https://en.wikisource.org/wiki/When_I_Heard_the_Learn%27d_Astronomer",
+      "public_domain_rationale": "Public domain in the United States: published 1897 (pre-1929) on Wikisource; Whitman died 1892.",
+      "notes": "Wikisource page includes a publication note about McClure’s Magazine; omitted from poem text.",
+      "canonical_source": {
+        "type": "wikisource",
+        "id": "wikisource:wiki/When_I_Heard_the_Learn%27d_Astronomer",
+        "url": "https://en.wikisource.org/wiki/When_I_Heard_the_Learn%27d_Astronomer"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: published 1897 (pre-1929) on Wikisource; Whitman died 1892."
+      },
+      "text_sha256": "4b525b44354257eb7b696109455833682644a58514c8f56165ed570c4d1ed989",
+      "normalized_sha256": "085afae5220dfb59831187711b412586c70dbf7df40f95fbba4ad26cd9d581a0",
+      "text_length": 396
+    },
+    {
+      "id": "william-blake/the-lamb",
+      "slug": "the-lamb",
+      "author": "William Blake",
+      "author_slug": "william-blake",
+      "title": "The Lamb",
+      "century": 18,
+      "text_path": "poems/william-blake/the-lamb.txt",
+      "text_in_repo": true,
+      "source_label": "Project Gutenberg",
+      "source_url": "https://www.gutenberg.org/cache/epub/1934/pg1934.txt",
+      "public_domain_rationale": "Public domain in the United States: originally published 1789 (pre-1929); text via Project Gutenberg eBook #1934.",
+      "canonical_source": {
+        "type": "gutenberg",
+        "id": "gutenberg:1934",
+        "url": "https://www.gutenberg.org/cache/epub/1934/pg1934.txt"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: originally published 1789 (pre-1929); text via Project Gutenberg eBook #1934."
+      },
+      "text_sha256": "b98abf3ae553a7fac13465b99b42eab38b3f6070996543d9d2dad44100863c95",
+      "normalized_sha256": "4765eb755d341abcaf7903dbd2ecb95c70ec461f0efa511fc3e0bca857fd4455",
+      "text_length": 606
+    },
+    {
+      "id": "william-blake/the-tiger",
+      "slug": "the-tiger",
+      "author": "William Blake",
+      "author_slug": "william-blake",
+      "title": "The Tiger",
+      "century": 18,
+      "text_path": "poems/william-blake/the-tiger.txt",
+      "text_in_repo": true,
+      "source_label": "Project Gutenberg",
+      "source_url": "https://www.gutenberg.org/cache/epub/1934/pg1934.txt",
+      "public_domain_rationale": "Public domain in the United States: originally published 1794 (pre-1929); text via Project Gutenberg eBook #1934.",
+      "notes": "Often titled ‘The Tyger’; Project Gutenberg text uses the heading ‘THE TIGER’.",
+      "canonical_source": {
+        "type": "gutenberg",
+        "id": "gutenberg:1934",
+        "url": "https://www.gutenberg.org/cache/epub/1934/pg1934.txt"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: originally published 1794 (pre-1929); text via Project Gutenberg eBook #1934."
+      },
+      "text_sha256": "872e35992f0ce2b658ceb6da23f1a9eecb62c3a80c22d4a7819cd96eeb581938",
+      "normalized_sha256": "949efac9120f6285824fdd3b4d5ee7d9fb4ea19ef375065eb97a8b8a00c5429a",
+      "text_length": 777
+    },
+    {
+      "id": "william-ernest-henley/invictus",
+      "slug": "invictus",
+      "author": "William Ernest Henley",
+      "author_slug": "william-ernest-henley",
+      "title": "Invictus",
+      "century": 19,
+      "text_path": "poems/william-ernest-henley/invictus.txt",
+      "text_in_repo": true,
+      "source_label": "Wikisource",
+      "source_url": "https://en.wikisource.org/wiki/Oxford_Book_of_English_Verse_1250-1900/Invictus",
+      "public_domain_rationale": "Public domain in the United States: published in an anthology (pre-1929) on Wikisource; Henley died 1903.",
+      "canonical_source": {
+        "type": "wikisource",
+        "id": "wikisource:wiki/Oxford_Book_of_English_Verse_1250-1900/Invictus",
+        "url": "https://en.wikisource.org/wiki/Oxford_Book_of_English_Verse_1250-1900/Invictus"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: published in an anthology (pre-1929) on Wikisource; Henley died 1903."
+      },
+      "text_sha256": "9891a2c4322ed70884c3ff935a24b69805548c888c293fe9c376112eb7c715e7",
+      "normalized_sha256": "3d477406e487568dd44c5edda6f54831eb8ac09e48682aadd7a300ae7ff8529f",
+      "text_length": 535
+    },
+    {
+      "id": "william-shakespeare/sonnet-130",
+      "slug": "sonnet-130",
+      "author": "William Shakespeare",
+      "author_slug": "william-shakespeare",
+      "title": "Sonnet 130",
+      "century": 16,
+      "text_path": "poems/william-shakespeare/sonnet-130.txt",
+      "text_in_repo": true,
+      "source_label": "Project Gutenberg",
+      "source_url": "https://www.gutenberg.org/cache/epub/1041/pg1041.txt",
+      "public_domain_rationale": "Public domain in the United States: originally published 1609 (pre-1929); text via Project Gutenberg eBook #1041.",
+      "canonical_source": {
+        "type": "gutenberg",
+        "id": "gutenberg:1041",
+        "url": "https://www.gutenberg.org/cache/epub/1041/pg1041.txt"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: originally published 1609 (pre-1929); text via Project Gutenberg eBook #1041."
+      },
+      "text_sha256": "e3549bcc5224c607189d0ae05c20e43f6acb7f96ddedb330922590d7e0a4b92a",
+      "normalized_sha256": "40006aca308816ec061333eff82c14739258bddd799d210f4739b86edb4cc6fd",
+      "text_length": 616
+    },
+    {
+      "id": "william-shakespeare/sonnet-18",
+      "slug": "sonnet-18",
+      "author": "William Shakespeare",
+      "author_slug": "william-shakespeare",
+      "title": "Sonnet 18",
+      "century": 16,
+      "text_path": "poems/william-shakespeare/sonnet-18.txt",
+      "text_in_repo": true,
+      "source_label": "Project Gutenberg",
+      "source_url": "https://www.gutenberg.org/cache/epub/1041/pg1041.txt",
+      "public_domain_rationale": "Public domain in the United States: originally published 1609 (pre-1929); text via Project Gutenberg eBook #1041.",
+      "canonical_source": {
+        "type": "gutenberg",
+        "id": "gutenberg:1041",
+        "url": "https://www.gutenberg.org/cache/epub/1041/pg1041.txt"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: originally published 1609 (pre-1929); text via Project Gutenberg eBook #1041."
+      },
+      "text_sha256": "2f33d9bc9dfa66f561f39f9bda361362752881d21bceb075e592dadce0a7784f",
+      "normalized_sha256": "50d337e8f87b8078a87e607ddca304067b25c39e83db80be7583673a3d9c89a4",
+      "text_length": 631
+    },
+    {
+      "id": "william-wordsworth/i-wandered-lonely-as-a-cloud",
+      "slug": "i-wandered-lonely-as-a-cloud",
+      "author": "William Wordsworth",
+      "author_slug": "william-wordsworth",
+      "title": "I Wandered Lonely as a Cloud",
+      "century": 19,
+      "text_path": "poems/william-wordsworth/i-wandered-lonely-as-a-cloud.txt",
+      "text_in_repo": true,
+      "source_label": "Wikisource",
+      "source_url": "https://en.wikisource.org/wiki/Poems,_in_Two_Volumes_(Wordsworth,_1807)/Volume_2/%22I_wandered_lonely_as_a_Cloud%22",
+      "public_domain_rationale": "Public domain in the United States: published 1807 (pre-1929) on Wikisource; Wordsworth died 1850.",
+      "canonical_source": {
+        "type": "wikisource",
+        "id": "wikisource:wiki/Poems,_in_Two_Volumes_(Wordsworth,_1807)/Volume_2/%22I_wandered_lonely_as_a_Cloud%22",
+        "url": "https://en.wikisource.org/wiki/Poems,_in_Two_Volumes_(Wordsworth,_1807)/Volume_2/%22I_wandered_lonely_as_a_Cloud%22"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: published 1807 (pre-1929) on Wikisource; Wordsworth died 1850."
+      },
+      "text_sha256": "f1beff4ad369420f73e5c141441e896422d1f4cf301d45dabcf57d1dc0fc14b9",
+      "normalized_sha256": "30aa26b4e793ca0cb3d443cdc8c911eed984f17d0a6b5cbdae870d92f84702eb",
+      "text_length": 609
+    },
+    {
+      "id": "william-wordsworth/the-solitary-reaper",
+      "slug": "the-solitary-reaper",
+      "author": "William Wordsworth",
+      "author_slug": "william-wordsworth",
+      "title": "The Solitary Reaper",
+      "century": 19,
+      "text_path": "poems/william-wordsworth/the-solitary-reaper.txt",
+      "text_in_repo": true,
+      "source_label": "Wikisource",
+      "source_url": "https://en.wikisource.org/wiki/Poems,_in_Two_Volumes_(Wordsworth,_1807)/Volume_2/The_solitary_Reaper",
+      "public_domain_rationale": "Public domain in the United States: published 1807 (pre-1929) on Wikisource; Wordsworth died 1850.",
+      "canonical_source": {
+        "type": "wikisource",
+        "id": "wikisource:wiki/Poems,_in_Two_Volumes_(Wordsworth,_1807)/Volume_2/The_solitary_Reaper",
+        "url": "https://en.wikisource.org/wiki/Poems,_in_Two_Volumes_(Wordsworth,_1807)/Volume_2/The_solitary_Reaper"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: published 1807 (pre-1929) on Wikisource; Wordsworth died 1850."
+      },
+      "text_sha256": "86796f21ff849f521ea0dddce73dd82ae6cddceab18291542b4e5e9a6a196e50",
+      "normalized_sha256": "878dcb8b4b023c8b1c6ee0ca2c8d828bc27ec4e8be415f2892b82aa8829f8b48",
+      "text_length": 1012
+    },
+    {
+      "id": "william-wordsworth/the-world-is-too-much-with-us",
+      "slug": "the-world-is-too-much-with-us",
+      "author": "William Wordsworth",
+      "author_slug": "william-wordsworth",
+      "title": "The world is too much with us; late and soon",
+      "century": 19,
+      "text_path": "poems/william-wordsworth/the-world-is-too-much-with-us.txt",
+      "text_in_repo": true,
+      "source_label": "Wikisource",
+      "source_url": "https://en.wikisource.org/wiki/Poems,_in_Two_Volumes_(Wordsworth,_1807)/Volume_1/The_world_is_too_much_with_us;_late_and_soon",
+      "public_domain_rationale": "Public domain in the United States: published 1807 (pre-1929) on Wikisource; Wordsworth died 1850.",
+      "notes": "Title follows the 1807 volume’s opening line.",
+      "canonical_source": {
+        "type": "wikisource",
+        "id": "wikisource:wiki/Poems,_in_Two_Volumes_(Wordsworth,_1807)/Volume_1/The_world_is_too_much_with_us;_late_and_soon",
+        "url": "https://en.wikisource.org/wiki/Poems,_in_Two_Volumes_(Wordsworth,_1807)/Volume_1/The_world_is_too_much_with_us;_late_and_soon"
+      },
+      "rights": {
+        "jurisdiction": "US",
+        "basis": "Public domain in the United States: published 1807 (pre-1929) on Wikisource; Wordsworth died 1850."
+      },
+      "text_sha256": "a1f4732187f2a6bbc6c7319f7eae030773343aafc33d1dc45a2f0eb8ed3b1abe",
+      "normalized_sha256": "77e4dd01493882b6a2e9ca6bb7f818604e5e60fa33c60951f52e996da6e3d20c",
+      "text_length": 611
+    }
+  ]
+}
