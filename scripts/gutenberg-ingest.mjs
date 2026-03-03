@@ -1,114 +1,220 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const DEFAULT_TEXT_URL = "https://www.gutenberg.org/cache/epub/1041/pg1041.txt";
-const SOURCE_URL = "https://www.gutenberg.org/ebooks/1041";
-const AUTHOR = "William Shakespeare";
-const AUTHOR_SLUG = "william-shakespeare";
-const COLLECTION_TITLE = "Shakespeare's Sonnets";
+const DICKINSON_TEXT_URL = "https://www.gutenberg.org/ebooks/12242.txt.utf-8";
+const DICKINSON_SOURCE_URL = "https://www.gutenberg.org/ebooks/12242";
 
-function normalizeText(raw) {
+const TARGET_FIRST_LINES = [
+  "Hope is the thing with feathers",
+  "I'm Nobody! Who are you?",
+  "A Bird came down the Walk",
+  "I heard a Fly buzz — when I died",
+  "Tell all the truth but tell it slant",
+  "Wild nights — Wild nights!",
+  "The Soul selects her own Society",
+  "I felt a Funeral, in my Brain",
+  "Success is counted sweetest",
+  "There's a certain Slant of light",
+  "Because I could not stop for Death",
+  "I dwell in Possibility",
+  "I'm ceded - I've stopped being Theirs",
+  "This is my letter to the World",
+  "Much Madness is divinest Sense",
+  "Pain — has an Element of Blank",
+  "After great pain, a formal feeling comes",
+  "I died for Beauty — but was scarce",
+  "If I can stop one Heart from breaking",
+  "The Brain — is wider than the Sky",
+  "The Brain, within its Groove",
+  "I'm wife — I've finished that",
+  "My life closed twice before its close",
+  "A narrow Fellow in the Grass",
+  "Apparently with no surprise",
+  "A still — Volcano — Life",
+  "I reason, Earth is short",
+  "The Chariot",
+  "I had been hungry, all the Years",
+  "I never saw a Moor",
+  "A Route of Evanescence",
+  "My River runs to thee",
+  "As imperceptibly as Grief",
+  "The Grass so little has to do",
+  "I cannot live with You",
+  "I gave myself to Him",
+  "Heart, we will forget him",
+  "I know that He exists",
+  "Parting is all we know of heaven",
+  "A Day! Help! Help! Another Day!",
+  "The morns are meeker than they were",
+  "I taste a liquor never brewed",
+  "He fumbles at your Soul",
+  "Safe in their Alabaster Chambers",
+  "I cannot dance upon my Toes",
+  "A Death-blow is a Life-blow to Some",
+  "Of all the Sounds despatched abroad",
+  "I dreaded that first Robin so",
+  "A little Madness in the Spring",
+  "To make a prairie it takes a clover and one bee",
+];
+
+function normalize(raw) {
   return raw.replace(/\r\n?/g, "\n").replace(/[ \t]+$/gm, "");
 }
 
-function stripGutenbergBoilerplate(raw) {
-  const startMatch = raw.match(/\*\*\*\s*START OF[\s\S]*?\*\*\*/i);
-  const endMatch = raw.match(/\*\*\*\s*END OF[\s\S]*?\*\*\*/i);
-  const start = startMatch ? startMatch.index + startMatch[0].length : 0;
-  const end = endMatch ? endMatch.index : raw.length;
-  return raw.slice(start, end).trim();
+function stripBoilerplate(raw) {
+  const start = raw.match(/\*\*\*\s*START OF[\s\S]*?\*\*\*/i);
+  const end = raw.match(/\*\*\*\s*END OF[\s\S]*?\*\*\*/i);
+  const startIdx = start ? start.index + start[0].length : 0;
+  const endIdx = end ? end.index : raw.length;
+  return raw.slice(startIdx, endIdx).trim();
 }
 
-function isSonnetHeader(line) {
-  return /^\s*(?:\d{1,3}|[IVXLCDM]+)\.?\s*$/i.test(line);
+function slugify(value) {
+  return value
+    .toLowerCase()
+    .replace(/['’]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 100);
 }
 
-function parseSonnets(body) {
-  const lines = body.split("\n");
-  const sonnets = [];
-  let current = [];
-  let inSonnets = false;
+function normalizeKey(value) {
+  return value
+    .toLowerCase()
+    .replace(/['’]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .replace(/\s+/g, " ");
+}
 
-  for (const line of lines) {
-    if (isSonnetHeader(line)) {
-      if (current.length > 0) {
-        sonnets.push(trimPoemLines(current));
+function extractPoemBlocks(lines) {
+  const starts = [];
+  for (let i = 0; i < lines.length; i += 1) {
+    if (/^(?:\d+|[IVXLCDM]+)\.$/.test(lines[i].trim())) starts.push(i);
+  }
+  const blocks = [];
+  for (let s = 0; s < starts.length; s += 1) {
+    const start = starts[s];
+    const end = s + 1 < starts.length ? starts[s + 1] : lines.length;
+    let poem = lines.slice(start + 1, end);
+
+    while (poem.length > 0 && poem[0].trim() === "") poem.shift();
+    while (poem.length > 0) {
+      const head = poem[0].trim();
+      if (head === "") {
+        poem.shift();
+        continue;
       }
-      current = [];
-      inSonnets = true;
-      continue;
+      if (head.startsWith("[")) {
+        poem.shift();
+        while (poem.length > 0) {
+          const done = poem[0].includes("]");
+          poem.shift();
+          if (done) break;
+        }
+        continue;
+      }
+      if (!/[a-z]/.test(head)) {
+        poem.shift();
+        continue;
+      }
+      break;
     }
-    if (inSonnets) {
-      current.push(line);
+    while (poem.length > 0 && poem[0].trim() === "") poem.shift();
+    while (poem.length > 0 && poem[poem.length - 1].trim() === "") poem.pop();
+
+    const nonEmpty = poem.filter((l) => l.trim() !== "").length;
+    if (nonEmpty >= 3) {
+      blocks.push(poem);
     }
   }
-
-  if (current.length > 0) {
-    sonnets.push(trimPoemLines(current));
-  }
-  return sonnets.filter((poem) => poem.length > 0);
+  return blocks;
 }
 
-function trimPoemLines(lines) {
-  let start = 0;
-  let end = lines.length;
-  while (start < end && lines[start] === "") start += 1;
-  while (end > start && lines[end - 1] === "") end -= 1;
-  return lines.slice(start, end);
-}
-
-function buildMeta(index) {
-  const num = String(index).padStart(3, "0");
-  const slug = `sonnet-${num}`;
-  const title = `Sonnet ${index}`;
+function buildMeta({ slug, title }) {
   return [
-    `id: "${AUTHOR_SLUG}/${slug}"`,
+    `id: "emily-dickinson/${slug}"`,
     `slug: "${slug}"`,
-    `author: "${AUTHOR}"`,
-    `author_slug: "${AUTHOR_SLUG}"`,
-    `title: "${title}"`,
-    "century: 16",
+    'author: "Emily Dickinson"',
+    'author_slug: "emily-dickinson"',
+    `title: "${title.replace(/"/g, '\\"')}"`,
+    "century: 19",
     "text_in_repo: true",
-    `text_path: "poems/${AUTHOR_SLUG}/${slug}.txt"`,
+    `text_path: "poems/emily-dickinson/${slug}.txt"`,
     'source_label: "Project Gutenberg"',
-    `source_url: "${SOURCE_URL}"`,
-    'public_domain_rationale: "Public domain (author died 1616; distributed by Project Gutenberg as public-domain text)."',
-    `collection_title: "${COLLECTION_TITLE}"`,
-    `collection_source_url: "${SOURCE_URL}"`,
+    `source_url: "${DICKINSON_SOURCE_URL}"`,
+    'public_domain_rationale: "Public domain (author died 1886; distributed by Project Gutenberg as public-domain text)."',
+    'collection_title: "Poems by Emily Dickinson, Three Series, Complete"',
+    `collection_source_url: "${DICKINSON_SOURCE_URL}"`,
     "featured: false",
     "",
   ].join("\n");
 }
 
 async function main() {
-  const textUrl = process.argv[2] || DEFAULT_TEXT_URL;
-  const poemsDir = path.join("poems", AUTHOR_SLUG);
-  const metaDir = path.join("meta", AUTHOR_SLUG);
-  await fs.mkdir(poemsDir, { recursive: true });
-  await fs.mkdir(metaDir, { recursive: true });
-
-  const response = await fetch(textUrl);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch Gutenberg text (${response.status})`);
+  const response = await fetch(DICKINSON_TEXT_URL);
+  if (!response.ok) throw new Error(`Fetch failed (${response.status})`);
+  const text = stripBoilerplate(normalize(await response.text()));
+  const lines = text.split("\n");
+  const blocks = extractPoemBlocks(lines);
+  if (process.argv.includes("--list")) {
+    for (const poem of blocks.slice(0, 140)) {
+      console.log(poem[0].trim());
+    }
+    return;
   }
 
-  const raw = normalizeText(await response.text());
-  const body = stripGutenbergBoilerplate(raw);
-  const sonnets = parseSonnets(body);
-  if (sonnets.length !== 154) {
-    throw new Error(`Expected 154 sonnets, found ${sonnets.length}`);
+  const outPoemsDir = path.join("poems", "emily-dickinson");
+  const outMetaDir = path.join("meta", "emily-dickinson");
+  await fs.mkdir(outPoemsDir, { recursive: true });
+  await fs.mkdir(outMetaDir, { recursive: true });
+
+  const existing = new Set(["because-i-could-not-stop-for-death"]);
+  let written = 0;
+  const used = new Set();
+  const targetKeys = TARGET_FIRST_LINES.map(normalizeKey);
+  const requiredAll = targetKeys.slice(0, 10);
+  const sourceKey = normalizeKey(text);
+  const requiredSet = new Set(requiredAll.filter((key) => sourceKey.includes(key)));
+
+  for (const key of targetKeys) {
+    const idx = blocks.findIndex((poem, i) => !used.has(i) && normalizeKey(poem[0]) === key);
+    if (idx === -1) continue;
+    const poem = blocks[idx];
+    used.add(idx);
+    const title = poem[0].trim();
+    const slug = slugify(title);
+    if (!slug || existing.has(slug)) continue;
+    existing.add(slug);
+    await fs.writeFile(path.join(outPoemsDir, `${slug}.txt`), `${poem.join("\n")}\n`, "utf8");
+    await fs.writeFile(path.join(outMetaDir, `${slug}.yml`), buildMeta({ slug, title }), "utf8");
+    written += 1;
   }
 
-  for (let i = 0; i < sonnets.length; i += 1) {
-    const n = i + 1;
-    const num = String(n).padStart(3, "0");
-    const slug = `sonnet-${num}`;
-    const poemPath = path.join(poemsDir, `${slug}.txt`);
-    const metaPath = path.join(metaDir, `${slug}.yml`);
-    const poemText = `${sonnets[i].join("\n")}\n`;
-    await fs.writeFile(poemPath, poemText, "utf8");
-    await fs.writeFile(metaPath, buildMeta(n), "utf8");
+  if (written < 50) {
+    for (let i = 0; i < blocks.length && written < 50; i += 1) {
+      if (used.has(i)) continue;
+      const poem = blocks[i];
+      const title = poem[0].trim();
+      const slug = slugify(title);
+      if (!slug || existing.has(slug)) continue;
+      existing.add(slug);
+      await fs.writeFile(path.join(outPoemsDir, `${slug}.txt`), `${poem.join("\n")}\n`, "utf8");
+      await fs.writeFile(path.join(outMetaDir, `${slug}.yml`), buildMeta({ slug, title }), "utf8");
+      written += 1;
+    }
   }
+
+  const foundRequired = new Set(blocks.map((poem) => normalizeKey(poem[0])).filter((k) => requiredSet.has(k)));
+  if (foundRequired.size !== requiredSet.size) {
+    const missing = [...requiredSet].filter((k) => !foundRequired.has(k));
+    throw new Error(`Missing required canonical poems (${foundRequired.size}/${requiredSet.size} found): ${missing.join(" | ")}`);
+  }
+
+  if (written < 50) {
+    throw new Error(`Too few poems extracted (${written}), expected at least 50`);
+  }
+  console.log(`Generated ${written} poems.`);
 }
 
 main().catch((error) => {

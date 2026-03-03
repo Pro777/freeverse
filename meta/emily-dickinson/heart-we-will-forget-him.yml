@@ -1,0 +1,14 @@
+id: "emily-dickinson/heart-we-will-forget-him"
+slug: "heart-we-will-forget-him"
+author: "Emily Dickinson"
+author_slug: "emily-dickinson"
+title: "Heart, we will forget him!"
+century: 19
+text_in_repo: true
+text_path: "poems/emily-dickinson/heart-we-will-forget-him.txt"
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/12242"
+public_domain_rationale: "Public domain (author died 1886; distributed by Project Gutenberg as public-domain text)."
+collection_title: "Poems by Emily Dickinson, Three Series, Complete"
+collection_source_url: "https://www.gutenberg.org/ebooks/12242"
+featured: false
