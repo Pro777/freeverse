@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { loadPoemMetas } from "../../lib/poems";
+import { authorPath } from "../../lib/url";
+import { AUTHOR_INFO } from "../../lib/authors";
+
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+
+const poems = await loadPoemMetas();
+const authors = Array.from(
+  poems.reduce((acc, poem) => {
+    const existing = acc.get(poem.author_slug);
+    if (existing) {
+      existing.count += 1;
+    } else {
+      acc.set(poem.author_slug, { slug: poem.author_slug, name: poem.author, count: 1 });
+    }
+    return acc;
+  }, new Map<string, { slug: string; name: string; count: number }>()),
+).map(([, v]) => v);
+
+authors.sort((a, b) => a.name.localeCompare(b.name));
+---
+
+<BaseLayout title="Authors · Freeverse" description="Browse poets in the Freeverse collection." currentPath={""}>
+  <section class="hero">
+    <h1>Authors</h1>
+    <p class="lede">Alphabetical index of poets in Freeverse.</p>
+  </section>
+
+  <div class="card">
+    <div class="kicker">
+      <h2>Poets</h2>
+      <span class="pill">{authors.length} total</span>
+    </div>
+
+    <ul class="list">
+      {authors.map((a) => {
+        const info = AUTHOR_INFO[a.slug];
+        return (
+          <li>
+            <a class="list-title" href={authorPath(base, a.slug)}>
+              <strong>{a.name}</strong>
+            </a>
+            <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
+              {info ? `${info.birth_year}–${info.death_year}` : "Dates unavailable"} · {a.count} poem{a.count === 1 ? "" : "s"}
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</BaseLayout>

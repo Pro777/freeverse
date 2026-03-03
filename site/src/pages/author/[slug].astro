@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { loadPoemMetas, type PoemMeta } from "../../lib/poems";
+import { AUTHOR_INFO } from "../../lib/authors";
 
 type AuthorPageProps = {
   author: string;
@@ -39,6 +40,7 @@ export async function getStaticPaths() {
 }
 
 const { author, poems } = Astro.props as AuthorPageProps;
+const info = AUTHOR_INFO[(Astro.props as AuthorPageProps).authorSlug];
 const title = `${author} · Freeverse`;
 const description = `Read public-domain poems by ${author}.`;
 ---
@@ -49,6 +51,19 @@ const description = `Read public-domain poems by ${author}.`;
     <p class="lede">
       {poems.length} poem{poems.length === 1 ? "" : "s"} in the collection.
     </p>
+    {info ? (
+      <p class="muted" style="margin: 0.55rem 0 0.25rem;">
+        {info.birth_year}–{info.death_year}
+      </p>
+    ) : null}
+    {info ? (
+      <p style="max-width: 72ch; margin: 0.2rem 0 0;">
+        {info.bio}{" "}
+        <a class="muted" href={info.source_url}>
+          Source: {info.source_label}
+        </a>
+      </p>
+    ) : null}
   </section>
 
   <div class="card">
@@ -72,6 +87,7 @@ const description = `Read public-domain poems by ${author}.`;
 
     <div class="actions" style="margin-top:1rem;">
       <a class="action" href={`${base}browse/`}>Back to Browse</a>
+      <a class="action" href={`${base}authors/`}>All authors</a>
       <a class="action" href={`${base}search/`}>Search</a>
     </div>
   </div>
