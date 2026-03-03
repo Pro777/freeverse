@@ -1,0 +1,14 @@
+id: "percy-bysshe-shelley/loves-philosophy"
+slug: "loves-philosophy"
+author: "Percy Bysshe Shelley"
+author_slug: "percy-bysshe-shelley"
+title: "Love'S Philosophy"
+century: 19
+text_in_repo: true
+text_path: "poems/percy-bysshe-shelley/loves-philosophy.txt"
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/4800"
+public_domain_rationale: "Public domain (author died 1822; distributed by Project Gutenberg as public-domain text)."
+collection_title: "The Complete Poetical Works of Percy Bysshe Shelley"
+collection_source_url: "https://www.gutenberg.org/ebooks/4800"
+featured: false

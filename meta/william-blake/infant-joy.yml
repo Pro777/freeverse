@@ -1,0 +1,14 @@
+id: "william-blake/infant-joy"
+slug: "infant-joy"
+author: "William Blake"
+author_slug: "william-blake"
+title: "Infant Joy"
+century: 18
+text_in_repo: true
+text_path: "poems/william-blake/infant-joy.txt"
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/1934"
+public_domain_rationale: "Public domain (author died 1827; distributed by Project Gutenberg as public-domain text)."
+collection_title: "Songs of Innocence and of Experience"
+collection_source_url: "https://www.gutenberg.org/ebooks/1934"
+featured: false

@@ -1,0 +1,14 @@
+id: "alfred-tennyson/break-break-break"
+slug: "break-break-break"
+author: "Alfred Lord Tennyson"
+author_slug: "alfred-tennyson"
+title: "Break, Break, Break"
+century: 19
+text_in_repo: true
+text_path: "poems/alfred-tennyson/break-break-break.txt"
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/8601"
+public_domain_rationale: "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text)."
+collection_title: "Poems by Alfred, Lord Tennyson"
+collection_source_url: "https://www.gutenberg.org/ebooks/8601"
+featured: false
