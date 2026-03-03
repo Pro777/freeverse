@@ -11,3 +11,12 @@
 - [ ] Metadata updated (`meta/*.yml`) as needed
 - [ ] `npm run build` (in `site/`) passes
 - [ ] GitHub Pages preview looks sane
+
+## Linked Issue
+
+Closes #
+
+## Execution Lane
+
+- [ ] Rowan-den
+- [ ] BLD
