@@ -1,0 +1,14 @@
+id: "elizabeth-barrett-browning/sonnet-01"
+slug: "sonnet-01"
+author: "Elizabeth Barrett Browning"
+author_slug: "elizabeth-barrett-browning"
+title: "Sonnet 1"
+century: 19
+text_in_repo: true
+text_path: "poems/elizabeth-barrett-browning/sonnet-01.txt"
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/2002"
+public_domain_rationale: "Public domain (author died 1861; distributed by Project Gutenberg as public-domain text)."
+collection_title: "Sonnets from the Portuguese"
+collection_source_url: "https://www.gutenberg.org/ebooks/2002"
+featured: false

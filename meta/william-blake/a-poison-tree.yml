@@ -1,0 +1,14 @@
+id: "william-blake/a-poison-tree"
+slug: "a-poison-tree"
+author: "William Blake"
+author_slug: "william-blake"
+title: "A Poison Tree"
+century: 18
+text_in_repo: true
+text_path: "poems/william-blake/a-poison-tree.txt"
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/1934"
+public_domain_rationale: "Public domain (author died 1827; distributed by Project Gutenberg as public-domain text)."
+collection_title: "Songs of Innocence and of Experience"
+collection_source_url: "https://www.gutenberg.org/ebooks/1934"
+featured: false

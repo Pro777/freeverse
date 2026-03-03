@@ -1,0 +1,14 @@
+id: "george-gordon-byron/stanzas-for-music"
+slug: "stanzas-for-music"
+author: "George Gordon Byron"
+author_slug: "george-gordon-byron"
+title: "Stanzas For Music"
+century: 19
+text_in_repo: true
+text_path: "poems/george-gordon-byron/stanzas-for-music.txt"
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/21811"
+public_domain_rationale: "Public domain (author died 1824; distributed by Project Gutenberg as public-domain text)."
+collection_title: "Byron: Selected Poetry"
+collection_source_url: "https://www.gutenberg.org/ebooks/21811"
+featured: false
