@@ -1,0 +1,15 @@
+id: "robert-browning/my-last-duchess"
+slug: "my-last-duchess"
+author: "Robert Browning"
+author_slug: "robert-browning"
+title: "My Last Duchess"
+century: 19
+
+text_path: "poems/robert-browning/my-last-duchess.txt"
+text_in_repo: true
+
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/cache/epub/4253/pg4253.txt"
+public_domain_rationale: "Public domain in the United States: first published 1842 (pre-1929); text via Project Gutenberg eBook #4253."
+
+notes: "This is a dramatic monologue set in Ferrara."

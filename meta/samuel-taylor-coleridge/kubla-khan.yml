@@ -1,0 +1,15 @@
+id: "samuel-taylor-coleridge/kubla-khan"
+slug: "kubla-khan"
+author: "Samuel Taylor Coleridge"
+author_slug: "samuel-taylor-coleridge"
+title: "Kubla Khan"
+century: 18
+
+text_path: "poems/samuel-taylor-coleridge/kubla-khan.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Christabel;_Kubla_Khan;_The_Pains_of_Sleep_(1816)/Kubla_Khan"
+public_domain_rationale: "Public domain in the United States: published 1816 (pre-1929) on Wikisource; Coleridge died 1834."
+
+notes: "Wikisource page includes Coleridge’s prose preface; omitted here."
