@@ -1,1 +1,8 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Freeverse Roadmap
+    url: https://github.com/Pro777/freeverse/blob/develop/ROADMAP.md
+    about: Check planned work before filing a new issue.
+  - name: Provenance Policy
+    url: https://github.com/Pro777/freeverse/blob/develop/PROVENANCE.md
+    about: Rights/provenance requirements for corpus and ingest work.

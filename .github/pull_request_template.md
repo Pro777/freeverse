@@ -18,5 +18,11 @@ Closes #
 
 ## Execution Lane
 
+- [ ] Codex
 - [ ] Rowan-den
 - [ ] BLD
+
+## References
+
+- ROADMAP: https://github.com/Pro777/freeverse/blob/develop/ROADMAP.md
+- PROVENANCE: https://github.com/Pro777/freeverse/blob/develop/PROVENANCE.md
