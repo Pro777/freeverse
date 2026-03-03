@@ -46,6 +46,8 @@ const poems = selectedAuthor
     <h1>Explore poems</h1>
     <p class="lede">
       A growing library of public-domain poetry. Click any title to read.
+      {" "}
+      <a href={`${base}search/`}><strong>Jump to search</strong></a>.
       {selectedAuthor ? (
         <>
           {' '}Showing only <strong>{selectedAuthor.name}</strong>.{' '}
