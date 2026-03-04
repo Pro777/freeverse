@@ -1,0 +1,59 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// Custom 404 page that handles share URLs via client-side redirect.
+//
+// Share URLs follow the pattern: /share/{author}/{poem-slug}/{start}-{end}
+// GitHub Pages serves this 404.html for any path without a static file,
+// so the JS below detects share URLs and redirects to the poem reader
+// with the appropriate line-highlight hash.
+//
+// This replaces the previous getStaticPaths approach that generated
+// ~1.16M static pages (one per line-range per poem).
+---
+
+<BaseLayout title="Page Not Found · Freeverse" description="The page you're looking for doesn't exist." currentPath="">
+  <section class="card" id="not-found">
+    <h1 style="margin: 0 0 0.5rem;">Page not found</h1>
+    <p class="muted">The page you're looking for doesn't exist or has moved.</p>
+    <p style="margin-top: 1rem;">
+      <a href="/">← Back to Freeverse</a>
+    </p>
+  </section>
+
+  <section class="card" id="share-redirect" style="display: none;">
+    <h1 style="margin: 0 0 0.5rem;">Opening poem…</h1>
+    <p class="muted">Redirecting to the reader.</p>
+  </section>
+
+  <script is:inline>
+    (function () {
+      var path = window.location.pathname.replace(/\/+$/, '');
+      var m = path.match(/^\/share\/(.+)\/(\d+-\d+)$/);
+      if (m) {
+        var poemId = m[1];
+        var range = m[2];
+        var parts = range.split('-').map(Number);
+        var start = Math.min(parts[0], parts[1]);
+        var end = Math.max(parts[0], parts[1]);
+
+        document.getElementById('not-found').style.display = 'none';
+        document.getElementById('share-redirect').style.display = '';
+
+        window.location.replace('/poem/' + poemId + '/#l' + start + '-l' + end);
+        return;
+      }
+
+      // Also handle bare share links without a range
+      var m2 = path.match(/^\/share\/(.+)$/);
+      if (m2) {
+        var poemId2 = m2[1];
+        // Strip trailing range-like segments that didn't match above
+        document.getElementById('not-found').style.display = 'none';
+        document.getElementById('share-redirect').style.display = '';
+        window.location.replace('/poem/' + poemId2 + '/');
+        return;
+      }
+    })();
+  </script>
+</BaseLayout>
