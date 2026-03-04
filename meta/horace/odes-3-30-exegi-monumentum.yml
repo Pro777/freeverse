@@ -8,9 +8,9 @@ century: -1
 text_path: "poems/horace/odes-3-30-exegi-monumentum.txt"
 text_in_repo: true
 
-source_label: "Liber Latinus (public-domain Latin text)"
-source_url: "https://liberlatinus.wordpress.com/2017/06/25/horace-odes-3-30/"
-public_domain_rationale: "Public domain (Quintus Horatius Flaccus died 8 BC)."
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/The_Odes_and_Carmen_Saeculare_of_Horace/Book_III/Ode_30"
+public_domain_rationale: "Public domain (author died 8 BC; source text distributed as public domain)."
 
 notes: "Motto source line: ‘non omnis moriar’ (line 6)."
 featured: false
