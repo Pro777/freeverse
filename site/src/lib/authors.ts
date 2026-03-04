@@ -84,6 +84,13 @@ export const AUTHOR_INFO: Record<string, AuthorInfo> = {
     source_label: "Wikipedia",
     source_url: "https://en.wikipedia.org/wiki/John_Milton",
   },
+  "henry-wadsworth-longfellow": {
+    birth_year: 1807,
+    death_year: 1882,
+    bio: "American poet and educator known for widely read narrative and lyric works including 'Paul Revere's Ride' and 'A Psalm of Life'.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/Henry_Wadsworth_Longfellow",
+  },
   "percy-bysshe-shelley": {
     birth_year: 1792,
     death_year: 1822,

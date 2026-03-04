@@ -31,7 +31,21 @@ const canonicalPath = `${base}poem/${poem.id}/`;
 <BaseLayout title={title} description={description} currentPath={""}>
   <article class="reader">
     <header class="reader-head">
-      <h1 class="reader-title">{poem.title}</h1>
+      <div class="reader-title-row">
+        <h1 class="reader-title">{poem.title}</h1>
+        <button
+          type="button"
+          class="favorite-toggle"
+          id="favorite-toggle"
+          data-poem-id={poem.id}
+          aria-pressed="false"
+          aria-label="Add to favorites"
+          title="Add to favorites"
+        >
+          <span aria-hidden="true">☆</span>
+          <span class="favorite-toggle-label">Favorite</span>
+        </button>
+      </div>
       <p class="reader-byline">
         <span class="muted">by</span>{' '}
         <a href={authorPath(base, poem.author_slug)}>
@@ -75,13 +89,38 @@ const canonicalPath = `${base}poem/${poem.id}/`;
       </p>
     </footer>
 
-    <script is:inline>
+    <script type="module" define:vars={{ base, poemId: poem.id }}>
+      import { isFavorite, toggleFavorite } from "../../lib/favorites";
+
+      const favoriteButton = document.getElementById("favorite-toggle");
+      const currentPoemId = favoriteButton?.dataset.poemId || poemId || "";
+
+      const updateFavoriteUi = (active) => {
+        if (!favoriteButton) return;
+
+        favoriteButton.setAttribute("aria-pressed", active ? "true" : "false");
+        favoriteButton.setAttribute("aria-label", active ? "Remove from favorites" : "Add to favorites");
+        favoriteButton.setAttribute("title", active ? "Remove from favorites" : "Add to favorites");
+        favoriteButton.classList.toggle("is-active", active);
+
+        const icon = favoriteButton.querySelector("span[aria-hidden='true']");
+        if (icon) icon.textContent = active ? "★" : "☆";
+      };
+
+      if (favoriteButton && currentPoemId) {
+        updateFavoriteUi(isFavorite(currentPoemId));
+        favoriteButton.addEventListener("click", () => {
+          const active = toggleFavorite(currentPoemId);
+          updateFavoriteUi(active);
+        });
+      }
+
       // NOTE: URL fragment helpers are unit-tested in site/src/lib/lineLinks.ts.
-      // This inline script intentionally keeps its own lightweight parsing/building
-      // to avoid bundling surprises in the static output.
+      // This script intentionally keeps its own lightweight parsing/building.
       (() => {
         const lines = Array.from(document.querySelectorAll('.poem-lines li'));
         if (!lines.length) return;
+        let hasAutoScrolledFromInitialHash = false;
 
         const clear = () => {
           lines.forEach((li) => li.classList.remove('is-selected'));
@@ -115,6 +154,14 @@ const canonicalPath = `${base}poem/${poem.id}/`;
             const el = document.getElementById(`l${n}`);
             if (el) el.classList.add('is-selected');
           }
+
+          if (!hasAutoScrolledFromInitialHash) {
+            const first = document.getElementById(`l${r.start}`);
+            if (first) {
+              first.scrollIntoView({ block: 'center', inline: 'nearest' });
+            }
+            hasAutoScrolledFromInitialHash = true;
+          }
         };
 
         let startLine = null;
@@ -147,7 +194,7 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           const s = Math.min(start, end);
           const e = Math.max(start, end);
           // Selection-aware, crawler-visible URL (static prebuilt for short ranges).
-          return `${location.origin}${base}share/${encodeURIComponent(poem.id)}/${s}-${e}/`;
+          return `${location.origin}${base}share/${encodeURIComponent(currentPoemId)}/${s}-${e}/`;
         };
 
         const copyUrl = async (start, end) => {

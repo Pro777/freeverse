@@ -41,6 +41,7 @@ const docs = poems.map((p) => ({
 
   <script type="module">
     import MiniSearch from 'minisearch';
+    import { readFavorites } from "../lib/favorites";
 
     const docs = JSON.parse(document.getElementById('search-data').textContent);
 
@@ -58,6 +59,7 @@ const docs = poems.map((p) => ({
     const input = document.getElementById('q');
     const resultsEl = document.getElementById('results');
     const countEl = document.getElementById('count');
+    const favoriteIds = new Set(readFavorites());
 
     const render = (items) => {
       resultsEl.innerHTML = '';
@@ -65,9 +67,11 @@ const docs = poems.map((p) => ({
 
       for (const r of items) {
         const li = document.createElement('li');
+        const favoriteClass = favoriteIds.has(r.id) ? "is-visible" : "";
         li.innerHTML = `
           <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:baseline;">
             <a class="list-title" href="${r.url}"><strong>${r.title}</strong></a>
+            <span class="favorite-indicator ${favoriteClass}" data-poem-id="${r.id}" aria-hidden="true" title="Favorite">★</span>
             <span class="muted">— <a class="muted" href="${r.authorUrl}">${r.author}</a></span>
           </div>
           <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">

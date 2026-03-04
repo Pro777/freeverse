@@ -575,6 +575,19 @@ main {
   text-decoration: underline;
 }
 
+.favorite-indicator {
+  opacity: 0;
+  color: var(--accent);
+  font-size: 0.95rem;
+  line-height: 1;
+  transform: translateY(-0.03rem);
+  transition: opacity 120ms ease;
+}
+
+.favorite-indicator.is-visible {
+  opacity: 1;
+}
+
 .reader {
   /* Readable measure for poetry (tighter than prose, but not narrow) */
   max-width: 44rem;
@@ -584,11 +597,47 @@ main {
   margin: 0.25rem 0 1.4rem;
 }
 
+.reader-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
 .reader-title {
   margin: 0;
   font-size: clamp(2.05rem, 1.65rem + 1.7vw, 2.75rem);
   text-wrap: balance;
   hyphens: auto;
+}
+
+.favorite-toggle {
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--paper) 86%, transparent);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  padding: 0.35rem 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.favorite-toggle.is-active {
+  border-color: color-mix(in oklab, var(--accent) 60%, transparent);
+  background: color-mix(in oklab, var(--accent) 14%, var(--paper));
+}
+
+.favorite-toggle:hover {
+  border-color: color-mix(in oklab, var(--accent) 45%, var(--card-border));
+}
+
+.favorite-toggle:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--accent) 55%, transparent);
+  outline-offset: 2px;
 }
 
 .reader-byline {

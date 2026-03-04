@@ -23,12 +23,16 @@ const authors = Array.from(
     const current = acc.get(key);
     if (current) {
       current.count += 1;
+      current.poems.push(poem);
     } else {
-      acc.set(key, { name: poem.author, slug: key, count: 1 });
+      acc.set(key, { name: poem.author, slug: key, count: 1, poems: [poem] });
     }
     return acc;
-  }, new Map<string, { name: string; slug: string; count: number }>())
-).map(([, value]) => value).sort((a, b) => a.name.localeCompare(b.name));
+  }, new Map<string, { name: string; slug: string; count: number; poems: typeof poemsAll }>())
+).map(([, value]) => ({
+  ...value,
+  poems: value.poems.sort((a, b) => a.title.localeCompare(b.title)),
+})).sort((a, b) => a.name.localeCompare(b.name));
 
 const selectedAuthor = authorSlugFilter
   ? authors.find((a) => a.slug === authorSlugFilter)
@@ -36,9 +40,6 @@ const selectedAuthor = authorSlugFilter
     ? authors.find((a) => a.name === authorFilter)
     : undefined;
 
-const poems = selectedAuthor
-  ? poemsAll.filter((p) => p.author_slug === selectedAuthor.slug)
-  : poemsAll;
 ---
 
 <BaseLayout title="Explore poems · Freeverse" description="Explore public-domain poems." currentPath="/browse">
@@ -79,29 +80,99 @@ const poems = selectedAuthor
 
   <div class="card">
     <div class="kicker">
-      <h2>Catalog</h2>
-      <span class="pill">{poems.length} poems</span>
+      <h2>Browse by author</h2>
+      <span class="pill">{poemsAll.length} poems</span>
     </div>
 
-    <ul class="list">
-      {poems.map((p) => (
-        <li>
-          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:baseline;">
-            <a class="list-title" href={`${base}poem/${p.id}/`}>
-              <strong>{p.title}</strong>
-            </a>
-            <span class="muted">
-              —{' '}
-              <a class="muted" href={authorPath(base, p.author_slug)}>
-                {p.author}
-              </a>
-            </span>
-          </div>
-          <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
-            {p.century}th century
-          </div>
-        </li>
+    <div style="display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap; margin-bottom: 0.85rem;">
+      <input
+        id="browse-filter"
+        type="search"
+        placeholder="Filter by title or author…"
+        autocomplete="off"
+        style="flex: 1 1 18rem; padding: 0.6rem 0.75rem; border-radius: 12px; border: 1px solid var(--card-border); background: color-mix(in oklab, var(--paper) 92%, transparent); font-family: var(--sans); font-size: 1rem;"
+      />
+      <span class="pill" id="browse-count">{poemsAll.length} poems</span>
+    </div>
+
+    <div id="browse-groups">
+      {authors.map((a) => (
+        <details
+          class="card"
+          style="margin-bottom: 0.8rem; padding: 0.8rem 0.9rem;"
+          data-author-group
+          data-author-name={a.name.toLowerCase()}
+          data-author-slug={a.slug}
+          open={selectedAuthor?.slug === a.slug}
+        >
+          <summary style="cursor:pointer; font-family: var(--sans);">
+            <strong>{a.name}</strong>
+            <span class="muted"> ({a.count})</span>
+          </summary>
+          <ul class="list" style="margin-top: 0.5rem;">
+            {a.poems.map((p) => (
+              <li data-poem-item data-poem-title={p.title.toLowerCase()}>
+                <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:baseline;">
+                  <a class="list-title" href={`${base}poem/${p.id}/`}>
+                    <strong>{p.title}</strong>
+                  </a>
+                  <span class="favorite-indicator" data-poem-id={p.id} aria-hidden="true" title="Favorite">★</span>
+                </div>
+                <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
+                  {p.century}th century
+                </div>
+              </li>
+            ))}
+          </ul>
+        </details>
       ))}
-    </ul>
+    </div>
   </div>
+
+  <script type="module">
+    import { readFavorites } from "../../lib/favorites";
+
+    const favoriteIds = new Set(readFavorites());
+    document.querySelectorAll(".favorite-indicator[data-poem-id]").forEach((el) => {
+      const id = el.getAttribute("data-poem-id");
+      if (id && favoriteIds.has(id)) {
+        el.classList.add("is-visible");
+      }
+    });
+
+    const filterInput = document.getElementById("browse-filter");
+    const countEl = document.getElementById("browse-count");
+    const groups = Array.from(document.querySelectorAll("[data-author-group]"));
+
+    const runFilter = () => {
+      const q = (filterInput?.value || "").trim().toLowerCase();
+      let visiblePoems = 0;
+
+      groups.forEach((group) => {
+        const authorName = group.getAttribute("data-author-name") || "";
+        const items = Array.from(group.querySelectorAll("[data-poem-item]"));
+        let groupVisible = 0;
+
+        items.forEach((item) => {
+          const title = item.getAttribute("data-poem-title") || "";
+          const match = !q || title.includes(q) || authorName.includes(q);
+          item.style.display = match ? "" : "none";
+          if (match) groupVisible += 1;
+        });
+
+        if (q && groupVisible > 0) {
+          group.open = true;
+        }
+        group.style.display = groupVisible > 0 ? "" : "none";
+        visiblePoems += groupVisible;
+      });
+
+      if (countEl) {
+        countEl.textContent = `${visiblePoems} poem${visiblePoems === 1 ? "" : "s"}`;
+      }
+    };
+
+    filterInput?.addEventListener("input", runFilter);
+    runFilter();
+  </script>
 </BaseLayout>
