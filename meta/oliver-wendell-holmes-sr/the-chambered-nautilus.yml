@@ -1,0 +1,15 @@
+id: "oliver-wendell-holmes-sr/the-chambered-nautilus"
+slug: "the-chambered-nautilus"
+author: "Oliver Wendell Holmes Sr."
+author_slug: "oliver-wendell-holmes-sr"
+title: "The Chambered Nautilus"
+century: 19
+text_in_repo: true
+text_path: "poems/oliver-wendell-holmes-sr/the-chambered-nautilus.txt"
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Poems_That_Every_Child_Should_Know/The_Chambered_Nautilus"
+public_domain_rationale: "Public domain (author died 1894; source provides a public-domain edition)."
+collection_title: "Poems That Every Child Should Know"
+collection_source_url: "https://en.wikisource.org/wiki/Poems_That_Every_Child_Should_Know"
+featured: false
+notes: "Anthology editor commentary and trailing author credit omitted from the in-repo text."
