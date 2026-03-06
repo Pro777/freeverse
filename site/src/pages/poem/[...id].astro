@@ -49,7 +49,15 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           const id = `l${n}`;
           const isBlank = line === "";
           return (
-            <li id={id} data-line={n} class={isBlank ? "is-blank" : ""} aria-label={isBlank ? "Stanza break" : undefined}>
+            <li
+              id={id}
+              data-line={n}
+              class={isBlank ? "is-blank" : ""}
+              aria-label={isBlank ? "Stanza break" : `Line ${n}`}
+              role={isBlank ? undefined : "button"}
+              tabindex={isBlank ? undefined : 0}
+              aria-roledescription={isBlank ? undefined : "selectable line"}
+            >
               <span class="line-anchor" aria-hidden="true"></span>
               <span class="line-text">{isBlank ? "\u00A0" : line}</span>
             </li>
@@ -177,19 +185,14 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           await copyUrl(start, end);
         };
 
-        document.addEventListener('click', (e) => {
-          const li = e.target && e.target.closest ? e.target.closest('.poem-lines li[id^="l"]') : null;
+        const handleLineSelect = (li, isShift) => {
           if (!li || !li.id) return;
           if (li.classList.contains('is-blank')) return;
-
-          // Don’t hijack clicks on real links inside the poem (if we add any later).
-          const isLink = e.target && e.target.closest ? e.target.closest('a') : null;
-          if (isLink) return;
 
           const n = Number(li.id.replace(/^l/, ''));
           if (!Number.isFinite(n)) return;
 
-          if (e.shiftKey) {
+          if (isShift) {
             if (startLine == null) {
               const r = parseHash();
               if (r) startLine = r.start;
@@ -202,6 +205,27 @@ const canonicalPath = `${base}poem/${poem.id}/`;
 
           startLine = n;
           void setHash(n, n);
+        };
+
+        document.addEventListener('click', (e) => {
+          const li = e.target && e.target.closest ? e.target.closest('.poem-lines li[id^="l"]') : null;
+          if (!li || !li.id) return;
+          if (li.classList.contains('is-blank')) return;
+
+          // Don’t hijack clicks on real links inside the poem (if we add any later).
+          const isLink = e.target && e.target.closest ? e.target.closest('a') : null;
+          if (isLink) return;
+
+          handleLineSelect(li, e.shiftKey);
+        });
+
+        // Keyboard support for poem line selection (Enter/Space)
+        document.addEventListener('keydown', (e) => {
+          if (e.key !== 'Enter' && e.key !== ' ') return;
+          const li = e.target instanceof HTMLElement ? e.target.closest('.poem-lines li[id^="l"]') : null;
+          if (!li || li.classList.contains('is-blank')) return;
+          e.preventDefault();
+          handleLineSelect(li, e.shiftKey);
         });
       })();
     </script>

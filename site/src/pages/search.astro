@@ -26,17 +26,19 @@ const docs = poems.map((p) => ({
 
   <div class="card">
     <div style="display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap;">
+      <label for="q" class="sr-only">Search poems by title or author</label>
       <input
         id="q"
         type="search"
         placeholder="Search titles and authors…"
         autocomplete="off"
+        aria-controls="results"
         style="flex: 1 1 18rem; padding: 0.6rem 0.75rem; border-radius: 12px; border: 1px solid var(--card-border); background: color-mix(in oklab, var(--paper) 92%, transparent); font-family: var(--sans); font-size: 1rem;"
       />
-      <span class="pill" id="count">{docs.length} poems</span>
+      <span class="pill" id="count" aria-live="polite" aria-atomic="true">{docs.length} poems</span>
     </div>
 
-    <ul class="list" id="results" style="margin-top: 0.75rem;"></ul>
+    <ul class="list" id="results" role="listbox" aria-label="Search results" style="margin-top: 0.75rem;"></ul>
   </div>
 
   <script type="module">
@@ -59,12 +61,26 @@ const docs = poems.map((p) => ({
     const resultsEl = document.getElementById('results');
     const countEl = document.getElementById('count');
 
+    let selectedIndex = -1;
+
     const render = (items) => {
       resultsEl.innerHTML = '';
       countEl.textContent = `${items.length} result${items.length === 1 ? '' : 's'}`;
+      selectedIndex = -1;
+
+      if (!items.length) {
+        const li = document.createElement('li');
+        li.role = 'option';
+        li.innerHTML = `<span class="muted">No matches.</span>`;
+        resultsEl.appendChild(li);
+        return;
+      }
 
       for (const r of items) {
         const li = document.createElement('li');
+        li.role = 'option';
+        li.tabIndex = -1;
+        li.setAttribute('aria-label', `${r.title} by ${r.author}`);
         li.innerHTML = `
           <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:baseline;">
             <a class="list-title" href="${r.url}"><strong>${r.title}</strong></a>
@@ -76,12 +92,6 @@ const docs = poems.map((p) => ({
         `;
         resultsEl.appendChild(li);
       }
-
-      if (!items.length) {
-        const li = document.createElement('li');
-        li.innerHTML = `<span class="muted">No matches.</span>`;
-        resultsEl.appendChild(li);
-      }
     };
 
     const run = () => {
@@ -89,13 +99,57 @@ const docs = poems.map((p) => ({
       if (!q) {
         countEl.textContent = `${docs.length} poems`;
         resultsEl.innerHTML = '';
+        selectedIndex = -1;
         return;
       }
       const hits = mini.search(q, { combineWith: 'AND' }).slice(0, 50).map(h => h);
       render(hits);
     };
 
+    const navigateToResult = (li) => {
+      const link = li && li.querySelector('a.list-title');
+      if (link) window.location.href = link.href;
+    };
+
     input.addEventListener('input', run);
+
+    // Arrow key navigation from search input into results
+    input.addEventListener('keydown', (e) => {
+      const items = resultsEl.querySelectorAll('[role="option"]');
+      if (!items.length) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
+        items[selectedIndex].focus();
+      } else if (e.key === 'Enter' && selectedIndex >= 0) {
+        e.preventDefault();
+        navigateToResult(items[selectedIndex]);
+      }
+    });
+
+    // Keyboard navigation within results list
+    resultsEl.addEventListener('keydown', (e) => {
+      const items = Array.from(resultsEl.querySelectorAll('[role="option"]'));
+      if (!items.length) return;
+      const idx = items.indexOf(e.target);
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const next = Math.min(idx + 1, items.length - 1);
+        items[next].focus();
+        selectedIndex = next;
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (idx <= 0) { input.focus(); selectedIndex = -1; return; }
+        items[idx - 1].focus();
+        selectedIndex = idx - 1;
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        navigateToResult(e.target);
+      }
+    });
+
     input.focus();
   </script>
 
