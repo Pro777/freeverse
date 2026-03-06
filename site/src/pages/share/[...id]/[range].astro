@@ -26,6 +26,7 @@ function excerptLines(lines: string[], start: number, end: number) {
 
 export async function getStaticPaths() {
   const MAX_RANGE_LEN = 12;
+  const MAX_EXPECTED_STATIC_PAGES = 5000;
   const poems = await loadPoemMetas();
 
   const paths = [] as Array<{ params: { id: string; range: string }; props: { poem: PoemMeta; start: number; end: number } }>;
@@ -44,6 +45,13 @@ export async function getStaticPaths() {
         });
       }
     }
+  }
+
+  if (paths.length > MAX_EXPECTED_STATIC_PAGES) {
+    console.warn(
+      `[share-routes] High static page count: ${paths.length}. ` +
+      `Expected <= ${MAX_EXPECTED_STATIC_PAGES}. Check for combinatorial explosion.`
+    );
   }
 
   return paths;
