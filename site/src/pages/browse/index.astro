@@ -119,6 +119,13 @@ const browseDocs = groupedAuthors.flatMap((author) =>
                   <a class="list-title" href={`${base}poem/${poem.id}/`}>
                     <strong>{poem.title}</strong>
                   </a>
+                  <span
+                    data-poem-id={poem.id}
+                    aria-hidden="true"
+                    title="Favorite"
+                    hidden
+                    style="color:var(--accent); font-size:0.95rem; line-height:1; transform:translateY(-0.03rem);"
+                  >★</span>
                 </div>
                 <div class="muted poem-meta">{poem.century}th century</div>
               </li>
@@ -218,6 +225,18 @@ const browseDocs = groupedAuthors.flatMap((author) =>
 
     filterInput.addEventListener("input", runFilter);
     runFilter();
+  </script>
+
+  <script type="module">
+    import { readFavorites } from "../../lib/favorites";
+
+    const favoriteIds = new Set(readFavorites());
+    document.querySelectorAll("[data-poem-id]").forEach((el) => {
+      const id = el.getAttribute("data-poem-id");
+      if (id && favoriteIds.has(id)) {
+        el.hidden = false;
+      }
+    });
   </script>
 
   <style>

@@ -31,7 +31,21 @@ const canonicalPath = `${base}poem/${poem.id}/`;
 <BaseLayout title={title} description={description} currentPath={""}>
   <article class="reader">
     <header class="reader-head">
-      <h1 class="reader-title">{poem.title}</h1>
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:0.75rem;">
+        <h1 class="reader-title">{poem.title}</h1>
+        <button
+          type="button"
+          id="favorite-toggle"
+          data-poem-id={poem.id}
+          aria-pressed="false"
+          aria-label="Add to favorites"
+          title="Add to favorites"
+          style="border:1px solid var(--card-border); border-radius:999px; background:color-mix(in oklab, var(--paper) 86%, transparent); color:var(--ink); font-family:var(--sans); font-size:0.85rem; padding:0.35rem 0.6rem; display:inline-flex; align-items:center; gap:0.3rem; cursor:pointer; white-space:nowrap;"
+        >
+          <span aria-hidden="true">☆</span>
+          <span>Favorite</span>
+        </button>
+      </div>
       <p class="reader-byline">
         <span class="muted">by</span>{' '}
         <a href={authorPath(base, poem.author_slug)}>
@@ -82,6 +96,38 @@ const canonicalPath = `${base}poem/${poem.id}/`;
         Tip: click a line to share it — or shift-click another line to share a range.
       </p>
     </footer>
+
+    <script type="module" define:vars={{ poemId: poem.id }}>
+      import { isFavorite, toggleFavorite } from "../../lib/favorites";
+
+      const favoriteButton = document.getElementById("favorite-toggle");
+      const currentPoemId = favoriteButton?.dataset.poemId || poemId || "";
+
+      const updateFavoriteUi = (active) => {
+        if (!favoriteButton) return;
+
+        favoriteButton.setAttribute("aria-pressed", active ? "true" : "false");
+        favoriteButton.setAttribute("aria-label", active ? "Remove from favorites" : "Add to favorites");
+        favoriteButton.setAttribute("title", active ? "Remove from favorites" : "Add to favorites");
+        favoriteButton.style.borderColor = active
+          ? "color-mix(in oklab, var(--accent) 60%, transparent)"
+          : "var(--card-border)";
+        favoriteButton.style.background = active
+          ? "color-mix(in oklab, var(--accent) 14%, var(--paper))"
+          : "color-mix(in oklab, var(--paper) 86%, transparent)";
+
+        const icon = favoriteButton.querySelector("span[aria-hidden='true']");
+        if (icon) icon.textContent = active ? "★" : "☆";
+      };
+
+      if (favoriteButton && currentPoemId) {
+        updateFavoriteUi(isFavorite(currentPoemId));
+        favoriteButton.addEventListener("click", () => {
+          const active = toggleFavorite(currentPoemId);
+          updateFavoriteUi(active);
+        });
+      }
+    </script>
 
     <script is:inline>
       // NOTE: URL fragment helpers are unit-tested in site/src/lib/lineLinks.ts.
