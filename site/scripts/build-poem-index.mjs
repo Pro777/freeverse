@@ -19,6 +19,8 @@ const repoRoot = path.resolve(process.cwd(), "..");
 const metaRoot = path.join(repoRoot, "meta");
 const outputPath = path.join(process.cwd(), "src", "data", "poem-index.json");
 const dedupeReportPath = path.join(process.cwd(), "src", "data", "dedupe-report.json");
+const STATIC_PAGE_WARNING_THRESHOLD = 5000;
+const FIXED_STATIC_PAGE_COUNT = 5;
 
 function parseScalar(raw) {
   const t = raw.trim();
@@ -99,9 +101,20 @@ function rightsLooksValid(rationale) {
   return hasPd && hasBasis;
 }
 
+function countNonBlankLines(text) {
+  if (!text) return 0;
+  return text.split(/\r\n?/).filter((line) => line.trim().length > 0).length;
+}
+
+function countContiguousLineRanges(lineCount) {
+  if (lineCount <= 0) return 0;
+  return (lineCount * (lineCount + 1)) / 2;
+}
+
 async function main() {
   const errors = [];
   const metas = [];
+  let estimatedSharePageCount = 0;
 
   const authorDirs = await fs.readdir(metaRoot, { withFileTypes: true });
   for (const author of authorDirs) {
@@ -146,6 +159,7 @@ async function main() {
           text = await fs.readFile(poemPath, "utf8");
           text_sha256 = sha256(text);
           normalized_sha256 = sha256(normalizeText(text));
+          estimatedSharePageCount += countContiguousLineRanges(countNonBlankLines(text));
         } catch {
           errors.push(`${full}: text_path missing on disk (${meta.text_path})`);
         }
@@ -213,6 +227,15 @@ async function main() {
     process.exit(1);
   }
 
+  const authorPageCount = new Set(metas.map((m) => m.author_slug)).size;
+  const estimatedStaticPages = FIXED_STATIC_PAGE_COUNT + authorPageCount + metas.length + estimatedSharePageCount;
+
+  if (estimatedStaticPages > STATIC_PAGE_WARNING_THRESHOLD) {
+    console.warn(
+      `[build-poem-index] Estimated static page count ${estimatedStaticPages} exceeds warning threshold ${STATIC_PAGE_WARNING_THRESHOLD} (${FIXED_STATIC_PAGE_COUNT} fixed, ${authorPageCount} author, ${metas.length} poem, ${estimatedSharePageCount} line-range share pages). Check for combinatorial route generation before deploy.`,
+    );
+  }
+
   await fs.mkdir(path.dirname(outputPath), { recursive: true });
   await fs.writeFile(
     outputPath,
@@ -226,7 +249,7 @@ async function main() {
   );
 
   console.log(
-    `Wrote poem index (${metas.length} poems), duplicate clusters: ${duplicate_clusters.length}, near-variant candidates: ${near_variant_candidates.length}`,
+    `Wrote poem index (${metas.length} poems), duplicate clusters: ${duplicate_clusters.length}, near-variant candidates: ${near_variant_candidates.length}, estimated static pages: ${estimatedStaticPages}`,
   );
 }
 
