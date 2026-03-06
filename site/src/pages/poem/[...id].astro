@@ -82,6 +82,7 @@ const canonicalPath = `${base}poem/${poem.id}/`;
       (() => {
         const lines = Array.from(document.querySelectorAll('.poem-lines li'));
         if (!lines.length) return;
+        let hasAutoScrolledFromInitialHash = false;
 
         const clear = () => {
           lines.forEach((li) => li.classList.remove('is-selected'));
@@ -114,6 +115,14 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           for (let n = r.start; n <= r.end; n++) {
             const el = document.getElementById(`l${n}`);
             if (el) el.classList.add('is-selected');
+          }
+
+          if (!hasAutoScrolledFromInitialHash) {
+            const first = document.getElementById(`l${r.start}`);
+            if (first) {
+              first.scrollIntoView({ block: 'center', inline: 'nearest' });
+            }
+            hasAutoScrolledFromInitialHash = true;
           }
         };
 
