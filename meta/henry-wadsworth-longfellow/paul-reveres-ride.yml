@@ -1,0 +1,14 @@
+id: "henry-wadsworth-longfellow/paul-reveres-ride"
+slug: "paul-reveres-ride"
+author: "Henry Wadsworth Longfellow"
+author_slug: "henry-wadsworth-longfellow"
+title: "Paul Revere's Ride"
+century: 19
+text_in_repo: true
+text_path: "poems/henry-wadsworth-longfellow/paul-reveres-ride.txt"
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Tales_of_a_Wayside_Inn/Part_First/The_Landlord%27s_Tale/Paul_Revere%27s_Ride"
+public_domain_rationale: "Public domain (author died 1882; source provides a public-domain edition)."
+collection_title: "Tales of a Wayside Inn"
+collection_source_url: "https://en.wikisource.org/wiki/Tales_of_a_Wayside_Inn"
+featured: false

@@ -1,0 +1,14 @@
+id: "henry-wadsworth-longfellow/a-psalm-of-life"
+slug: "a-psalm-of-life"
+author: "Henry Wadsworth Longfellow"
+author_slug: "henry-wadsworth-longfellow"
+title: "A Psalm of Life"
+century: 19
+text_in_repo: true
+text_path: "poems/henry-wadsworth-longfellow/a-psalm-of-life.txt"
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Voices_of_the_Night/A_Psalm_of_Life"
+public_domain_rationale: "Public domain (author died 1882; source provides a public-domain edition)."
+collection_title: "Voices of the Night"
+collection_source_url: "https://en.wikisource.org/wiki/Voices_of_the_Night"
+featured: false
