@@ -1,126 +1,126 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { loadPoemMetas } from "../../lib/poems";
-import { authorPath } from "../../lib/url";
 
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
 
-const poemsAll = await loadPoemMetas();
+const poems = await loadPoemMetas();
 
-poemsAll.sort((a, b) => {
-  const author = a.author.localeCompare(b.author);
-  if (author !== 0) return author;
+poems.sort((a, b) => {
+  const authorOrder = a.author.localeCompare(b.author);
+  if (authorOrder !== 0) return authorOrder;
   return a.title.localeCompare(b.title);
 });
 
-const authorFilter = Astro.url.searchParams.get('author');
-const authorSlugFilter = Astro.url.searchParams.get('author_slug');
-const authors = Array.from(
-  poemsAll.reduce((acc, poem) => {
-    const key = poem.author_slug;
-    const current = acc.get(key);
+const groupedAuthors = Array.from(
+  poems.reduce((acc, poem) => {
+    const current = acc.get(poem.author_slug);
+
     if (current) {
-      current.count += 1;
       current.poems.push(poem);
-    } else {
-      acc.set(key, { name: poem.author, slug: key, count: 1, poems: [poem] });
+      return acc;
     }
+
+    acc.set(poem.author_slug, {
+      name: poem.author,
+      slug: poem.author_slug,
+      poems: [poem],
+    });
+
     return acc;
-  }, new Map<string, { name: string; slug: string; count: number; poems: typeof poemsAll }>())
+  }, new Map<string, { name: string; slug: string; poems: typeof poems }>()),
 )
-  .map(([, value]) => ({
-    ...value,
-    poems: value.poems.sort((a, b) => a.title.localeCompare(b.title)),
+  .map(([, group]) => ({
+    ...group,
+    poems: group.poems.sort((a, b) => a.title.localeCompare(b.title)),
   }))
   .sort((a, b) => a.name.localeCompare(b.name));
 
+const authorFilter = Astro.url.searchParams.get("author");
+const authorSlugFilter = Astro.url.searchParams.get("author_slug");
 const selectedAuthor = authorSlugFilter
-  ? authors.find((a) => a.slug === authorSlugFilter)
+  ? groupedAuthors.find((author) => author.slug === authorSlugFilter)
   : authorFilter
-    ? authors.find((a) => a.name === authorFilter)
+    ? groupedAuthors.find((author) => author.name === authorFilter)
     : undefined;
+
+const browseDocs = groupedAuthors.flatMap((author) =>
+  author.poems.map((poem) => ({
+    id: poem.id,
+    title: poem.title,
+    author: poem.author,
+    authorSlug: poem.author_slug,
+  })),
+);
 ---
 
 <BaseLayout title="Explore poems · Freeverse" description="Explore public-domain poems." currentPath="/browse">
   <section class="hero">
     <h1>Explore poems</h1>
     <p class="lede">
-      A growing library of public-domain poetry. Click any title to read.
+      Browse the collection by author, then expand a name to read poem titles.
       {" "}
       <a href={`${base}search/`}><strong>Jump to search</strong></a>.
       {selectedAuthor ? (
         <>
-          {' '}Showing only <strong>{selectedAuthor.name}</strong>.{' '}
-          <a class="muted" href={`${base}browse/`}>Clear filter</a>.
+          {" "}Auto-expanded <strong>{selectedAuthor.name}</strong>.{" "}
+          <a class="muted" href={`${base}browse/`}>Clear focus</a>.
         </>
       ) : null}
     </p>
   </section>
 
-  <div class="card" style="margin-bottom: 1rem;">
-    <div class="kicker">
-      <h2>Authors</h2>
-      <span class="pill">{authors.length} total</span>
-    </div>
-
-    <ul class="list">
-      {authors.map((a) => (
-        <li>
-          <a class="list-title" href={authorPath(base, a.slug)}>
-            <strong>{a.name}</strong>
-          </a>
-          <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
-            {a.count} poem{a.count === 1 ? "" : "s"}
-          </div>
-        </li>
-      ))}
-    </ul>
-  </div>
-
-  <div class="card">
-    <div class="kicker">
+  <div class="card browse-shell">
+    <div class="kicker browse-kicker">
       <h2>Browse by author</h2>
-      <span class="pill">{poemsAll.length} poems</span>
+      <span class="pill">{poems.length} poems</span>
     </div>
 
-    <div style="display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap; margin-bottom: 0.85rem;">
-      <input
-        id="browse-filter"
-        type="search"
-        placeholder="Filter by title or author…"
-        autocomplete="off"
-        style="flex: 1 1 18rem; padding: 0.6rem 0.75rem; border-radius: 12px; border: 1px solid var(--card-border); background: color-mix(in oklab, var(--paper) 92%, transparent); font-family: var(--sans); font-size: 1rem;"
-      />
-      <span class="pill" id="browse-count">{poemsAll.length} poems</span>
+    <div class="browse-toolbar">
+      <label class="browse-label" for="browse-filter">Quick filter</label>
+      <div class="browse-toolbar-row">
+        <input
+          id="browse-filter"
+          type="search"
+          placeholder="Filter by title or author..."
+          autocomplete="off"
+        />
+        <span class="pill" id="browse-count">{poems.length} poems across {groupedAuthors.length} authors</span>
+      </div>
+      <p class="muted browse-help">
+        All sections start collapsed so you can scan authors first. Filtering opens matching groups.
+      </p>
     </div>
 
-    <div id="browse-groups">
-      {authors.map((a) => (
+    <p class="muted browse-empty" id="browse-empty" hidden>No matches.</p>
+
+    <div class="browse-groups" id="browse-groups">
+      {groupedAuthors.map((author) => (
         <details
-          class="card"
-          style="margin-bottom: 0.8rem; padding: 0.8rem 0.9rem;"
+          class="author-group"
           data-author-group
-          data-author-name={a.name.toLowerCase()}
-          data-author-slug={a.slug}
-          open={selectedAuthor?.slug === a.slug}
+          data-author-name={author.name.toLowerCase()}
+          data-author-slug={author.slug}
+          open={selectedAuthor?.slug === author.slug}
         >
-          <summary style="cursor:pointer; font-family: var(--sans);">
-            <strong>{a.name}</strong>
-            <span class="muted"> ({a.count})</span>
+          <summary class="author-summary">
+            <span class="author-summary-text">
+              <strong>{author.name}</strong>
+              <span class="pill author-count" data-group-count>{author.poems.length} poems</span>
+            </span>
           </summary>
-          <ul class="list" style="margin-top: 0.5rem;">
-            {a.poems.map((p) => (
-              <li data-poem-item data-poem-title={p.title.toLowerCase()}>
-                <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:baseline;">
-                  <a class="list-title" href={`${base}poem/${p.id}/`}>
-                    <strong>{p.title}</strong>
+
+          <ul class="list author-poems">
+            {author.poems.map((poem) => (
+              <li data-poem-item data-poem-id={poem.id}>
+                <div class="poem-row">
+                  <a class="list-title" href={`${base}poem/${poem.id}/`}>
+                    <strong>{poem.title}</strong>
                   </a>
                 </div>
-                <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
-                  {p.century}th century
-                </div>
+                <div class="muted poem-meta">{poem.century}th century</div>
               </li>
             ))}
           </ul>
@@ -129,40 +129,207 @@ const selectedAuthor = authorSlugFilter
     </div>
   </div>
 
+  <script id="browse-data" type="application/json">{JSON.stringify(browseDocs)}</script>
+
   <script type="module">
+    import MiniSearch from "minisearch";
+
+    const docs = JSON.parse(document.getElementById("browse-data").textContent);
     const filterInput = document.getElementById("browse-filter");
     const countEl = document.getElementById("browse-count");
+    const emptyEl = document.getElementById("browse-empty");
     const groups = Array.from(document.querySelectorAll("[data-author-group]"));
 
+    const defaultOpen = new Map(
+      groups.map((group) => [group.dataset.authorSlug || "", group.open]),
+    );
+
+    const mini = new MiniSearch({
+      fields: ["title", "author"],
+      storeFields: ["id", "authorSlug"],
+      searchOptions: {
+        boost: { title: 2 },
+        fuzzy: 0.2,
+        prefix: true,
+      },
+    });
+    mini.addAll(docs);
+
+    groups.forEach((group) => {
+      group.addEventListener("toggle", () => {
+        if (!filterInput.value.trim()) {
+          defaultOpen.set(group.dataset.authorSlug || "", group.open);
+        }
+      });
+    });
+
+    const formatPoemCount = (count) => `${count} poem${count === 1 ? "" : "s"}`;
+    const formatAuthorCount = (count) => `${count} author${count === 1 ? "" : "s"}`;
+
     const runFilter = () => {
-      const q = (filterInput?.value || "").trim().toLowerCase();
+      const query = filterInput.value.trim();
+      const visibleIds = query
+        ? new Set(mini.search(query, { combineWith: "AND" }).map((hit) => hit.id))
+        : null;
+
       let visiblePoems = 0;
+      let visibleAuthors = 0;
 
       groups.forEach((group) => {
-        const authorName = group.getAttribute("data-author-name") || "";
+        const slug = group.dataset.authorSlug || "";
         const items = Array.from(group.querySelectorAll("[data-poem-item]"));
+        const countBadge = group.querySelector("[data-group-count]");
         let groupVisible = 0;
 
         items.forEach((item) => {
-          const title = item.getAttribute("data-poem-title") || "";
-          const match = !q || title.includes(q) || authorName.includes(q);
-          item.style.display = match ? "" : "none";
-          if (match) groupVisible += 1;
+          const isMatch = !visibleIds || visibleIds.has(item.dataset.poemId || "");
+          item.hidden = !isMatch;
+          if (isMatch) groupVisible += 1;
         });
 
-        if (q && groupVisible > 0) {
-          group.open = true;
+        if (query) {
+          group.hidden = groupVisible === 0;
+          group.open = groupVisible > 0;
+          if (countBadge) {
+            countBadge.textContent = formatPoemCount(groupVisible);
+          }
+        } else {
+          group.hidden = false;
+          group.open = defaultOpen.get(slug) || false;
+          if (countBadge) {
+            countBadge.textContent = formatPoemCount(items.length);
+          }
         }
-        group.style.display = groupVisible > 0 ? "" : "none";
+
+        if (groupVisible > 0) {
+          visibleAuthors += 1;
+        }
         visiblePoems += groupVisible;
       });
 
-      if (countEl) {
-        countEl.textContent = `${visiblePoems} poem${visiblePoems === 1 ? "" : "s"}`;
+      if (query) {
+        countEl.textContent = `${formatPoemCount(visiblePoems)} across ${formatAuthorCount(visibleAuthors)}`;
+      } else {
+        countEl.textContent = `${formatPoemCount(docs.length)} across ${formatAuthorCount(groups.length)}`;
       }
+
+      emptyEl.hidden = visiblePoems !== 0;
     };
 
-    filterInput?.addEventListener("input", runFilter);
+    filterInput.addEventListener("input", runFilter);
     runFilter();
   </script>
+
+  <style>
+    .browse-shell {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .browse-kicker {
+      gap: 0.75rem;
+    }
+
+    .browse-toolbar {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .browse-label {
+      font-family: var(--sans);
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .browse-toolbar-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .browse-toolbar-row input {
+      flex: 1 1 18rem;
+      min-width: 0;
+      padding: 0.7rem 0.85rem;
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      background: color-mix(in oklab, var(--paper) 92%, transparent);
+      font-family: var(--sans);
+      font-size: 1rem;
+    }
+
+    .browse-toolbar-row input:focus {
+      outline: 2px solid color-mix(in oklab, var(--ink) 22%, transparent);
+      outline-offset: 2px;
+    }
+
+    .browse-help,
+    .browse-empty,
+    .poem-meta {
+      font-family: var(--sans);
+      font-size: 0.92rem;
+    }
+
+    .browse-groups {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .author-group {
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      background: color-mix(in oklab, var(--paper) 96%, transparent);
+      padding: 0.2rem 0.9rem 0.75rem;
+    }
+
+    .author-summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 0.75rem 0 0.45rem;
+    }
+
+    .author-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .author-summary-text {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-family: var(--sans);
+    }
+
+    .author-count {
+      flex-shrink: 0;
+    }
+
+    .author-poems {
+      margin-top: 0.1rem;
+    }
+
+    .poem-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: baseline;
+    }
+
+    @media (max-width: 640px) {
+      .browse-toolbar-row {
+        align-items: stretch;
+      }
+
+      .browse-toolbar-row .pill {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .author-summary-text {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
 </BaseLayout>
