@@ -84,3 +84,46 @@ These are generated. Add to `.gitignore` if not already present:
 - Production build: `cd site && npm run build`
 - Build scripts are in `site/package.json`. Run from `site/`, not repo root.
 - If Astro build is unavailable in your environment (e.g., Codex on BLD), note it in the PR. Corpus PRs do not require a successful site build to merge.
+
+---
+
+## Queue Scope
+
+When working inside this repo's mounted worktree, "the queue" means only:
+- the issue implied by the current branch, if the branch is named `codex/<issue>-<slug>`
+- this repo's open GitHub issues labeled `Codex`
+
+Do not inspect or act on Rowan/global queue items or on other repositories unless the user explicitly instructs you to switch repos.
+
+If no repo-local Codex issue exists, report that the repo-local queue is empty and stop.
+
+## Queue Resolution Order
+
+Before starting new work, resolve scope in this order:
+1. Current branch assignment
+2. Open PR already associated with the current branch or issue
+3. Open issues in this repo labeled `Codex`
+4. Otherwise: stop and report no repo-local Codex work
+
+## Duplicate Work Guard
+
+Before creating a branch, commit, or PR:
+- check for open PRs in this repo
+- check for open issues in this repo labeled `Codex`
+- check whether the current branch already corresponds to the active issue
+
+If an open PR already exists for the issue, do not create another PR unless the user explicitly asks.
+If another Codex branch or PR already exists for the same issue, stop and report the overlap.
+
+## Worktree Boundary
+
+A mounted permanent worktree is a hard project boundary.
+Do not leave this repo to work in another repo because another queue appears non-empty.
+Do not reinterpret "the queue" as org-wide or global when a repo worktree is mounted.
+A permanent worktree implies one repo, one branch, one issue unless the user explicitly says otherwise.
+
+## Communication
+
+If the user asks for "the queue" and scope is ambiguous, prefer the repo-local interpretation and state that assumption briefly.
+If the repo-local queue is empty, say so explicitly.
+If continuing would require changing repos or leaving the current branch assignment, ask first.
