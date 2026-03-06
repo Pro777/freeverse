@@ -43,7 +43,7 @@ const here = normalized(currentPath);
       </a>
     ))}
 
-    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme" aria-pressed="false">
       Theme
     </button>
   </nav>
@@ -60,7 +60,7 @@ const here = normalized(currentPath);
   </button>
 
   <div class="mobile-menu" id="mobile-menu" hidden>
-    <nav class="mobile-nav" aria-label="Primary">
+    <nav class="mobile-nav" aria-label="Primary navigation (mobile)">
       {nav.map((item) => (
         <a href={item.href} aria-current={here === item.key ? "page" : undefined}>
           {item.label}
@@ -68,7 +68,7 @@ const here = normalized(currentPath);
       ))}
     </nav>
 
-    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme" aria-pressed="false">
       Theme
     </button>
   </div>
@@ -87,7 +87,10 @@ const here = normalized(currentPath);
         else delete root.dataset.theme;
 
         const label = mode === 'system' ? 'System' : mode[0].toUpperCase() + mode.slice(1);
-        for (const btn of toggleButtons) btn.textContent = `Theme: ${label}`;
+        for (const btn of toggleButtons) {
+          btn.textContent = `Theme: ${label}`;
+          btn.setAttribute('aria-pressed', String(mode !== 'system'));
+        }
       };
 
       const getStored = () => {
@@ -118,15 +121,28 @@ const here = normalized(currentPath);
       }
 
       if (menuBtn && menu) {
+        let lastFocusedElement = null;
+
         const close = () => {
           menu.hidden = true;
           menuBtn.setAttribute('aria-expanded', 'false');
+          if (lastFocusedElement && lastFocusedElement instanceof HTMLElement) {
+            lastFocusedElement.focus();
+          }
+        };
+
+        const open = () => {
+          lastFocusedElement = document.activeElement;
+          menu.hidden = false;
+          menuBtn.setAttribute('aria-expanded', 'true');
+          const firstLink = menu.querySelector('a');
+          if (firstLink) firstLink.focus();
         };
 
         menuBtn.addEventListener('click', () => {
           const isOpen = menu.hidden === false;
-          menu.hidden = isOpen;
-          menuBtn.setAttribute('aria-expanded', String(!isOpen));
+          if (isOpen) close();
+          else open();
         });
 
         document.addEventListener('click', (e) => {
@@ -138,7 +154,27 @@ const here = normalized(currentPath);
         });
 
         document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape') close();
+          if (menu.hidden) return;
+
+          if (e.key === 'Escape') {
+            e.preventDefault();
+            close();
+            return;
+          }
+
+          // Focus trap: cycle Tab within mobile menu
+          if (e.key === 'Tab') {
+            const focusable = Array.from(menu.querySelectorAll('a, button'));
+            if (!focusable.length) return;
+            const idx = focusable.indexOf(document.activeElement);
+            if (e.shiftKey && idx <= 0) {
+              e.preventDefault();
+              focusable[focusable.length - 1].focus();
+            } else if (!e.shiftKey && idx >= focusable.length - 1) {
+              e.preventDefault();
+              focusable[0].focus();
+            }
+          }
         });
       }
     })();

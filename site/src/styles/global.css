@@ -1,15 +1,51 @@
 :root {
-  /* We support both; actual colors are set by theme variables below. */
+  /* ── Color Scheme ── */
   color-scheme: light dark;
 
-  --radius: 16px;
-  --radius-sm: 12px;
-
+  /* ── Typography ── */
   --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", Times, serif;
   --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
+  --text-xs: 0.78rem;
+  --text-sm: 0.85rem;
+  --text-base: 0.9rem;
+  --text-md: 0.92rem;
+  --text-lg: 1.05rem;
+  --text-xl: 1.15rem;
+
+  --line-height-tight: 1.15;
+  --line-height-normal: 1.7;
+  --line-height-relaxed: 1.75;
+  --line-height-poetry: 1.95;
+
+  /* ── Spacing ── */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 0.75rem;
+  --space-lg: 1rem;
+  --space-xl: 1.25rem;
+  --space-2xl: 1.5rem;
+  --space-3xl: 2rem;
+  --space-4xl: 3rem;
+
+  /* ── Border & Radius ── */
+  --radius: 16px;
+  --radius-sm: 12px;
+  --radius-pill: 999px;
+
+  /* ── Shadows ── */
   --shadow: 0 1px 0 rgba(2, 6, 23, 0.05), 0 14px 30px rgba(2, 6, 23, 0.10);
+
+  /* ── Layout ── */
+  --measure: 60rem;
+  --measure-reader: 44rem;
+  --grid-min: 18rem;
+
+  /* ── Interactive ── */
+  --focus-ring: 2px solid var(--accent, #8a6a12);
+  --focus-offset: 3px;
+  --transition-fast: 140ms ease;
 }
 
 /* Light (explicit or default system light) */
@@ -148,7 +184,7 @@ h2 {
 code, pre { font-family: var(--mono); }
 
 .container {
-  max-width: 60rem;
+  max-width: var(--measure);
   margin: 0 auto;
   padding: 2.75rem 1.25rem 4rem;
 }
@@ -391,7 +427,7 @@ main {
 .grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--grid-min), 1fr));
   margin-top: 1.2rem;
 }
 
@@ -577,7 +613,7 @@ main {
 
 .reader {
   /* Readable measure for poetry (tighter than prose, but not narrow) */
-  max-width: 44rem;
+  max-width: var(--measure-reader);
 }
 
 .reader-head {
@@ -689,4 +725,68 @@ main {
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; }
   .toast { transition: none; }
+}
+
+/* ── Accessibility ── */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  padding: var(--space-md) var(--space-lg);
+  background: var(--accent);
+  color: var(--accent-ink);
+  text-decoration: none;
+  border-radius: 0 0 var(--radius-sm) 0;
+  font-family: var(--sans);
+  font-size: var(--text-md);
+  font-weight: 500;
+  transform: translateY(-100%);
+  transition: transform 200ms ease;
+}
+
+.skip-nav:focus {
+  transform: translateY(0);
+  outline: none;
+}
+
+/* Focus-visible styles */
+a:focus-visible,
+button:focus-visible,
+.action:focus-visible,
+.list-title:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+input:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.poem-lines li[role="button"]:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: -2px;
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+  border-radius: 2px;
+}
+
+#results [role="option"]:focus {
+  outline: var(--focus-ring);
+  outline-offset: -2px;
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
 }
