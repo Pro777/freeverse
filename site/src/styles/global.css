@@ -575,6 +575,158 @@ main {
   text-decoration: underline;
 }
 
+.browse-controls {
+  margin-bottom: 1rem;
+}
+
+.browse-filter {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.35rem;
+}
+
+.browse-filter-label {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.browse-filter-input {
+  width: 100%;
+  font: inherit;
+  font-family: var(--sans);
+  color: var(--ink);
+  padding: 0.8rem 0.95rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  background: color-mix(in oklab, var(--paper) 90%, transparent);
+}
+
+.browse-filter-input::placeholder {
+  color: color-mix(in oklab, var(--muted) 85%, transparent);
+}
+
+.browse-filter-input:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--accent) 55%, transparent);
+  outline-offset: 2px;
+}
+
+.browse-filter-status {
+  margin: 0.85rem 0 0;
+}
+
+.browse-groups {
+  display: grid;
+  gap: 1rem;
+}
+
+.browse-group {
+  padding: 0;
+  overflow: clip;
+}
+
+.browse-group-summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+}
+
+.browse-group-summary::-webkit-details-marker {
+  display: none;
+}
+
+.browse-group-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.55rem;
+}
+
+.browse-group-count {
+  font-family: var(--sans);
+  font-size: 0.92rem;
+}
+
+.browse-group-toggle {
+  font-size: 0;
+}
+
+.browse-group-toggle::before {
+  content: "Expand";
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.browse-group[open] .browse-group-toggle::before {
+  content: "Collapse";
+}
+
+.browse-group-body {
+  padding: 0 1.1rem 1rem;
+  border-top: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+}
+
+.browse-group-meta {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0.8rem 0 0.25rem;
+  font-family: var(--sans);
+  font-size: 0.92rem;
+}
+
+.browse-poem-list {
+  margin-top: 0;
+}
+
+.browse-poem-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.browse-empty {
+  margin-top: 1rem;
+}
+
+.browse-poem-century {
+  font-family: var(--sans);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 640px) {
+  .browse-group-summary,
+  .browse-group-body {
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
+  }
+
+  .browse-group-summary {
+    align-items: flex-start;
+  }
+
+  .browse-group-heading,
+  .browse-poem-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .browse-group-meta {
+    justify-content: flex-start;
+  }
+}
+
 .reader {
   /* Readable measure for poetry (tighter than prose, but not narrow) */
   max-width: 44rem;

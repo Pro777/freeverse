@@ -3,6 +3,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { loadPoemMetas } from "../../lib/poems";
 import { authorPath } from "../../lib/url";
 
+type AuthorGroup = {
+  name: string;
+  slug: string;
+  poems: Awaited<ReturnType<typeof loadPoemMetas>>;
+};
+
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
@@ -15,93 +21,232 @@ poemsAll.sort((a, b) => {
   return a.title.localeCompare(b.title);
 });
 
-const authorFilter = Astro.url.searchParams.get('author');
-const authorSlugFilter = Astro.url.searchParams.get('author_slug');
-const authors = Array.from(
+const authorGroups = Array.from(
   poemsAll.reduce((acc, poem) => {
-    const key = poem.author_slug;
-    const current = acc.get(key);
+    const current = acc.get(poem.author_slug);
     if (current) {
-      current.count += 1;
+      current.poems.push(poem);
     } else {
-      acc.set(key, { name: poem.author, slug: key, count: 1 });
+      acc.set(poem.author_slug, {
+        name: poem.author,
+        slug: poem.author_slug,
+        poems: [poem],
+      });
     }
     return acc;
-  }, new Map<string, { name: string; slug: string; count: number }>())
+  }, new Map<string, AuthorGroup>())
 ).map(([, value]) => value).sort((a, b) => a.name.localeCompare(b.name));
 
-const selectedAuthor = authorSlugFilter
-  ? authors.find((a) => a.slug === authorSlugFilter)
-  : authorFilter
-    ? authors.find((a) => a.name === authorFilter)
-    : undefined;
-
-const poems = selectedAuthor
-  ? poemsAll.filter((p) => p.author_slug === selectedAuthor.slug)
-  : poemsAll;
+const statsLabel = `${poemsAll.length} poems across ${authorGroups.length} authors`;
+const defaultStatus = `Showing ${statsLabel}. All author groups start collapsed.`;
 ---
 
-<BaseLayout title="Explore poems · Freeverse" description="Explore public-domain poems." currentPath="/browse">
+<BaseLayout title="Explore poems - Freeverse" description="Explore public-domain poems." currentPath="/browse">
   <section class="hero">
     <h1>Explore poems</h1>
     <p class="lede">
-      A growing library of public-domain poetry. Click any title to read.
+      Browse the full library by author, then expand a section to read individual poems.
       {" "}
       <a href={`${base}search/`}><strong>Jump to search</strong></a>.
-      {selectedAuthor ? (
-        <>
-          {' '}Showing only <strong>{selectedAuthor.name}</strong>.{' '}
-          <a class="muted" href={`${base}browse/`}>Clear filter</a>.
-        </>
-      ) : null}
+      <span data-browse-url-note hidden>
+        {" "}Opening with <strong data-browse-url-author></strong> expanded from the URL.
+        {" "}
+        <a class="muted" href={`${base}browse/`}>Clear author filter</a>.
+      </span>
     </p>
   </section>
 
-  <div class="card" style="margin-bottom: 1rem;">
+  <section class="card browse-controls" aria-labelledby="browse-filter-title">
     <div class="kicker">
-      <h2>Authors</h2>
-      <span class="pill">{authors.length} total</span>
+      <h2 id="browse-filter-title">Browse by author</h2>
+      <span class="pill">{statsLabel}</span>
     </div>
 
-    <ul class="list">
-      {authors.map((a) => (
-        <li>
-          <a class="list-title" href={authorPath(base, a.slug)}>
-            <strong>{a.name}</strong>
-          </a>
-          <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
-            {a.count} poem{a.count === 1 ? "" : "s"}
-          </div>
-        </li>
-      ))}
-    </ul>
-  </div>
+    <label class="browse-filter" for="browse-filter">
+      <span class="browse-filter-label">Quick filter</span>
+      <input
+        id="browse-filter"
+        class="browse-filter-input"
+        type="search"
+        placeholder="Filter by author or poem title"
+        autocomplete="off"
+        spellcheck="false"
+        aria-describedby="browse-filter-status"
+        data-browse-filter
+      />
+    </label>
 
-  <div class="card">
-    <div class="kicker">
-      <h2>Catalog</h2>
-      <span class="pill">{poems.length} poems</span>
-    </div>
+    <p
+      id="browse-filter-status"
+      class="muted browse-filter-status"
+      role="status"
+      aria-live="polite"
+      data-browse-filter-status
+    >
+      {defaultStatus}
+    </p>
+  </section>
 
-    <ul class="list">
-      {poems.map((p) => (
-        <li>
-          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:baseline;">
-            <a class="list-title" href={`${base}poem/${p.id}/`}>
-              <strong>{p.title}</strong>
-            </a>
-            <span class="muted">
-              —{' '}
-              <a class="muted" href={authorPath(base, p.author_slug)}>
-                {p.author}
-              </a>
+  <section class="browse-groups" data-browse-groups>
+    {authorGroups.map((group) => (
+      <details
+        class="card browse-group"
+        data-author-group
+        data-author-name={group.name.toLowerCase()}
+        data-author-label={group.name}
+        data-author-slug={group.slug}
+      >
+        <summary class="browse-group-summary">
+          <span class="browse-group-heading">
+            <strong>{group.name}</strong>
+            <span class="muted browse-group-count">
+              {group.poems.length} poem{group.poems.length === 1 ? "" : "s"}
             </span>
+          </span>
+          <span class="browse-group-toggle" aria-hidden="true">Expand</span>
+        </summary>
+
+        <div class="browse-group-body">
+          <div class="browse-group-meta">
+            <a class="muted" href={authorPath(base, group.slug)}>
+              View author page
+            </a>
           </div>
-          <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
-            {p.century}th century
-          </div>
-        </li>
-      ))}
-    </ul>
-  </div>
+
+          <ul class="list browse-poem-list">
+            {group.poems.map((poem) => (
+              <li
+                data-poem-item
+                data-poem-id={poem.id}
+                data-poem-title={poem.title}
+                data-search-text={`${group.name} ${poem.title}`.toLowerCase()}
+              >
+                <div class="browse-poem-row">
+                  <a class="list-title" href={`${base}poem/${poem.id}/`}>
+                    <strong>{poem.title}</strong>
+                  </a>
+                  <span class="muted browse-poem-century">
+                    {poem.century}th century
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </details>
+    ))}
+  </section>
+
+  <p class="card muted browse-empty" role="status" aria-live="polite" data-browse-empty hidden>
+    No authors or poems match that filter.
+  </p>
+
+  <script>
+    const filterInput = document.querySelector("[data-browse-filter]");
+    const status = document.querySelector("[data-browse-filter-status]");
+    const emptyState = document.querySelector("[data-browse-empty]");
+    const urlNote = document.querySelector("[data-browse-url-note]");
+    const urlAuthor = document.querySelector("[data-browse-url-author]");
+    const authorGroups = Array.from(document.querySelectorAll("[data-author-group]"));
+
+    if (
+      filterInput instanceof HTMLInputElement &&
+      status instanceof HTMLElement &&
+      emptyState instanceof HTMLElement
+    ) {
+      const params = new URLSearchParams(window.location.search);
+      const requestedAuthorSlug = params.get("author_slug") ?? "";
+      const requestedAuthorName = params.get("author")?.trim().toLowerCase() ?? "";
+      const selectedAuthorGroup = authorGroups.find((group) => {
+        if (!(group instanceof HTMLDetailsElement)) return false;
+
+        const authorSlug = group.dataset.authorSlug ?? "";
+        const authorName = group.dataset.authorName ?? "";
+
+        if (requestedAuthorSlug) return authorSlug === requestedAuthorSlug;
+        if (requestedAuthorName) return authorName === requestedAuthorName;
+        return false;
+      });
+
+      const selectedAuthorSlug =
+        selectedAuthorGroup instanceof HTMLDetailsElement
+          ? selectedAuthorGroup.dataset.authorSlug ?? ""
+          : "";
+      const selectedAuthorLabel =
+        selectedAuthorGroup instanceof HTMLDetailsElement
+          ? selectedAuthorGroup.dataset.authorLabel ?? ""
+          : "";
+
+      if (urlAuthor instanceof HTMLElement) {
+        urlAuthor.textContent = selectedAuthorLabel;
+      }
+
+      if (selectedAuthorSlug && urlNote instanceof HTMLElement) {
+        urlNote.hidden = false;
+      }
+
+      const updateStatus = (authors, poems, query) => {
+        const poemLabel = `${poems} poem${poems === 1 ? "" : "s"}`;
+        const authorLabel = `${authors} author${authors === 1 ? "" : "s"}`;
+
+        if (query) {
+          status.textContent = `Showing ${poemLabel} across ${authorLabel} for "${query}".`;
+          return;
+        }
+
+        if (selectedAuthorSlug) {
+          status.textContent = `Showing ${poemLabel} across ${authorLabel}. The requested author stays expanded.`;
+          return;
+        }
+
+        status.textContent = `Showing ${poemLabel} across ${authorLabel}. All author groups are collapsed by default.`;
+      };
+
+      const applyFilter = () => {
+        const query = filterInput.value.trim().toLowerCase();
+        const queryTerms = query.split(/\s+/).filter(Boolean);
+        let visibleAuthors = 0;
+        let visiblePoems = 0;
+
+        for (const group of authorGroups) {
+          if (!(group instanceof HTMLDetailsElement)) continue;
+
+          const authorName = group.dataset.authorName ?? "";
+          const authorSlug = group.dataset.authorSlug ?? "";
+          const poemItems = Array.from(group.querySelectorAll("[data-poem-item]"));
+          let groupMatches = 0;
+
+          for (const item of poemItems) {
+            if (!(item instanceof HTMLElement)) continue;
+
+            const searchText = item.dataset.searchText ?? "";
+            const matches = queryTerms.length === 0
+              ? true
+              : queryTerms.every((term) => searchText.includes(term));
+            item.hidden = !matches;
+            if (matches) groupMatches += 1;
+          }
+
+          const shouldShowGroup = groupMatches > 0;
+          group.hidden = !shouldShowGroup;
+
+          if (!shouldShowGroup) {
+            group.open = false;
+            continue;
+          }
+
+          visibleAuthors += 1;
+          visiblePoems += groupMatches;
+
+          group.open = query.length > 0 ? true : authorSlug === selectedAuthorSlug;
+        }
+
+        updateStatus(visibleAuthors, visiblePoems, query);
+        emptyState.hidden = visibleAuthors > 0;
+      };
+
+      filterInput.addEventListener("input", applyFilter);
+      applyFilter();
+    }
+  </script>
 </BaseLayout>
