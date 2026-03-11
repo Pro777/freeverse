@@ -10,5 +10,9 @@ tmp/
 site/test-results/
 site/playwright-report/
 
+# Generated site data
+site/src/data/poem-index.json
+site/src/data/dedupe-report.json
+
 # local ops
 inbox
