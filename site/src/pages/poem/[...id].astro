@@ -31,7 +31,20 @@ const canonicalPath = `${base}poem/${poem.id}/`;
 <BaseLayout title={title} description={description} currentPath={""}>
   <article class="reader">
     <header class="reader-head">
-      <h1 class="reader-title">{poem.title}</h1>
+      <div class="reader-head-row">
+        <h1 class="reader-title">{poem.title}</h1>
+        <button
+          class="star-btn"
+          type="button"
+          aria-label="Add to favorites"
+          aria-pressed="false"
+          data-poem-id={poem.id}
+        >
+          <svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </button>
+      </div>
       <p class="reader-byline">
         <span class="muted">by</span>{' '}
         <a href={authorPath(base, poem.author_slug)}>
@@ -59,7 +72,7 @@ const canonicalPath = `${base}poem/${poem.id}/`;
     ) : (
       <div class="card">
         <p class="muted" style="margin:0;">
-          Poem text isn’t in the repository yet.
+          Poem text isn't in the repository yet.
           {poem.source_url ? (
             <>
               {" "}Try the source: <a href={poem.source_url}>{poem.source_label ?? poem.source_url}</a>.
@@ -182,7 +195,7 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           if (!li || !li.id) return;
           if (li.classList.contains('is-blank')) return;
 
-          // Don’t hijack clicks on real links inside the poem (if we add any later).
+          // Don't hijack clicks on real links inside the poem (if we add any later).
           const isLink = e.target && e.target.closest ? e.target.closest('a') : null;
           if (isLink) return;
 
@@ -202,6 +215,57 @@ const canonicalPath = `${base}poem/${poem.id}/`;
 
           startLine = n;
           void setHash(n, n);
+        });
+      })();
+    </script>
+
+    <script is:inline>
+      // Favorites / star button
+      (() => {
+        const STORAGE_KEY = 'freeverse-favorites';
+
+        const readFavs = () => {
+          try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return [];
+            const parsed = JSON.parse(raw);
+            return Array.isArray(parsed) ? parsed.filter(x => typeof x === 'string') : [];
+          } catch { return []; }
+        };
+
+        const writeFavs = (ids) => {
+          try { localStorage.setItem(STORAGE_KEY, JSON.stringify(ids)); } catch {}
+        };
+
+        const btn = document.querySelector('.star-btn[data-poem-id]');
+        if (!btn) return;
+
+        const poemId = btn.dataset.poemId;
+
+        const sync = () => {
+          const starred = readFavs().includes(poemId);
+          btn.setAttribute('aria-pressed', String(starred));
+          btn.setAttribute('aria-label', starred ? 'Remove from favorites' : 'Add to favorites');
+          btn.classList.toggle('is-starred', starred);
+        };
+
+        sync();
+
+        btn.addEventListener('click', () => {
+          const favs = readFavs();
+          const idx = favs.indexOf(poemId);
+          if (idx === -1) {
+            writeFavs([...favs, poemId]);
+          } else {
+            writeFavs(favs.filter(x => x !== poemId));
+          }
+          sync();
+          window.dispatchEvent(new CustomEvent('freeverse:favorites-change'));
+        });
+
+        // React if another tab/page changes favorites.
+        window.addEventListener('storage', (e) => {
+          if (e.key === STORAGE_KEY) sync();
         });
       })();
     </script>

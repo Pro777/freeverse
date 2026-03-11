@@ -1,0 +1,113 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { loadPoemMetas } from "../../lib/poems";
+import { authorPath } from "../../lib/url";
+
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+
+// We need poem metadata on the client side so we can render the favorites list.
+// Serialize the minimal fields required into a JSON data island.
+const poemsAll = await loadPoemMetas();
+const poemData = poemsAll.map((p) => ({
+  id: p.id,
+  title: p.title,
+  author: p.author,
+  author_slug: p.author_slug,
+}));
+---
+
+<BaseLayout title="My favorites · Freeverse" description="Your starred poems." currentPath="/favorites">
+  <section class="hero">
+    <h1>My favorites</h1>
+    <p class="lede" id="fav-lede">
+      Poems you've starred are listed here. They're saved in your browser — no account needed.
+    </p>
+  </section>
+
+  <div class="card" id="fav-card">
+    <div class="kicker">
+      <h2>Starred poems</h2>
+      <span class="pill" id="fav-count">0</span>
+    </div>
+
+    <p class="muted" id="fav-empty" style="margin:0.5rem 0 0; font-family:var(--sans); font-size:0.97rem;">
+      You haven't starred any poems yet. Open a poem and click the ★ to save it here.
+    </p>
+
+    <ul class="list" id="fav-list" hidden></ul>
+  </div>
+
+  <script is:inline define:vars={{ poemData, base }}>
+    (() => {
+      const STORAGE_KEY = 'freeverse-favorites';
+
+      const readFavs = () => {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return [];
+          const parsed = JSON.parse(raw);
+          return Array.isArray(parsed) ? parsed.filter(x => typeof x === 'string') : [];
+        } catch { return []; }
+      };
+
+      const writeFavs = (ids) => {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(ids)); } catch {}
+      };
+
+      // Build a lookup map from the embedded poem data.
+      const poemMap = new Map(poemData.map(p => [p.id, p]));
+
+      const countEl = document.getElementById('fav-count');
+      const emptyEl = document.getElementById('fav-empty');
+      const listEl = document.getElementById('fav-list');
+
+      const render = () => {
+        const favs = readFavs();
+        const found = favs.map(id => poemMap.get(id)).filter(Boolean);
+
+        countEl.textContent = String(found.length);
+
+        if (found.length === 0) {
+          emptyEl.hidden = false;
+          listEl.hidden = true;
+          listEl.innerHTML = '';
+          return;
+        }
+
+        emptyEl.hidden = true;
+        listEl.hidden = false;
+
+        listEl.innerHTML = found.map(p => {
+          const poemHref = `${base}poem/${p.id}/`;
+          const authorHref = `${base}author/${p.author_slug}/`;
+          return `<li data-poem-id="${p.id}">
+  <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:baseline;">
+    <a class="list-title" href="${poemHref}"><strong>${p.title}</strong></a>
+    <span class="muted">— <a class="muted" href="${authorHref}">${p.author}</a></span>
+    <button class="unstar-btn" type="button" aria-label="Remove from favorites" data-poem-id="${p.id}" title="Remove">✕</button>
+  </div>
+</li>`;
+        }).join('');
+
+        listEl.querySelectorAll('.unstar-btn[data-poem-id]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.poemId;
+            const current = readFavs();
+            writeFavs(current.filter(x => x !== id));
+            window.dispatchEvent(new CustomEvent('freeverse:favorites-change'));
+            render();
+          });
+        });
+      };
+
+      render();
+
+      window.addEventListener('freeverse:favorites-change', render);
+      window.addEventListener('storage', (e) => {
+        if (e.key === STORAGE_KEY) render();
+      });
+    })();
+  </script>
+</BaseLayout>
