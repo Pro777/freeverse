@@ -147,4 +147,32 @@ export const AUTHOR_INFO: Record<string, AuthorInfo> = {
     source_label: "Wikipedia",
     source_url: "https://en.wikipedia.org/wiki/William_Wordsworth",
   },
+  "henry-wadsworth-longfellow": {
+    birth_year: 1807,
+    death_year: 1882,
+    bio: "American poet of the Fireside School whose narrative and lyric poems, including 'Paul Revere's Ride' and 'The Song of Hiawatha', made him the most widely read American poet of the nineteenth century.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/Henry_Wadsworth_Longfellow",
+  },
+  "oliver-wendell-holmes-sr": {
+    birth_year: 1809,
+    death_year: 1894,
+    bio: "American poet, physician, and essayist of the Fireside School, best remembered for 'Old Ironsides' and 'The Chambered Nautilus'.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/Oliver_Wendell_Holmes_Sr.",
+  },
+  "james-russell-lowell": {
+    birth_year: 1819,
+    death_year: 1891,
+    bio: "American Romantic poet, critic, and diplomat, known for 'The Vision of Sir Launfal' and his satirical verse in 'The Biglow Papers'.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/James_Russell_Lowell",
+  },
+  "john-greenleaf-whittier": {
+    birth_year: 1807,
+    death_year: 1892,
+    bio: "American Quaker poet and abolitionist whose rural New England narratives, including 'Snow-Bound' and 'Barbara Frietchie', earned him wide popular acclaim.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/John_Greenleaf_Whittier",
+  },
 };

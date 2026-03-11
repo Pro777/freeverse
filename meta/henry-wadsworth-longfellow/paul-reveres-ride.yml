@@ -1,0 +1,14 @@
+id: "henry-wadsworth-longfellow/paul-reveres-ride"
+slug: "paul-reveres-ride"
+author: "Henry Wadsworth Longfellow"
+author_slug: "henry-wadsworth-longfellow"
+title: "Paul Revere'S Ride"
+century: 19
+text_in_repo: true
+text_path: "poems/henry-wadsworth-longfellow/paul-reveres-ride.txt"
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/1365"
+public_domain_rationale: "Public domain (author died 1882; distributed by Project Gutenberg as public-domain text)."
+collection_title: "The Complete Poetical Works of Henry Wadsworth Longfellow"
+collection_source_url: "https://www.gutenberg.org/ebooks/1365"
+featured: false

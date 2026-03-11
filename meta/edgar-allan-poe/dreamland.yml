@@ -1,0 +1,14 @@
+id: "edgar-allan-poe/dreamland"
+slug: "dreamland"
+author: "Edgar Allan Poe"
+author_slug: "edgar-allan-poe"
+title: "Dreamland"
+century: 19
+text_in_repo: true
+text_path: "poems/edgar-allan-poe/dreamland.txt"
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/10031"
+public_domain_rationale: "Public domain (author died 1849; distributed by Project Gutenberg as public-domain text)."
+collection_title: "The Complete Poetical Works of Edgar Allan Poe"
+collection_source_url: "https://www.gutenberg.org/ebooks/10031"
+featured: false
