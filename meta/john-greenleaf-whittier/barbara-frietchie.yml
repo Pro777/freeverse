@@ -1,0 +1,14 @@
+id: "john-greenleaf-whittier/barbara-frietchie"
+slug: "barbara-frietchie"
+author: "John Greenleaf Whittier"
+author_slug: "john-greenleaf-whittier"
+title: "Barbara Frietchie"
+century: 19
+text_in_repo: true
+text_path: "poems/john-greenleaf-whittier/barbara-frietchie.txt"
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/9580"
+public_domain_rationale: "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text)."
+collection_title: "Anti-Slavery Poems and Songs of Labor and Reform, Complete"
+collection_source_url: "https://www.gutenberg.org/ebooks/9580"
+featured: false
