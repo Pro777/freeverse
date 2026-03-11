@@ -103,7 +103,7 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           return { start, end };
         };
 
-        const applyFromHash = () => {
+        const applyFromHash = (scroll) => {
           clear();
           const r = parseHash();
           if (!r) return;
@@ -115,13 +115,19 @@ const canonicalPath = `${base}poem/${poem.id}/`;
             const el = document.getElementById(`l${n}`);
             if (el) el.classList.add('is-selected');
           }
+
+          // Scroll the first highlighted line into view when following a deep link.
+          if (scroll) {
+            const first = document.getElementById(`l${r.start}`);
+            if (first) first.scrollIntoView({ block: 'center' });
+          }
         };
 
         let startLine = null;
 
         // Keep UI in sync when navigating back/forward.
-        window.addEventListener('hashchange', applyFromHash);
-        applyFromHash();
+        window.addEventListener('hashchange', () => applyFromHash(true));
+        applyFromHash(true);
 
         const toast = (() => {
           let el = document.getElementById('toast');
@@ -173,7 +179,7 @@ const canonicalPath = `${base}poem/${poem.id}/`;
         const setHash = async (start, end) => {
           const fragment = start === end ? `#l${start}` : `#l${start}-l${end}`;
           history.replaceState(null, '', fragment);
-          applyFromHash();
+          applyFromHash(false);
           await copyUrl(start, end);
         };
 
