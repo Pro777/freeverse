@@ -1,9 +1,12 @@
 import { expect, test } from '@playwright/test';
 
-test('author links navigate to author pages', async ({ page }) => {
-  await page.goto('browse/');
+test('browse groups link through to author and poem pages', async ({ page }) => {
+  await page.goto('browse/?author_slug=walt-whitman');
 
-  await page.locator('a', { hasText: 'Walt Whitman' }).first().click();
+  const group = page.locator('details[data-author-slug="walt-whitman"]');
+  await expect(group).toHaveAttribute('open', '');
+
+  await group.getByRole('link', { name: 'View author page' }).click();
   await expect(page).toHaveURL(/author\/walt-whitman\/$/);
   await expect(page.getByRole('heading', { name: 'Walt Whitman' })).toBeVisible();
 
