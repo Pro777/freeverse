@@ -128,6 +128,7 @@ const defaultStatus = `Showing ${statsLabel}. All author groups start collapsed.
                   <span class="muted browse-poem-century">
                     {poem.century}th century
                   </span>
+                  <span class="browse-star" role="img" aria-label="Starred">★</span>
                 </div>
               </li>
             ))}
@@ -248,5 +249,37 @@ const defaultStatus = `Showing ${statsLabel}. All author groups start collapsed.
       filterInput.addEventListener("input", applyFilter);
       applyFilter();
     }
+  </script>
+
+  <script is:inline>
+    (() => {
+      const STORAGE_KEY = 'freeverse-favorites';
+
+      const readFavs = () => {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return [];
+          const parsed = JSON.parse(raw);
+          return Array.isArray(parsed) ? parsed.filter(x => typeof x === 'string') : [];
+        } catch { return []; }
+      };
+
+      const applyFavs = () => {
+        const favSet = new Set(readFavs());
+        const items = document.querySelectorAll('[data-poem-item][data-poem-id]');
+        items.forEach((li) => {
+          const id = li.dataset.poemId;
+          li.classList.toggle('is-starred', favSet.has(id));
+        });
+      };
+
+      applyFavs();
+
+      // React to changes made on poem reader pages (same tab or other tabs).
+      window.addEventListener('freeverse:favorites-change', applyFavs);
+      window.addEventListener('storage', (e) => {
+        if (e.key === STORAGE_KEY) applyFavs();
+      });
+    })();
   </script>
 </BaseLayout>
