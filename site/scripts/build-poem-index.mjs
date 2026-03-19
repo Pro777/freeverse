@@ -20,6 +20,8 @@ const metaRoot = path.join(repoRoot, "meta");
 const outputPath = path.join(process.cwd(), "src", "data", "poem-index.json");
 const dedupeReportPath = path.join(process.cwd(), "src", "data", "dedupe-report.json");
 
+const STATIC_PAGE_LIMIT = 5000;
+
 function parseScalar(raw) {
   const t = raw.trim();
   if (t === "true") return true;
@@ -224,6 +226,14 @@ async function main() {
     `${JSON.stringify({ duplicate_clusters, near_variant_candidates }, null, 2)}\n`,
     "utf8",
   );
+
+  const staticPageCount = metas.length;
+  if (staticPageCount > STATIC_PAGE_LIMIT) {
+    process.stderr.write(
+      `WARNING: static page count (${staticPageCount}) exceeds the ${STATIC_PAGE_LIMIT}-page limit. ` +
+      `This may cause slow builds or bloated deploy artifacts.\n`,
+    );
+  }
 
   console.log(
     `Wrote poem index (${metas.length} poems), duplicate clusters: ${duplicate_clusters.length}, near-variant candidates: ${near_variant_candidates.length}`,
