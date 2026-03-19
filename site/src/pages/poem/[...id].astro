@@ -103,7 +103,22 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           return { start, end };
         };
 
-        const applyFromHash = () => {
+        const scrollRangeIntoView = (range) => {
+          if (!range) return;
+
+          const target = document.getElementById(`l${range.start}`);
+          if (!target) return;
+
+          target.scrollIntoView({
+            block: 'center',
+            inline: 'nearest',
+            behavior: window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+              ? 'auto'
+              : 'smooth',
+          });
+        };
+
+        const applyFromHash = ({ scroll = false } = {}) => {
           clear();
           const r = parseHash();
           if (!r) return;
@@ -115,13 +130,15 @@ const canonicalPath = `${base}poem/${poem.id}/`;
             const el = document.getElementById(`l${n}`);
             if (el) el.classList.add('is-selected');
           }
+
+          if (scroll) scrollRangeIntoView(r);
         };
 
         let startLine = null;
 
         // Keep UI in sync when navigating back/forward.
-        window.addEventListener('hashchange', applyFromHash);
-        applyFromHash();
+        window.addEventListener('hashchange', () => applyFromHash({ scroll: true }));
+        applyFromHash({ scroll: true });
 
         const toast = (() => {
           let el = document.getElementById('toast');

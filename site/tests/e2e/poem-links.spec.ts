@@ -16,3 +16,10 @@ test('clicking and shift-clicking lines updates hash', async ({ page }) => {
   await page.locator('.poem-lines li#l10').click();
   await expect(page).toHaveURL(/#l10$/);
 });
+
+test('deep-linked ranges scroll highlighted lines into view on load', async ({ page }) => {
+  await page.goto('poem/walt-whitman/song-of-myself/#l150-l152');
+
+  await expect(page.locator('.poem-lines li#l150')).toHaveClass(/is-selected/);
+  await expect.poll(async () => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+});
