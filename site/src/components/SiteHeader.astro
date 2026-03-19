@@ -88,7 +88,10 @@ const here = normalized(currentPath);
         else delete root.dataset.theme;
 
         const label = mode === 'system' ? 'System' : mode[0].toUpperCase() + mode.slice(1);
-        for (const btn of toggleButtons) btn.textContent = `Theme: ${label}`;
+        for (const btn of toggleButtons) {
+          btn.textContent = `Theme: ${label}`;
+          btn.setAttribute('aria-pressed', mode === 'dark' ? 'true' : 'false');
+        }
       };
 
       const getStored = () => {
@@ -140,6 +143,26 @@ const here = normalized(currentPath);
 
         document.addEventListener('keydown', (e) => {
           if (e.key === 'Escape') close();
+        });
+
+        // Focus trap: cycle Tab/Shift+Tab within menu
+        menu.addEventListener('keydown', (e) => {
+          if (e.key !== 'Tab') return;
+          const focusable = Array.from(menu.querySelectorAll('a, button'));
+          if (!focusable.length) return;
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+          if (e.shiftKey) {
+            if (document.activeElement === first) {
+              e.preventDefault();
+              last.focus();
+            }
+          } else {
+            if (document.activeElement === last) {
+              e.preventDefault();
+              first.focus();
+            }
+          }
         });
       }
     })();

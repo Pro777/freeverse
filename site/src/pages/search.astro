@@ -26,6 +26,7 @@ const docs = poems.map((p) => ({
 
   <div class="card">
     <div style="display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap;">
+      <label for="q" class="sr-only">Search poems</label>
       <input
         id="q"
         type="search"
@@ -36,7 +37,7 @@ const docs = poems.map((p) => ({
       <span class="pill" id="count">{docs.length} poems</span>
     </div>
 
-    <ul class="list" id="results" style="margin-top: 0.75rem;"></ul>
+    <ul class="list" id="results" aria-live="polite" aria-label="Search results" style="margin-top: 0.75rem;"></ul>
   </div>
 
   <script type="module">
@@ -96,6 +97,28 @@ const docs = poems.map((p) => ({
     };
 
     input.addEventListener('input', run);
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowDown') return;
+      const first = resultsEl.querySelector('a');
+      if (first) { e.preventDefault(); first.focus(); }
+    });
+
+    resultsEl.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      const links = Array.from(resultsEl.querySelectorAll('a'));
+      if (!links.length) return;
+      const idx = links.indexOf(document.activeElement);
+      e.preventDefault();
+      if (e.key === 'ArrowDown') {
+        const next = links[idx + 1] ?? links[0];
+        next.focus();
+      } else {
+        const prev = links[idx - 1] ?? input;
+        if (prev === input) { input.focus(); } else { prev.focus(); }
+      }
+    });
+
     input.focus();
   </script>
 

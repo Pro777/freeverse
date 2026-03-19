@@ -62,7 +62,7 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           const id = `l${n}`;
           const isBlank = line === "";
           return (
-            <li id={id} data-line={n} class={isBlank ? "is-blank" : ""} aria-label={isBlank ? "Stanza break" : undefined}>
+            <li id={id} data-line={n} class={isBlank ? "is-blank" : ""} aria-label={isBlank ? "Stanza break" : undefined} tabindex={isBlank ? undefined : 0} role={isBlank ? undefined : "option"} aria-selected="false">
               <span class="line-anchor" aria-hidden="true"></span>
               <span class="line-text">{isBlank ? "\u00A0" : line}</span>
             </li>
@@ -97,7 +97,10 @@ const canonicalPath = `${base}poem/${poem.id}/`;
         if (!lines.length) return;
 
         const clear = () => {
-          lines.forEach((li) => li.classList.remove('is-selected'));
+          lines.forEach((li) => {
+            li.classList.remove('is-selected');
+            if (li.hasAttribute('aria-selected')) li.setAttribute('aria-selected', 'false');
+          });
         };
 
         const parseHash = () => {
@@ -141,7 +144,10 @@ const canonicalPath = `${base}poem/${poem.id}/`;
 
           for (let n = r.start; n <= r.end; n++) {
             const el = document.getElementById(`l${n}`);
-            if (el) el.classList.add('is-selected');
+            if (el) {
+              el.classList.add('is-selected');
+              el.setAttribute('aria-selected', 'true');
+            }
           }
 
           if (scroll) scrollRangeIntoView(r);
@@ -216,6 +222,31 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           const isLink = e.target && e.target.closest ? e.target.closest('a') : null;
           if (isLink) return;
 
+          const n = Number(li.id.replace(/^l/, ''));
+          if (!Number.isFinite(n)) return;
+
+          if (e.shiftKey) {
+            if (startLine == null) {
+              const r = parseHash();
+              if (r) startLine = r.start;
+            }
+            if (startLine != null) {
+              void setHash(startLine, n);
+              return;
+            }
+          }
+
+          startLine = n;
+          void setHash(n, n);
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key !== 'Enter' && e.key !== ' ') return;
+          const li = document.activeElement && document.activeElement.closest ? document.activeElement.closest('.poem-lines li[id^="l"]') : null;
+          if (!li || !li.id) return;
+          if (li.classList.contains('is-blank')) return;
+
+          e.preventDefault();
           const n = Number(li.id.replace(/^l/, ''));
           if (!Number.isFinite(n)) return;
 
