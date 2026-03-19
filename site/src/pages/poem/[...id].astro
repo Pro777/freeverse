@@ -190,7 +190,7 @@ const canonicalPath = `${base}poem/${poem.id}/`;
         const setHash = async (start, end) => {
           const fragment = start === end ? `#l${start}` : `#l${start}-l${end}`;
           history.replaceState(null, '', fragment);
-          applyFromHash();
+          applyFromHash(false);
           await copyUrl(start, end);
         };
 
