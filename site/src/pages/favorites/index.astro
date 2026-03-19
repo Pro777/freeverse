@@ -79,26 +79,52 @@ const poemData = poemsAll.map((p) => ({
         emptyEl.hidden = true;
         listEl.hidden = false;
 
-        listEl.innerHTML = found.map(p => {
+        listEl.innerHTML = '';
+        found.forEach(p => {
           const poemHref = `${base}poem/${p.id}/`;
           const authorHref = `${base}author/${p.author_slug}/`;
-          return `<li data-poem-id="${p.id}">
-  <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:baseline;">
-    <a class="list-title" href="${poemHref}"><strong>${p.title}</strong></a>
-    <span class="muted">— <a class="muted" href="${authorHref}">${p.author}</a></span>
-    <button class="unstar-btn" type="button" aria-label="Remove from favorites" data-poem-id="${p.id}" title="Remove">✕</button>
-  </div>
-</li>`;
-        }).join('');
 
-        listEl.querySelectorAll('.unstar-btn[data-poem-id]').forEach(btn => {
+          const li = document.createElement('li');
+          li.dataset.poemId = p.id;
+
+          const row = document.createElement('div');
+          row.style.cssText = 'display:flex; gap:0.5rem; flex-wrap:wrap; align-items:baseline;';
+
+          const titleLink = document.createElement('a');
+          titleLink.className = 'list-title';
+          titleLink.href = poemHref;
+          const strong = document.createElement('strong');
+          strong.textContent = p.title;
+          titleLink.appendChild(strong);
+
+          const byline = document.createElement('span');
+          byline.className = 'muted';
+          byline.appendChild(document.createTextNode('— '));
+          const authorLink = document.createElement('a');
+          authorLink.className = 'muted';
+          authorLink.href = authorHref;
+          authorLink.textContent = p.author;
+          byline.appendChild(authorLink);
+
+          const btn = document.createElement('button');
+          btn.className = 'unstar-btn';
+          btn.type = 'button';
+          btn.setAttribute('aria-label', 'Remove from favorites');
+          btn.dataset.poemId = p.id;
+          btn.title = 'Remove';
+          btn.textContent = '✕';
           btn.addEventListener('click', () => {
-            const id = btn.dataset.poemId;
             const current = readFavs();
-            writeFavs(current.filter(x => x !== id));
+            writeFavs(current.filter(x => x !== p.id));
             window.dispatchEvent(new CustomEvent('freeverse:favorites-change'));
             render();
           });
+
+          row.appendChild(titleLink);
+          row.appendChild(byline);
+          row.appendChild(btn);
+          li.appendChild(row);
+          listEl.appendChild(li);
         });
       };
 

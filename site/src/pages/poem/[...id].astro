@@ -236,31 +236,16 @@ const canonicalPath = `${base}poem/${poem.id}/`;
       })();
     </script>
 
-    <script is:inline>
+    <script>
       // Favorites / star button
-      (() => {
-        const STORAGE_KEY = 'freeverse-favorites';
+      import { getFavorites, toggleFavorite, dispatchFavoritesChange } from '../../lib/favorites';
 
-        const readFavs = () => {
-          try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            if (!raw) return [];
-            const parsed = JSON.parse(raw);
-            return Array.isArray(parsed) ? parsed.filter(x => typeof x === 'string') : [];
-          } catch { return []; }
-        };
-
-        const writeFavs = (ids) => {
-          try { localStorage.setItem(STORAGE_KEY, JSON.stringify(ids)); } catch {}
-        };
-
-        const btn = document.querySelector('.star-btn[data-poem-id]');
-        if (!btn) return;
-
-        const poemId = btn.dataset.poemId;
+      const btn = document.querySelector<HTMLButtonElement>('.star-btn[data-poem-id]');
+      if (btn) {
+        const poemId = btn.dataset.poemId!;
 
         const sync = () => {
-          const starred = readFavs().includes(poemId);
+          const starred = getFavorites().includes(poemId);
           btn.setAttribute('aria-pressed', String(starred));
           btn.setAttribute('aria-label', starred ? 'Remove from favorites' : 'Add to favorites');
           btn.classList.toggle('is-starred', starred);
@@ -269,22 +254,15 @@ const canonicalPath = `${base}poem/${poem.id}/`;
         sync();
 
         btn.addEventListener('click', () => {
-          const favs = readFavs();
-          const idx = favs.indexOf(poemId);
-          if (idx === -1) {
-            writeFavs([...favs, poemId]);
-          } else {
-            writeFavs(favs.filter(x => x !== poemId));
-          }
+          toggleFavorite(poemId);
           sync();
-          window.dispatchEvent(new CustomEvent('freeverse:favorites-change'));
+          dispatchFavoritesChange();
         });
 
         // React if another tab/page changes favorites.
-        window.addEventListener('storage', (e) => {
-          if (e.key === STORAGE_KEY) sync();
-        });
-      })();
+        window.addEventListener('storage', sync);
+        window.addEventListener('freeverse:favorites-change', sync);
+      }
     </script>
   </article>
 </BaseLayout>

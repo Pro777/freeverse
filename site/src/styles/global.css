@@ -885,7 +885,7 @@ main {
 .star-icon {
   display: block;
   fill: none;
-  stroke: currentColor;
+  stroke: currentcolor;
   stroke-width: 1.8;
   stroke-linejoin: round;
 }
@@ -897,8 +897,8 @@ main {
 }
 
 .star-btn.is-starred .star-icon {
-  fill: currentColor;
-  stroke: currentColor;
+  fill: currentcolor;
+  stroke: currentcolor;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -917,7 +917,7 @@ main {
   top: -0.05em;
 }
 
-#catalog-list li.is-starred .browse-star {
+.browse-poem-list li.is-starred .browse-star {
   display: inline;
 }
 
