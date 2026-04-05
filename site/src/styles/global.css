@@ -736,6 +736,39 @@ main {
   margin: 0.25rem 0 1.4rem;
 }
 
+.reader-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.reader-mode-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.2rem;
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--paper) 82%, transparent);
+}
+
+.reader-mode-btn {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 0.45rem 0.75rem;
+  font: inherit;
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  cursor: pointer;
+}
+
+.reader-mode-btn[aria-pressed="true"] {
+  background: color-mix(in oklab, var(--accent) 18%, var(--paper));
+  color: var(--ink);
+}
+
 .reader-title {
   margin: 0;
   font-size: clamp(2.05rem, 1.65rem + 1.7vw, 2.75rem);
@@ -766,6 +799,11 @@ main {
   padding: 0.22rem 0;
 }
 
+:root[data-reader-mode="scholar"] .poem-lines li {
+  grid-template-columns: 2.75rem 1fr;
+  gap: 0.8rem;
+}
+
 .poem-lines li:not(.is-blank) {
   cursor: pointer;
 }
@@ -790,6 +828,19 @@ main {
   width: 1.2rem;
 }
 
+:root[data-reader-mode="scholar"] .line-anchor {
+  width: 2.4rem;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: color-mix(in oklab, var(--muted) 82%, transparent);
+  user-select: none;
+}
+
+:root[data-reader-mode="scholar"] .line-anchor::before {
+  content: attr(data-line);
+}
+
 .line-text {
   white-space: pre-wrap;
   font-size: clamp(1.05rem, 1.01rem + 0.35vw, 1.18rem);
@@ -799,9 +850,32 @@ main {
 
 /* De-emphasize the empty gutter on small screens */
 @media (max-width: 480px) {
+  .reader-head-row {
+    align-items: flex-start;
+  }
+
+  .reader-actions {
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+
+  .reader-mode-toggle {
+    align-self: stretch;
+  }
+
+  .reader-mode-btn {
+    padding-inline: 0.65rem;
+  }
+
   .poem-lines li {
     grid-template-columns: 1.1rem 1fr;
     gap: 0.5rem;
+  }
+
+  :root[data-reader-mode="scholar"] .poem-lines li {
+    grid-template-columns: 2.2rem 1fr;
+    gap: 0.55rem;
   }
 }
 
