@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadCollections } from '../../lib/collections';
+
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+
+const collections = await loadCollections();
+---
+
+<BaseLayout
+  title="Collections - Freeverse"
+  description="Curated reading paths through the Freeverse poetry library."
+  currentPath="/collections"
+>
+  <section class="hero">
+    <h1>Collections</h1>
+    <p class="lede">
+      Small editorial paths through the library. Read a mood, a form, or a line of influence rather than a single poem in isolation.
+    </p>
+  </section>
+
+  <section class="grid">
+    {collections.map((collection) => (
+      <article class="card">
+        <div class="kicker">
+          <h2>{collection.title}</h2>
+          <span class="pill">{collection.poems.length} poems</span>
+        </div>
+        <p><strong>{collection.dek}</strong></p>
+        <p class="muted">{collection.description}</p>
+        <div class="actions">
+          <a class="action primary" href={`${base}collections/${collection.slug}/`}>Open collection</a>
+        </div>
+      </article>
+    ))}
+  </section>
+</BaseLayout>
