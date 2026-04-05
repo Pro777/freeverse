@@ -29,7 +29,13 @@ const canonicalPath = `${base}poem/${poem.id}/`;
 ---
 
 <BaseLayout title={title} description={description} currentPath={""}>
-  <article class="reader">
+  <article
+    class="reader"
+    data-poem-id={poem.id}
+    data-poem-title={poem.title}
+    data-poem-author={poem.author}
+    data-share-base={base}
+  >
     <header class="reader-head">
       <div class="reader-head-row">
         <h1 class="reader-title">{poem.title}</h1>
@@ -98,15 +104,83 @@ const canonicalPath = `${base}poem/${poem.id}/`;
       </p>
     </footer>
 
+    <section class="quote-card-tools" data-quote-card-tools hidden aria-live="polite">
+      <div>
+        <p class="quote-card-tools-label">Selected passage</p>
+        <p class="quote-card-tools-range" data-selected-range>Choose a line range to generate a quote card.</p>
+      </div>
+      <div class="quote-card-tools-actions">
+        <button type="button" class="quote-card-action" data-copy-range-link>
+          Copy range link
+        </button>
+        <button type="button" class="quote-card-action quote-card-action-primary" data-open-quote-card>
+          Open quote card
+        </button>
+      </div>
+    </section>
+
+    <div class="quote-card-modal" data-quote-card-modal hidden>
+      <div class="quote-card-backdrop" data-close-quote-card></div>
+      <section
+        class="quote-card-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="quote-card-title"
+      >
+        <button type="button" class="quote-card-close" data-close-quote-card aria-label="Close quote card">
+          Close
+        </button>
+        <p class="quote-card-kicker" id="quote-card-title">Quote card preview</p>
+        <article class="quote-card-preview" data-quote-card-preview>
+          <p class="quote-card-preview-range" data-quote-card-range></p>
+          <blockquote class="quote-card-preview-text" data-quote-card-text></blockquote>
+          <p class="quote-card-preview-meta">
+            <span data-quote-card-author></span>
+            <span class="quote-card-preview-dot">·</span>
+            <span data-quote-card-title-text></span>
+          </p>
+          <p class="quote-card-preview-link" data-quote-card-link></p>
+        </article>
+        <div class="quote-card-panel-actions">
+          <button type="button" class="quote-card-action" data-copy-quote-card-text>
+            Copy card text
+          </button>
+          <button type="button" class="quote-card-action quote-card-action-primary" data-native-share>
+            Share card
+          </button>
+        </div>
+      </section>
+    </div>
+
     <script is:inline>
       // NOTE: URL fragment helpers are unit-tested in site/src/lib/lineLinks.ts.
       // This inline script intentionally keeps its own lightweight parsing/building
       // to avoid bundling surprises in the static output.
       (() => {
+        const article = document.querySelector('.reader[data-poem-id]');
+        if (!article) return;
+
         const READER_MODE_STORAGE_KEY = 'freeverse-reader-mode';
         const lines = Array.from(document.querySelectorAll('.poem-lines li'));
         if (!lines.length) return;
         const readerModeButtons = Array.from(document.querySelectorAll('.reader-mode-btn'));
+        const quoteCardTools = document.querySelector('[data-quote-card-tools]');
+        const selectedRangeLabel = document.querySelector('[data-selected-range]');
+        const copyRangeLinkButton = document.querySelector('[data-copy-range-link]');
+        const openQuoteCardButton = document.querySelector('[data-open-quote-card]');
+        const quoteCardModal = document.querySelector('[data-quote-card-modal]');
+        const quoteCardText = document.querySelector('[data-quote-card-text]');
+        const quoteCardRange = document.querySelector('[data-quote-card-range]');
+        const quoteCardAuthor = document.querySelector('[data-quote-card-author]');
+        const quoteCardTitle = document.querySelector('[data-quote-card-title-text]');
+        const quoteCardLink = document.querySelector('[data-quote-card-link]');
+        const copyQuoteCardTextButton = document.querySelector('[data-copy-quote-card-text]');
+        const nativeShareButton = document.querySelector('[data-native-share]');
+        const closeQuoteCardButtons = Array.from(document.querySelectorAll('[data-close-quote-card]'));
+        const poemId = article.dataset.poemId || '';
+        const poemTitle = article.dataset.poemTitle || '';
+        const poemAuthor = article.dataset.poemAuthor || '';
+        const shareBase = article.dataset.shareBase || '/';
 
         const applyReaderMode = (mode) => {
           const nextMode = mode === 'scholar' ? 'scholar' : 'clean';
@@ -164,7 +238,12 @@ const canonicalPath = `${base}poem/${poem.id}/`;
         const applyFromHash = ({ scroll = false } = {}) => {
           clear();
           const r = parseHash();
-          if (!r) return;
+          syncQuoteCardState(r);
+          if (!r) {
+            if (quoteCardModal) quoteCardModal.hidden = true;
+            document.body.classList.remove('quote-card-open');
+            return;
+          }
 
           // Make shift-click extend the current selection, even after refresh/back/forward.
           startLine = r.start;
@@ -178,10 +257,6 @@ const canonicalPath = `${base}poem/${poem.id}/`;
         };
 
         let startLine = null;
-
-        // Keep UI in sync when navigating back/forward.
-        window.addEventListener('hashchange', () => applyFromHash({ scroll: true }));
-        applyFromHash({ scroll: true });
 
         const toast = (() => {
           let el = document.getElementById('toast');
@@ -207,8 +282,60 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           const s = Math.min(start, end);
           const e = Math.max(start, end);
           // Selection-aware, crawler-visible URL (static prebuilt for short ranges).
-          return `${location.origin}${base}share/${encodeURIComponent(poem.id)}/${s}-${e}/`;
+          return new URL(`${shareBase}share/${encodeURIComponent(poemId)}/${s}-${e}/`, location.origin).toString();
         };
+
+        const formatRangeLabel = (start, end) => {
+          const s = Math.min(start, end);
+          const e = Math.max(start, end);
+          return s === e ? `Line ${s}` : `Lines ${s}-${e}`;
+        };
+
+        const getRangeText = (start, end) => {
+          const excerpt = [];
+          for (let n = Math.min(start, end); n <= Math.max(start, end); n += 1) {
+            const line = document.getElementById(`l${n}`);
+            if (!line) continue;
+            excerpt.push(line.classList.contains('is-blank') ? '' : (line.querySelector('.line-text')?.textContent ?? ''));
+          }
+          return excerpt.join('\n').trimEnd();
+        };
+
+        const buildQuoteCardPayload = (start, end) => {
+          const rangeLabel = formatRangeLabel(start, end);
+          const excerpt = getRangeText(start, end);
+          const url = buildShareUrl(start, end);
+          const shareText = `"${excerpt}"\n\n${poemTitle} — ${poemAuthor}\n${rangeLabel}\n${url}`;
+          return { rangeLabel, excerpt, url, shareText };
+        };
+
+        const syncQuoteCardState = (range) => {
+          if (!quoteCardTools || !selectedRangeLabel || !copyRangeLinkButton || !openQuoteCardButton) return;
+
+          if (!range) {
+            quoteCardTools.hidden = true;
+            selectedRangeLabel.textContent = 'Choose a line range to generate a quote card.';
+            copyRangeLinkButton.disabled = true;
+            openQuoteCardButton.disabled = true;
+            return;
+          }
+
+          const payload = buildQuoteCardPayload(range.start, range.end);
+          quoteCardTools.hidden = false;
+          selectedRangeLabel.textContent = `${payload.rangeLabel} ready to share`;
+          copyRangeLinkButton.disabled = false;
+          openQuoteCardButton.disabled = false;
+
+          if (quoteCardText) quoteCardText.textContent = payload.excerpt;
+          if (quoteCardRange) quoteCardRange.textContent = payload.rangeLabel;
+          if (quoteCardAuthor) quoteCardAuthor.textContent = poemAuthor;
+          if (quoteCardTitle) quoteCardTitle.textContent = poemTitle;
+          if (quoteCardLink) quoteCardLink.textContent = payload.url.replace(location.origin, '');
+        };
+
+        // Keep UI in sync when navigating back/forward.
+        window.addEventListener('hashchange', () => applyFromHash({ scroll: true }));
+        applyFromHash({ scroll: true });
 
         const copyUrl = async (start, end) => {
           const url = (start && end) ? buildShareUrl(start, end) : location.href;
@@ -233,9 +360,80 @@ const canonicalPath = `${base}poem/${poem.id}/`;
         const setHash = async (start, end) => {
           const fragment = start === end ? `#l${start}` : `#l${start}-l${end}`;
           history.replaceState(null, '', fragment);
-          applyFromHash(false);
+          applyFromHash({ scroll: false });
           await copyUrl(start, end);
         };
+
+        const closeQuoteCard = () => {
+          if (!quoteCardModal) return;
+          quoteCardModal.hidden = true;
+          document.body.classList.remove('quote-card-open');
+        };
+
+        const openQuoteCard = () => {
+          const range = parseHash();
+          if (!range || !quoteCardModal) return;
+          syncQuoteCardState(range);
+          quoteCardModal.hidden = false;
+          document.body.classList.add('quote-card-open');
+        };
+
+        closeQuoteCardButtons.forEach((button) => {
+          button.addEventListener('click', closeQuoteCard);
+        });
+
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') closeQuoteCard();
+        });
+
+        copyRangeLinkButton?.addEventListener('click', async () => {
+          const range = parseHash();
+          if (!range) return;
+          await copyUrl(range.start, range.end);
+        });
+
+        openQuoteCardButton?.addEventListener('click', openQuoteCard);
+
+        copyQuoteCardTextButton?.addEventListener('click', async () => {
+          const range = parseHash();
+          if (!range) return;
+          const payload = buildQuoteCardPayload(range.start, range.end);
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(payload.shareText);
+              toast(`Copied quote card for ${payload.rangeLabel.toLowerCase()}`);
+            } else {
+              toast('Quote card ready to copy');
+            }
+          } catch {
+            toast('Quote card ready to copy');
+          }
+        });
+
+        nativeShareButton?.addEventListener('click', async () => {
+          const range = parseHash();
+          if (!range) return;
+          const payload = buildQuoteCardPayload(range.start, range.end);
+          if (navigator.share) {
+            try {
+              await navigator.share({
+                title: `${poemTitle} — ${payload.rangeLabel}`,
+                text: `"${payload.excerpt}"\n\n${poemTitle} — ${poemAuthor}`,
+                url: payload.url,
+              });
+            } catch {}
+            return;
+          }
+
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(payload.shareText);
+              toast(`Copied quote card for ${payload.rangeLabel.toLowerCase()}`);
+            }
+          } catch {
+            toast('Share unavailable on this browser');
+          }
+        });
 
         document.addEventListener('click', (e) => {
           const li = e.target && e.target.closest ? e.target.closest('.poem-lines li[id^="l"]') : null;
