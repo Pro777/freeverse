@@ -1,0 +1,15 @@
+id: "andrew-marvell/to-his-coy-mistress"
+slug: "to-his-coy-mistress"
+author: "Andrew Marvell"
+author_slug: "andrew-marvell"
+title: "To His Coy Mistress"
+century: 17
+
+text_path: "poems/andrew-marvell/to-his-coy-mistress.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Miscellaneous_Poems_(Marvell)/To_his_Coy_Mistress"
+public_domain_rationale: "Public domain in the United States: Marvell died 1678 and the Wikisource text is from a public-domain source."
+
+notes: "Orthography preserved from the 1681 text on Wikisource."
