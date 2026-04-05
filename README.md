@@ -39,3 +39,4 @@ See:
 - `PROVENANCE.md`
 - `CONTENT_LICENSE.md`
 - `CONTRIBUTING.md`
+- `docs/org-transfer-plan.md`
