@@ -33,17 +33,27 @@ const canonicalPath = `${base}poem/${poem.id}/`;
     <header class="reader-head">
       <div class="reader-head-row">
         <h1 class="reader-title">{poem.title}</h1>
-        <button
-          class="star-btn"
-          type="button"
-          aria-label="Add to favorites"
-          aria-pressed="false"
-          data-poem-id={poem.id}
-        >
-          <svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/>
-          </svg>
-        </button>
+        <div class="reader-actions">
+          <div class="reader-mode-toggle" role="group" aria-label="Reader mode">
+            <button type="button" class="reader-mode-btn" data-reader-mode-value="clean" aria-pressed="false">
+              Clean page
+            </button>
+            <button type="button" class="reader-mode-btn" data-reader-mode-value="scholar" aria-pressed="false">
+              Scholar mode
+            </button>
+          </div>
+          <button
+            class="star-btn"
+            type="button"
+            aria-label="Add to favorites"
+            aria-pressed="false"
+            data-poem-id={poem.id}
+          >
+            <svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </button>
+        </div>
       </div>
       <p class="reader-byline">
         <span class="muted">by</span>{' '}
@@ -63,7 +73,7 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           const isBlank = line === "";
           return (
             <li id={id} data-line={n} class={isBlank ? "is-blank" : ""} aria-label={isBlank ? "Stanza break" : undefined}>
-              <span class="line-anchor" aria-hidden="true"></span>
+              <span class="line-anchor" aria-hidden="true" data-line={n}></span>
               <span class="line-text">{isBlank ? "\u00A0" : line}</span>
             </li>
           );
@@ -93,8 +103,28 @@ const canonicalPath = `${base}poem/${poem.id}/`;
       // This inline script intentionally keeps its own lightweight parsing/building
       // to avoid bundling surprises in the static output.
       (() => {
+        const READER_MODE_STORAGE_KEY = 'freeverse-reader-mode';
         const lines = Array.from(document.querySelectorAll('.poem-lines li'));
         if (!lines.length) return;
+        const readerModeButtons = Array.from(document.querySelectorAll('.reader-mode-btn'));
+
+        const applyReaderMode = (mode) => {
+          const nextMode = mode === 'scholar' ? 'scholar' : 'clean';
+          document.documentElement.dataset.readerMode = nextMode;
+          readerModeButtons.forEach((button) => {
+            const active = button.dataset.readerModeValue === nextMode;
+            button.setAttribute('aria-pressed', String(active));
+          });
+          try {
+            localStorage.setItem(READER_MODE_STORAGE_KEY, nextMode);
+          } catch {}
+        };
+
+        readerModeButtons.forEach((button) => {
+          button.addEventListener('click', () => applyReaderMode(button.dataset.readerModeValue));
+        });
+
+        applyReaderMode(document.documentElement.dataset.readerMode);
 
         const clear = () => {
           lines.forEach((li) => li.classList.remove('is-selected'));

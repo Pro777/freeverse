@@ -32,6 +32,17 @@ const ogImageUrl = site ? new URL(`${base}og.png`, site).toString() : undefined;
         } catch {}
       })();
     </script>
+    <script is:inline>
+      (() => {
+        const STORAGE_KEY = 'freeverse-reader-mode';
+        try {
+          const mode = localStorage.getItem(STORAGE_KEY);
+          if (mode === 'clean' || mode === 'scholar') {
+            document.documentElement.dataset.readerMode = mode;
+          }
+        } catch {}
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <link rel="icon" href={`${base}favicon.ico`} />
     <meta name="viewport" content="width=device-width" />
