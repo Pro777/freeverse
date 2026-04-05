@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { loadPoemMetas } from "../../lib/poems";
 import { authorPath } from "../../lib/url";
+import { AUTHOR_INFO, formatAuthorYears } from "../../lib/authors";
 import { AUTHOR_INFO } from "../../lib/authors";
 
 const base = import.meta.env.BASE_URL.endsWith("/")
@@ -45,7 +46,7 @@ authors.sort((a, b) => a.name.localeCompare(b.name));
               <strong>{a.name}</strong>
             </a>
             <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
-              {info ? `${info.birth_year}–${info.death_year}` : "Dates unavailable"} · {a.count} poem{a.count === 1 ? "" : "s"}
+              {info ? formatAuthorYears(info.birth_year, info.death_year) : "Dates unavailable"} · {a.count} poem{a.count === 1 ? "" : "s"}
             </div>
           </li>
         );

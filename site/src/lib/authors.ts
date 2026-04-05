@@ -6,6 +6,35 @@ export type AuthorInfo = {
   source_url: string;
 };
 
+function formatHistoricalYear(year: number): string {
+  return year < 0 ? `${Math.abs(year)} BC` : `${year}`;
+}
+
+function ordinal(value: number): string {
+  const mod100 = value % 100;
+  if (mod100 >= 11 && mod100 <= 13) return `${value}th`;
+
+  switch (value % 10) {
+    case 1:
+      return `${value}st`;
+    case 2:
+      return `${value}nd`;
+    case 3:
+      return `${value}rd`;
+    default:
+      return `${value}th`;
+  }
+}
+
+export function formatAuthorYears(birthYear: number, deathYear: number): string {
+  return `${formatHistoricalYear(birthYear)}–${formatHistoricalYear(deathYear)}`;
+}
+
+export function formatCenturyLabel(century: number): string {
+  if (century < 0) return `${ordinal(Math.abs(century))} century BC`;
+  return `${ordinal(century)} century`;
+}
+
 export const AUTHOR_INFO: Record<string, AuthorInfo> = {
   "alfred-tennyson": {
     birth_year: 1809,
@@ -69,6 +98,20 @@ export const AUTHOR_INFO: Record<string, AuthorInfo> = {
     bio: "Roman lyric poet of the Augustan age, celebrated for the Odes and enduring maxims including 'non omnis moriar'.",
     source_label: "Wikipedia",
     source_url: "https://en.wikipedia.org/wiki/Horace",
+  },
+  catullus: {
+    birth_year: -84,
+    death_year: -54,
+    bio: "Roman lyric poet whose brief, intensely personal poems on love, betrayal, friendship, and invective shaped later European lyric.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/Catullus",
+  },
+  sappho: {
+    birth_year: -630,
+    death_year: -570,
+    bio: "Archaic Greek lyric poet from Lesbos, famed for fragments on desire, devotion, and intimate speech that became foundational for lyric tradition.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/Sappho",
   },
   "john-keats": {
     birth_year: 1795,

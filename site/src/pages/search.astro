@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { formatCenturyLabel } from "../lib/authors";
 import { loadPoemMetas } from "../lib/poems";
 import { authorPath } from "../lib/url";
 
@@ -14,6 +15,7 @@ const docs = poems.map((p) => ({
   author: p.author,
   authorUrl: authorPath(base, p.author_slug),
   century: p.century,
+  centuryLabel: formatCenturyLabel(p.century),
   url: `${base}poem/${p.id}/`,
 }));
 ---
@@ -46,7 +48,7 @@ const docs = poems.map((p) => ({
 
     const mini = new MiniSearch({
       fields: ['title', 'author'],
-      storeFields: ['id', 'title', 'author', 'authorUrl', 'url', 'century'],
+      storeFields: ['id', 'title', 'author', 'authorUrl', 'url', 'century', 'centuryLabel'],
       searchOptions: {
         boost: { title: 2 },
         fuzzy: 0.2,
@@ -71,7 +73,7 @@ const docs = poems.map((p) => ({
             <span class="muted">— <a class="muted" href="${r.authorUrl}">${r.author}</a></span>
           </div>
           <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
-            ${r.century}th century
+            ${r.centuryLabel}
           </div>
         `;
         resultsEl.appendChild(li);

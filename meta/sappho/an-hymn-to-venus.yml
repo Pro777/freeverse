@@ -1,0 +1,15 @@
+id: "sappho/an-hymn-to-venus"
+slug: "an-hymn-to-venus"
+author: "Sappho"
+author_slug: "sappho"
+title: "An Hymn to Venus"
+century: -6
+
+text_path: "poems/sappho/an-hymn-to-venus.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Pastorals_Epistles_Odes_(1748)/An_Hymn_to_Venus,_from_the_Greek_of_Sappho"
+public_domain_rationale: "Public domain in the United States: Sappho died in the 6th century BC and Ambrose Philips's translation was published in 1748 on Wikisource."
+
+notes: "English translation from the Greek by Ambrose Philips."

@@ -1,0 +1,15 @@
+id: "catullus/womans-faith"
+slug: "womans-faith"
+author: "Catullus"
+author_slug: "catullus"
+title: "Woman's Faith"
+century: -1
+
+text_path: "poems/catullus/womans-faith.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Woman%27s_Faith"
+public_domain_rationale: "Public domain in the United States: Catullus died in the 1st century BC and Edward Shepherd Creasy's translation was published in 1851 on Wikisource."
+
+notes: "Translation of Catullus 70 by Edward Shepherd Creasy."
