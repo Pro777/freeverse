@@ -1,0 +1,15 @@
+id: "john-donne/a-valediction-forbidding-mourning"
+slug: "a-valediction-forbidding-mourning"
+author: "John Donne"
+author_slug: "john-donne"
+title: "A Valediction: Forbidding Mourning"
+century: 17
+
+text_path: "poems/john-donne/a-valediction-forbidding-mourning.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/A_Valediction:_Forbidding_Mourning"
+public_domain_rationale: "Public domain in the United States: Donne died 1631 and the Wikisource text is from a public-domain source."
+
+notes: "Orthography preserved from Wikisource."

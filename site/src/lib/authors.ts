@@ -77,6 +77,13 @@ export const AUTHOR_INFO: Record<string, AuthorInfo> = {
     source_label: "Wikipedia",
     source_url: "https://en.wikipedia.org/wiki/John_Keats",
   },
+  "john-donne": {
+    birth_year: 1572,
+    death_year: 1631,
+    bio: "English poet, preacher, and leading metaphysical writer, known for intellectually charged lyrics such as 'A Valediction: Forbidding Mourning' and the Holy Sonnets.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/John_Donne",
+  },
   "john-milton": {
     birth_year: 1608,
     death_year: 1674,
@@ -111,6 +118,20 @@ export const AUTHOR_INFO: Record<string, AuthorInfo> = {
     bio: "English poet and critic of the Romantic movement, known for 'The Rime of the Ancient Mariner' and collaboration with Wordsworth.",
     source_label: "Wikipedia",
     source_url: "https://en.wikipedia.org/wiki/Samuel_Taylor_Coleridge",
+  },
+  "george-herbert": {
+    birth_year: 1593,
+    death_year: 1633,
+    bio: "English poet and priest whose devotional lyrics in 'The Temple' combine metaphysical wit with compressed spiritual reflection.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/George_Herbert",
+  },
+  "andrew-marvell": {
+    birth_year: 1621,
+    death_year: 1678,
+    bio: "English poet and statesman associated with metaphysical and political verse, remembered for 'To His Coy Mistress' and other agile, argument-driven lyrics.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/Andrew_Marvell",
   },
   "walt-whitman": {
     birth_year: 1819,

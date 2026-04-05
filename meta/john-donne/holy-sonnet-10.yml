@@ -1,0 +1,15 @@
+id: "john-donne/holy-sonnet-10"
+slug: "holy-sonnet-10"
+author: "John Donne"
+author_slug: "john-donne"
+title: "Holy Sonnet 10"
+century: 17
+
+text_path: "poems/john-donne/holy-sonnet-10.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Holy_Sonnets/Holy_Sonnet_X"
+public_domain_rationale: "Public domain in the United States: Donne died 1631 and the Wikisource text is from a public-domain source."
+
+notes: "Often known by its opening line, 'Death be not proud'."
