@@ -1,0 +1,15 @@
+id: "emily-dickinson/after-great-pain-a-formal-feeling-comes"
+slug: "after-great-pain-a-formal-feeling-comes"
+author: "Emily Dickinson"
+author_slug: "emily-dickinson"
+title: "After great pain a formal feeling comes"
+century: 19
+
+text_path: "poems/emily-dickinson/after-great-pain-a-formal-feeling-comes.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Further_Poems_of_Emily_Dickinson/After_great_pain_a_formal_feeling_comes%E2%80%94"
+public_domain_rationale: "Public domain in the United States: Dickinson died 1886; text from a 1929-or-earlier public-domain volume on Wikisource."
+
+notes: "Title normalized to the opening line without the trailing dash; original capitalization and line breaks preserved from the source transcription."

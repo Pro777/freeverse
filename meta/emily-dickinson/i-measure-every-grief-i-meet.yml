@@ -1,0 +1,15 @@
+id: "emily-dickinson/i-measure-every-grief-i-meet"
+slug: "i-measure-every-grief-i-meet"
+author: "Emily Dickinson"
+author_slug: "emily-dickinson"
+title: "I measure every grief I meet"
+century: 19
+
+text_path: "poems/emily-dickinson/i-measure-every-grief-i-meet.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Poems:_Third_Series/Griefs"
+public_domain_rationale: "Public domain in the United States: Dickinson died 1886; text from the 1896 Poems: Third Series volume on Wikisource."
+
+notes: "Title follows the opening line; source section numbering and front matter were omitted."
