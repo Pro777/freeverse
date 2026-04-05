@@ -1,0 +1,15 @@
+id: "samuel-taylor-coleridge/france-an-ode"
+slug: "france-an-ode"
+author: "Samuel Taylor Coleridge"
+author_slug: "samuel-taylor-coleridge"
+title: "France, an Ode"
+century: 19
+
+text_path: "poems/samuel-taylor-coleridge/france-an-ode.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Fears_in_Solitude_(Coleridge)/France,_an_Ode"
+public_domain_rationale: "Public domain in the United States: Coleridge died 1834; text from the 1798 Wikisource transcription of Fears in Solitude."
+
+notes: "Copied from the poem-specific Wikisource page."

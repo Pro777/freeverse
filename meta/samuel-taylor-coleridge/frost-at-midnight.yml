@@ -1,0 +1,15 @@
+id: "samuel-taylor-coleridge/frost-at-midnight"
+slug: "frost-at-midnight"
+author: "Samuel Taylor Coleridge"
+author_slug: "samuel-taylor-coleridge"
+title: "Frost at Midnight"
+century: 19
+
+text_path: "poems/samuel-taylor-coleridge/frost-at-midnight.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Fears_in_Solitude_(Coleridge)/Frost_at_Midnight"
+public_domain_rationale: "Public domain in the United States: Coleridge died 1834; text from the 1798 Wikisource transcription of Fears in Solitude."
+
+notes: "Copied from the poem-specific Wikisource page; page-note reference explaining 'film'/'stranger' was omitted from the poem text."
