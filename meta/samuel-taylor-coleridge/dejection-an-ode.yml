@@ -1,0 +1,15 @@
+id: "samuel-taylor-coleridge/dejection-an-ode"
+slug: "dejection-an-ode"
+author: "Samuel Taylor Coleridge"
+author_slug: "samuel-taylor-coleridge"
+title: "Dejection: an Ode"
+century: 19
+
+text_path: "poems/samuel-taylor-coleridge/dejection-an-ode.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Sibylline_Leaves_(Coleridge)/Dejection:_an_Ode"
+public_domain_rationale: "Public domain in the United States: Coleridge died 1834; text from an 1817 Wikisource transcription of Sibylline Leaves."
+
+notes: "Keeps the source epigraph and stanza numbering; Wikisource errata notes and glossary footnotes were omitted from the poem text."

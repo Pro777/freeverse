@@ -1,0 +1,15 @@
+id: "john-keats/bright-star"
+slug: "bright-star"
+author: "John Keats"
+author_slug: "john-keats"
+title: "Bright star, would I were stedfast as thou art"
+century: 19
+
+text_path: "poems/john-keats/bright-star.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/The_Hundred_Best_Poems_(lyrical)_in_the_English_language_-_second_series/Bright_star,_would_I_were_stedfast_as_thou_art"
+public_domain_rationale: "Public domain in the United States: Keats died 1821; text from a 1904 Wikisource transcription of a public-domain anthology."
+
+notes: "Title follows the opening line on Wikisource; original spelling and punctuation preserved from the source transcription."

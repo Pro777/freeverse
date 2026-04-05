@@ -1,0 +1,15 @@
+id: "william-wordsworth/tintern-abbey"
+slug: "tintern-abbey"
+author: "William Wordsworth"
+author_slug: "william-wordsworth"
+title: "Lines Composed a few Miles above Tintern Abbey"
+century: 19
+
+text_path: "poems/william-wordsworth/tintern-abbey.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Poems_(Wordsworth,_1815)/Volume_2/Tintern_Abbey"
+public_domain_rationale: "Public domain in the United States: published in an 1815 volume on Wikisource (pre-1929); Wordsworth died 1850."
+
+notes: "Running title shortened to the common form 'Tintern Abbey' for the slug; poem text omits Wikisource page notes and references."
