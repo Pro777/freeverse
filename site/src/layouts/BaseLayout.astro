@@ -67,10 +67,11 @@ const ogImageUrl = site ? new URL(`${base}og.png`, site).toString() : undefined;
     <title>{title}</title>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <div class="container">
       <div class="shell">
         <SiteHeader currentPath={currentPath} />
-        <main>
+        <main id="main-content" tabindex="-1">
           <slot />
         </main>
         <footer class="footer">

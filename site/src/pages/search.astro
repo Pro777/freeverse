@@ -27,24 +27,38 @@ const docs = poems.map((p) => ({
   </section>
 
   <div class="card">
-    <div style="display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap;">
-      <input
-        id="q"
-        type="search"
-        placeholder="Try grief, night, sea, prayer, or a title..."
-        autocomplete="off"
-        style="flex: 1 1 18rem; padding: 0.6rem 0.75rem; border-radius: 12px; border: 1px solid var(--card-border); background: color-mix(in oklab, var(--paper) 92%, transparent); font-family: var(--sans); font-size: 1rem;"
-      />
-      <span class="pill" id="count">{docs.length} poems</span>
-    </div>
+    <form role="search" aria-labelledby="search-form-title">
+      <h2 id="search-form-title" class="sr-only">Search poems</h2>
+      <div style="display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap;">
+        <label class="sr-only" for="q">Search poems</label>
+        <input
+          id="q"
+          type="search"
+          placeholder="Try grief, night, sea, prayer, or a title..."
+          autocomplete="off"
+          aria-describedby="search-help search-status"
+          aria-controls="results"
+          style="flex: 1 1 18rem; padding: 0.6rem 0.75rem; border-radius: 12px; border: 1px solid var(--card-border); background: color-mix(in oklab, var(--paper) 92%, transparent); font-family: var(--sans); font-size: 1rem;"
+        />
+        <span class="pill" id="count" aria-hidden="true">{docs.length} poems</span>
+      </div>
 
-    <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.75rem;">
-      {['grief', 'love', 'nature', 'night', 'sea', 'faith', 'solitude'].map((term) => (
-        <button class="pill" type="button" data-suggestion={term} style="cursor:pointer; border:0;">
-          {term}
-        </button>
-      ))}
-    </div>
+      <p id="search-help" class="muted" style="margin-top:0.75rem;">
+        Search by title, author, theme, or mood. Suggestions below fill the search field.
+      </p>
+
+      <div aria-label="Suggested searches" style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.75rem;">
+        {['grief', 'love', 'nature', 'night', 'sea', 'faith', 'solitude'].map((term) => (
+          <button class="pill" type="button" data-suggestion={term} style="cursor:pointer; border:0;">
+            {term}
+          </button>
+        ))}
+      </div>
+    </form>
+
+    <p id="search-status" class="muted" role="status" aria-live="polite" style="margin-top:0.75rem;">
+      {docs.length} poems available.
+    </p>
 
     <ul class="list" id="results" style="margin-top: 0.75rem;"></ul>
   </div>
@@ -73,12 +87,14 @@ const docs = poems.map((p) => ({
     const input = document.getElementById('q');
     const resultsEl = document.getElementById('results');
     const countEl = document.getElementById('count');
+    const statusEl = document.getElementById('search-status');
     const params = new URLSearchParams(window.location.search);
     const suggestions = Array.from(document.querySelectorAll('[data-suggestion]'));
 
     const render = (items) => {
       resultsEl.innerHTML = '';
       countEl.textContent = `${items.length} result${items.length === 1 ? '' : 's'}`;
+      if (statusEl) statusEl.textContent = `${items.length} result${items.length === 1 ? '' : 's'} available.`;
 
       for (const r of items) {
         const li = document.createElement('li');
@@ -109,6 +125,7 @@ const docs = poems.map((p) => ({
       if (!q) {
         countEl.textContent = `${docs.length} poems`;
         resultsEl.innerHTML = '';
+        if (statusEl) statusEl.textContent = `${docs.length} poems available.`;
         params.delete('q');
         history.replaceState({}, '', `${window.location.pathname}`);
         return;
@@ -147,7 +164,6 @@ const docs = poems.map((p) => ({
     }
     input.value = params.get('q') ?? '';
     if (input.value) run();
-    input.focus();
   </script>
 
   <script id="search-data" type="application/json">{JSON.stringify(docs)}</script>

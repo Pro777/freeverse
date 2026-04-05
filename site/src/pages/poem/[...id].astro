@@ -74,19 +74,30 @@ const canonicalPath = `${base}poem/${poem.id}/`;
     </header>
 
     {raw ? (
-      <ol class="poem-lines" aria-label="Poem">
+      <>
+        <p id="poem-reader-instructions" class="sr-only">
+          Use Tab to move through poem lines. Press Enter or Space to select a line. Hold Shift while selecting a second line to create a shared range.
+        </p>
+        <ol class="poem-lines" aria-label="Poem" aria-describedby="poem-reader-instructions">
         {lines.map((line, idx) => {
           const n = idx + 1;
           const id = `l${n}`;
           const isBlank = line === "";
           return (
-            <li id={id} data-line={n} class={isBlank ? "is-blank" : ""} aria-label={isBlank ? "Stanza break" : undefined}>
+            <li
+              id={id}
+              data-line={n}
+              class={isBlank ? "is-blank" : ""}
+              aria-label={isBlank ? "Stanza break" : undefined}
+              tabindex={isBlank ? undefined : 0}
+            >
               <span class="line-anchor" aria-hidden="true" data-line={n}></span>
               <span class="line-text">{isBlank ? "\u00A0" : line}</span>
             </li>
           );
         })}
-      </ol>
+        </ol>
+      </>
     ) : (
       <div class="card">
         <p class="muted" style="margin:0;">
@@ -204,10 +215,13 @@ const canonicalPath = `${base}poem/${poem.id}/`;
         const copyQuoteCardTextButton = document.querySelector('[data-copy-quote-card-text]');
         const nativeShareButton = document.querySelector('[data-native-share]');
         const closeQuoteCardButtons = Array.from(document.querySelectorAll('[data-close-quote-card]'));
+        const quoteCardPanel = document.querySelector('[data-quote-card-modal] .quote-card-panel');
+        const quoteCardCloseButton = document.querySelector('[data-close-quote-card].quote-card-close');
         const poemId = article.dataset.poemId || '';
         const poemTitle = article.dataset.poemTitle || '';
         const poemAuthor = article.dataset.poemAuthor || '';
         const shareBase = article.dataset.shareBase || '/';
+        let lastFocusedElement = null;
 
         const applyReaderMode = (mode) => {
           const nextMode = mode === 'scholar' ? 'scholar' : 'clean';
@@ -395,14 +409,17 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           if (!quoteCardModal) return;
           quoteCardModal.hidden = true;
           document.body.classList.remove('quote-card-open');
+          if (lastFocusedElement instanceof HTMLElement) lastFocusedElement.focus();
         };
 
         const openQuoteCard = () => {
           const range = parseHash();
           if (!range || !quoteCardModal) return;
           syncQuoteCardState(range);
+          lastFocusedElement = document.activeElement;
           quoteCardModal.hidden = false;
           document.body.classList.add('quote-card-open');
+          if (quoteCardCloseButton instanceof HTMLElement) quoteCardCloseButton.focus();
         };
 
         closeQuoteCardButtons.forEach((button) => {
@@ -410,6 +427,22 @@ const canonicalPath = `${base}poem/${poem.id}/`;
         });
 
         document.addEventListener('keydown', (event) => {
+          if (event.key === 'Tab' && quoteCardModal && !quoteCardModal.hidden && quoteCardPanel instanceof HTMLElement) {
+            const focusable = Array.from(
+              quoteCardPanel.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+            ).filter((el) => el instanceof HTMLElement && !el.hasAttribute('disabled'));
+            if (focusable.length) {
+              const first = focusable[0];
+              const last = focusable[focusable.length - 1];
+              if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
+              } else if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+              }
+            }
+          }
           if (event.key === 'Escape') closeQuoteCard();
         });
 
@@ -470,6 +503,31 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           // Don't hijack clicks on real links inside the poem (if we add any later).
           const isLink = e.target && e.target.closest ? e.target.closest('a') : null;
           if (isLink) return;
+
+          const n = Number(li.id.replace(/^l/, ''));
+          if (!Number.isFinite(n)) return;
+
+          if (e.shiftKey) {
+            if (startLine == null) {
+              const r = parseHash();
+              if (r) startLine = r.start;
+            }
+            if (startLine != null) {
+              void setHash(startLine, n);
+              return;
+            }
+          }
+
+          startLine = n;
+          void setHash(n, n);
+        });
+
+        document.addEventListener('keydown', (e) => {
+          const li = e.target && e.target.closest ? e.target.closest('.poem-lines li[id^="l"]') : null;
+          if (!li || !li.id || li.classList.contains('is-blank')) return;
+          if (e.key !== 'Enter' && e.key !== ' ') return;
+
+          e.preventDefault();
 
           const n = Number(li.id.replace(/^l/, ''));
           if (!Number.isFinite(n)) return;

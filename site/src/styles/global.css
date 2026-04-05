@@ -118,6 +118,18 @@ body {
   background: transparent;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 a {
   color: inherit;
   text-decoration-color: color-mix(in oklab, var(--ink) 35%, transparent);
@@ -126,6 +138,25 @@ a {
 
 a:hover {
   text-decoration-color: color-mix(in oklab, var(--ink) 70%, transparent);
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  padding: 0.65rem 0.9rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--paper) 96%, transparent);
+  border: 1px solid color-mix(in oklab, var(--border) 78%, transparent);
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  transform: translateY(-180%);
+  transition: transform 140ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 p { line-height: 1.75; margin: 0.75rem 0; }
@@ -823,6 +854,12 @@ main {
   box-shadow: inset 3px 0 0 color-mix(in oklab, var(--accent) 70%, transparent);
 }
 
+.poem-lines li:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--accent) 72%, white 28%);
+  outline-offset: 0.12rem;
+  border-radius: 0.2rem;
+}
+
 .line-anchor {
   display: block;
   width: 1.2rem;
@@ -1009,6 +1046,13 @@ main {
 .quote-card-action-primary {
   background: color-mix(in oklab, var(--accent) 22%, var(--paper));
   border-color: color-mix(in oklab, var(--accent) 35%, var(--border));
+}
+
+.quote-card-action:focus-visible,
+.quote-card-close:focus-visible,
+.skip-link:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--accent) 72%, white 28%);
+  outline-offset: 2px;
 }
 
 .quote-card-modal[hidden] {
