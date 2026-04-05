@@ -40,13 +40,16 @@ const collectionRecords: CollectionRecord[] = [
     description:
       'A focused route through high-Romantic intensity: urns, skylarks, autumn, memory, and the unstable promise of transcendence.',
     poemIds: [
+      'john-keats/bright-star',
       'john-keats/ode-to-a-nightingale',
       'john-keats/ode-on-a-grecian-urn',
       'john-keats/to-autumn',
+      'samuel-taylor-coleridge/dejection-an-ode',
       'percy-bysshe-shelley/ozymandias',
       'percy-bysshe-shelley/to-a-skylark',
       'samuel-taylor-coleridge/kubla-khan',
       'william-wordsworth/i-wandered-lonely-as-a-cloud',
+      'william-wordsworth/tintern-abbey',
     ],
   },
 ];
