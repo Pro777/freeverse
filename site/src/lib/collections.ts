@@ -27,8 +27,10 @@ const collectionRecords: CollectionRecord[] = [
     poemIds: [
       'edgar-allan-poe/annabel-lee',
       'edgar-allan-poe/the-raven',
+      'emily-dickinson/after-great-pain-a-formal-feeling-comes',
       'emily-dickinson/as-imperceptibly-as-grief',
       'emily-dickinson/i-felt-a-funeral-in-my-brain',
+      'emily-dickinson/i-measure-every-grief-i-meet',
       'emily-dickinson/because-i-could-not-stop-for-death',
       'william-ernest-henley/invictus',
     ],

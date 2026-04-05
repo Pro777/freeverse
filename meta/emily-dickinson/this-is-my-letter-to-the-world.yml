@@ -1,0 +1,15 @@
+id: "emily-dickinson/this-is-my-letter-to-the-world"
+slug: "this-is-my-letter-to-the-world"
+author: "Emily Dickinson"
+author_slug: "emily-dickinson"
+title: "This is my letter to the World"
+century: 19
+
+text_path: "poems/emily-dickinson/this-is-my-letter-to-the-world.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/Poems_(Dickinson)/Prelude"
+public_domain_rationale: "Public domain in the United States: Dickinson died 1886; text from the 1890 edition of Poems on Wikisource."
+
+notes: "Title follows the opening line; punctuation and capitalization preserved from the source transcription."
