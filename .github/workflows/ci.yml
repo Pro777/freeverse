@@ -1,6 +1,11 @@
 name: CI (build)
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - '.github/workflows/ci.yml'
   pull_request:
     branches: [main]
     paths:
@@ -11,6 +16,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
@@ -23,6 +31,18 @@ jobs:
       - name: Install dependencies
         working-directory: site
         run: npm ci
+
+      - name: Unit tests with coverage
+        working-directory: site
+        run: npm run test:unit:coverage
+
+      - name: Upload coverage to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/codecov-action@v5
+        with:
+          use_oidc: true
+          files: site/coverage/lcov.info
+          fail_ci_if_error: false
 
       - name: Build
         working-directory: site
