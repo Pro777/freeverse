@@ -1,11 +1,11 @@
-id: william-blake/a-poison-tree
-slug: a-poison-tree
+id: william-blake/the-sick-rose
+slug: the-sick-rose
 author: William Blake
 author_slug: william-blake
-title: A Poison Tree
+title: The Sick Rose
 century: 18
 text_in_repo: true
-text_path: poems/william-blake/a-poison-tree.txt
+text_path: poems/william-blake/the-sick-rose.txt
 source_label: Project Gutenberg
 source_url: https://www.gutenberg.org/ebooks/1934
 public_domain_rationale: Public domain (author died 1827; distributed by Project Gutenberg as public-domain text).
