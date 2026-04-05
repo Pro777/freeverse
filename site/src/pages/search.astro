@@ -20,10 +20,10 @@ const docs = poems.map((p) => ({
 }));
 ---
 
-<BaseLayout title="Search · Freeverse" description="Search poems by title or author." currentPath="/search">
+<BaseLayout title="Search · Freeverse" description="Search poems by title, author, theme, or mood." currentPath="/search">
   <section class="hero">
     <h1>Search</h1>
-    <p class="lede">Type a title or author. Instant results. No server.</p>
+    <p class="lede">Type a title, author, theme, or mood. Instant results from a build-time semantic index.</p>
   </section>
 
   <div class="card">
@@ -31,35 +31,50 @@ const docs = poems.map((p) => ({
       <input
         id="q"
         type="search"
-        placeholder="Search titles and authors…"
+        placeholder="Try grief, night, sea, prayer, or a title..."
         autocomplete="off"
         style="flex: 1 1 18rem; padding: 0.6rem 0.75rem; border-radius: 12px; border: 1px solid var(--card-border); background: color-mix(in oklab, var(--paper) 92%, transparent); font-family: var(--sans); font-size: 1rem;"
       />
       <span class="pill" id="count">{docs.length} poems</span>
     </div>
 
+    <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.75rem;">
+      {['grief', 'love', 'nature', 'night', 'sea', 'faith', 'solitude'].map((term) => (
+        <button class="pill" type="button" data-suggestion={term} style="cursor:pointer; border:0;">
+          {term}
+        </button>
+      ))}
+    </div>
+
     <ul class="list" id="results" style="margin-top: 0.75rem;"></ul>
   </div>
 
-  <script type="module">
+  <script type="module" define:vars={{ base }}>
     import MiniSearch from 'minisearch';
+    import { expandSearchTerms, normalizeSearchText } from '../lib/search-taxonomy.mjs';
 
     const docs = JSON.parse(document.getElementById('search-data').textContent);
+    const searchIndexResponse = await fetch(`${base}api/search-index.json`);
+    const searchIndex = await searchIndexResponse.json();
+    const semanticDocs = new Map(searchIndex.poems.map((doc) => [doc.id, doc]));
+    const mergedDocs = docs.map((doc) => ({ ...semanticDocs.get(doc.id), ...doc }));
 
     const mini = new MiniSearch({
-      fields: ['title', 'author'],
-      storeFields: ['id', 'title', 'author', 'authorUrl', 'url', 'century', 'centuryLabel'],
+      fields: ['title', 'author', 'collections', 'themes', 'semanticTerms', 'keywords', 'excerpt', 'searchText'],
+      storeFields: ['id', 'title', 'author', 'authorUrl', 'url', 'century', 'centuryLabel', 'excerpt', 'themes', 'collections'],
       searchOptions: {
-        boost: { title: 2 },
+        boost: { title: 3, author: 2, collections: 4, themes: 5, semanticTerms: 5, keywords: 2, excerpt: 1 },
         fuzzy: 0.2,
         prefix: true,
       },
     });
-    mini.addAll(docs);
+    mini.addAll(mergedDocs);
 
     const input = document.getElementById('q');
     const resultsEl = document.getElementById('results');
     const countEl = document.getElementById('count');
+    const params = new URLSearchParams(window.location.search);
+    const suggestions = Array.from(document.querySelectorAll('[data-suggestion]'));
 
     const render = (items) => {
       resultsEl.innerHTML = '';
@@ -75,6 +90,9 @@ const docs = poems.map((p) => ({
           <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
             ${r.centuryLabel}
           </div>
+          ${r.excerpt ? `<p class="muted" style="margin-top:0.45rem;">${r.excerpt}</p>` : ''}
+          ${r.collections?.length ? `<div class="muted" style="margin-top:0.45rem; font-family: var(--sans); font-size: 0.9rem;">Curated path: ${r.collections.join(', ')}</div>` : ''}
+          ${r.themes?.length ? `<div style="display:flex; gap:0.35rem; flex-wrap:wrap; margin-top:0.45rem;">${r.themes.map((theme) => `<span class="pill">${theme}</span>`).join('')}</div>` : ''}
         `;
         resultsEl.appendChild(li);
       }
@@ -91,13 +109,44 @@ const docs = poems.map((p) => ({
       if (!q) {
         countEl.textContent = `${docs.length} poems`;
         resultsEl.innerHTML = '';
+        params.delete('q');
+        history.replaceState({}, '', `${window.location.pathname}`);
         return;
       }
-      const hits = mini.search(q, { combineWith: 'AND' }).slice(0, 50).map(h => h);
+
+      const exactQuery = normalizeSearchText(q);
+      const expandedQuery = expandSearchTerms(q).join(' ');
+      const exactHits = exactQuery
+        ? mini.search(exactQuery, { combineWith: 'AND', prefix: true, fuzzy: 0.15 })
+        : [];
+      const semanticHits = expandedQuery
+        ? mini.search(expandedQuery, { combineWith: 'OR', prefix: true, fuzzy: 0.2 })
+        : [];
+
+      const mergedHits = new Map();
+      for (const hit of [...exactHits, ...semanticHits]) {
+        const existing = mergedHits.get(hit.id);
+        if (!existing || hit.score > existing.score) mergedHits.set(hit.id, hit);
+      }
+
+      const hits = Array.from(mergedHits.values())
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 50);
+
+      params.set('q', q);
+      history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
       render(hits);
     };
 
     input.addEventListener('input', run);
+    for (const button of suggestions) {
+      button.addEventListener('click', () => {
+        input.value = button.dataset.suggestion ?? '';
+        run();
+      });
+    }
+    input.value = params.get('q') ?? '';
+    if (input.value) run();
     input.focus();
   </script>
 

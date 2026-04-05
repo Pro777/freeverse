@@ -13,6 +13,7 @@ site/playwright-report/
 # Generated site data
 site/src/data/poem-index.json
 site/src/data/dedupe-report.json
+site/public/api/search-index.json
 
 # local ops
 inbox

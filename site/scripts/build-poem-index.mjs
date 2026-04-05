@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import crypto from "node:crypto";
+import yaml from "js-yaml";
 
 const REQUIRED_FIELDS = [
   "id",
@@ -21,33 +22,6 @@ const outputPath = path.join(process.cwd(), "src", "data", "poem-index.json");
 const dedupeReportPath = path.join(process.cwd(), "src", "data", "dedupe-report.json");
 
 const STATIC_PAGE_LIMIT = 5000;
-
-function parseScalar(raw) {
-  const t = raw.trim();
-  if (t === "true") return true;
-  if (t === "false") return false;
-  if (/^-?\d+$/.test(t)) return Number(t);
-  if ((t.startsWith('"') && t.endsWith('"')) || (t.startsWith("'") && t.endsWith("'"))) {
-    return t.slice(1, -1).replace(/\\"/g, '"').replace(/\\'/g, "'");
-  }
-  return t;
-}
-
-function parseSimpleYaml(raw) {
-  const out = {};
-  const lines = raw.replace(/\r\n?/g, "\n").split("\n");
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith("#")) continue;
-    const i = line.indexOf(":");
-    if (i === -1) continue;
-    const key = line.slice(0, i).trim();
-    const value = line.slice(i + 1).trim();
-    if (!key) continue;
-    out[key] = parseScalar(value);
-  }
-  return out;
-}
 
 function sha256(value) {
   return crypto.createHash("sha256").update(value).digest("hex");
@@ -114,7 +88,7 @@ async function main() {
       if (!f.isFile() || !f.name.endsWith(".yml")) continue;
       const full = path.join(dir, f.name);
       const raw = await fs.readFile(full, "utf8");
-      const parsed = parseSimpleYaml(raw);
+      const parsed = yaml.load(raw);
       if (!parsed || typeof parsed !== "object") {
         errors.push(`${full}: metadata is not a YAML object`);
         continue;
