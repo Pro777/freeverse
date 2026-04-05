@@ -50,12 +50,30 @@ export async function loadCollections(): Promise<CollectionWithPoems[]> {
   const poems = await loadPoemMetas();
   const poemById = new Map(poems.map((poem) => [poem.id, poem]));
 
-  return collectionRecords.map((collection) => ({
-    ...collection,
-    poems: collection.poemIds
-      .map((poemId) => poemById.get(poemId))
-      .filter((poem): poem is PoemMeta => Boolean(poem)),
-  }));
+  return collectionRecords.map((collection) => {
+    const missingPoemIds: string[] = [];
+    const collectionPoems = collection.poemIds.flatMap((poemId) => {
+      const poem = poemById.get(poemId);
+
+      if (!poem) {
+        missingPoemIds.push(poemId);
+        return [];
+      }
+
+      return [poem];
+    });
+
+    if (missingPoemIds.length > 0) {
+      console.warn(
+        `Collection "${collection.slug}" is missing poem IDs: ${missingPoemIds.join(', ')}`,
+      );
+    }
+
+    return {
+      ...collection,
+      poems: collectionPoems,
+    };
+  });
 }
 
 export async function loadCollectionBySlug(slug: string): Promise<CollectionWithPoems | undefined> {
