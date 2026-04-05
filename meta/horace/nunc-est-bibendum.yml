@@ -1,0 +1,15 @@
+id: "horace/nunc-est-bibendum"
+slug: "nunc-est-bibendum"
+author: "Horace"
+author_slug: "horace"
+title: "Nunc est Bibendum"
+century: -1
+
+text_path: "poems/horace/nunc-est-bibendum.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/This_Canada_of_ours_and_other_poems/Nunc_est_Bibendum"
+public_domain_rationale: "Public domain in the United States: Horace died 8 BC and James David Edgar's translation was published in 1893 on Wikisource."
+
+notes: "English translation of Horace, Ode 1.37, by James David Edgar."

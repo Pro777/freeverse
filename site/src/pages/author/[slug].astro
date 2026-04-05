@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { loadPoemMetas, type PoemMeta } from "../../lib/poems";
-import { AUTHOR_INFO } from "../../lib/authors";
+import { AUTHOR_INFO, formatAuthorYears, formatCenturyLabel } from "../../lib/authors";
 
 type AuthorPageProps = {
   author: string;
@@ -53,7 +53,7 @@ const description = `Read public-domain poems by ${author}.`;
     </p>
     {info ? (
       <p class="muted" style="margin: 0.55rem 0 0.25rem;">
-        {info.birth_year}–{info.death_year}
+        {formatAuthorYears(info.birth_year, info.death_year)}
       </p>
     ) : null}
     {info ? (
@@ -79,7 +79,7 @@ const description = `Read public-domain poems by ${author}.`;
             <strong>{p.title}</strong>
           </a>
           <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
-            {p.century}th century
+            {formatCenturyLabel(p.century)}
           </div>
         </li>
       ))}

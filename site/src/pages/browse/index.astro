@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { formatCenturyLabel } from "../../lib/authors";
 import { loadPoemMetas } from "../../lib/poems";
 import { authorPath } from "../../lib/url";
 
@@ -128,7 +129,7 @@ const defaultStatus = `Showing ${statsLabel}. All author groups start collapsed.
                     <strong>{poem.title}</strong>
                   </a>
                   <span class="muted browse-poem-century">
-                    {poem.century}th century
+                    {formatCenturyLabel(poem.century)}
                   </span>
                   <span class="browse-star" role="img" aria-label="Starred">★</span>
                 </div>
