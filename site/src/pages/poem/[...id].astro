@@ -53,6 +53,13 @@ const poemStructuredData = {
   isAccessibleForFree: true,
   description,
   text: excerpt || undefined,
+  isBasedOn: poem.source_url
+    ? {
+        "@type": "CreativeWork",
+        url: poem.source_url,
+        name: poem.source_label ?? undefined,
+      }
+    : undefined,
   translator: poem.translator
     ? {
         "@type": "Person",
