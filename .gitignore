@@ -15,7 +15,9 @@ site/src/data/poem-index.json
 site/src/data/dedupe-report.json
 site/public/api/search-index.json
 site/public/api/freeverse-public-corpus.jsonl
+site/public/api/freeverse-public-chunks.jsonl
 site/public/api/freeverse-public-manifest.json
+site/public/.well-known/alcove-collection.json
 
 # local ops
 inbox

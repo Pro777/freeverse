@@ -6,9 +6,11 @@ import poemIndex from "../src/data/poem-index.json" with { type: "json" };
 const siteRoot = process.cwd();
 const repoRoot = path.resolve(siteRoot, "..");
 const publicApiDir = path.join(siteRoot, "public", "api");
+const wellKnownDir = path.join(siteRoot, "public", ".well-known");
 const corpusOutputPath = path.join(publicApiDir, "freeverse-public-corpus.jsonl");
 const chunksOutputPath = path.join(publicApiDir, "freeverse-public-chunks.jsonl");
 const manifestOutputPath = path.join(publicApiDir, "freeverse-public-manifest.json");
+const discoveryOutputPath = path.join(wellKnownDir, "alcove-collection.json");
 const siteUrl = process.env.SITE_URL || "https://thefreeverse.org";
 const collectionName = "freeverse_public";
 const chunkConfig = {
@@ -30,6 +32,10 @@ function authorUrl(baseUrl, authorSlug) {
 
 function artifactUrl(baseUrl, filePath) {
   return `${normalizeBaseUrl(baseUrl)}api/${path.basename(filePath)}`;
+}
+
+function wellKnownUrl(baseUrl, filePath) {
+  return `${normalizeBaseUrl(baseUrl)}.well-known/${path.basename(filePath)}`;
 }
 
 function normalizeText(value) {
@@ -113,6 +119,17 @@ function sha256(value) {
   return crypto.createHash("sha256").update(value).digest("hex");
 }
 
+function countByLocale(records) {
+  const counts = new Map();
+  for (const record of records) {
+    const locale = record.metadata?.text_locale || "en";
+    counts.set(locale, (counts.get(locale) || 0) + 1);
+  }
+  return Array.from(counts.entries())
+    .sort((left, right) => left[0].localeCompare(right[0]))
+    .map(([locale, count]) => ({ locale, count }));
+}
+
 async function writeJsonl(filePath, records) {
   const body = records.map((record) => JSON.stringify(record)).join("\n");
   const content = `${body}${body ? "\n" : ""}`;
@@ -181,23 +198,76 @@ async function main() {
   const baseUrl = normalizeBaseUrl(siteUrl);
   const { records, chunks, excluded } = await loadCorpusRecords(baseUrl);
   const generatedAt = new Date().toISOString();
+  const localeCounts = countByLocale(records);
+  const artifactDescriptors = [
+    {
+      name: "source_documents",
+      path: "/api/freeverse-public-corpus.jsonl",
+      url: artifactUrl(baseUrl, corpusOutputPath),
+      media_type: "application/x-ndjson",
+      role: "source_documents",
+      format: "jsonl",
+      record_count: records.length,
+      recommended_use: "custom indexing or local rechunking",
+    },
+    {
+      name: "alcove_chunks",
+      path: "/api/freeverse-public-chunks.jsonl",
+      url: artifactUrl(baseUrl, chunksOutputPath),
+      media_type: "application/x-ndjson",
+      role: "prechunked_documents",
+      format: "jsonl",
+      record_count: chunks.length,
+      recommended_use: "direct Alcove-style ingest",
+    },
+  ];
 
   await fs.mkdir(publicApiDir, { recursive: true });
+  await fs.mkdir(wellKnownDir, { recursive: true });
   const corpusArtifact = await writeJsonl(corpusOutputPath, records);
   const chunksArtifact = await writeJsonl(chunksOutputPath, chunks);
 
   const manifest = {
+    manifest_type: "alcove_static_collection",
     generated_at: generatedAt,
-    collection: collectionName,
+    schema_version: 2,
+    collection: {
+      id: collectionName,
+      title: "Freeverse public corpus",
+      provider: "Freeverse",
+      homepage_url: baseUrl,
+      reader_url: baseUrl,
+      discovery_url: wellKnownUrl(baseUrl, discoveryOutputPath),
+      manifest_url: artifactUrl(baseUrl, manifestOutputPath),
+      visibility: "public",
+      content_type: "public-domain poetry",
+      rights_jurisdiction: "US",
+      retrieval_modes: [
+        "download-source-documents",
+        "download-prechunked-corpus",
+        "client-side-keyword-search",
+        "client-side-semantic-indexing",
+      ],
+    },
     site_url: baseUrl,
     record_count: records.length,
     chunk_count: chunks.length,
     excluded_count: excluded.length,
-    schema_version: 1,
+    languages: {
+      default_ui_locale: "en",
+      text_locales: localeCounts,
+    },
     chunking: {
       strategy: "character-window over whitespace-normalized text",
       size: chunkConfig.size,
       overlap: chunkConfig.overlap,
+    },
+    client_hints: {
+      browser_safe: true,
+      extension_friendly: true,
+      requires_runtime_embeddings_for_semantic_search: true,
+      supports_direct_keyword_search: true,
+      supports_cross_site_federation: true,
     },
     includes: [
       "public poem text",
@@ -229,20 +299,12 @@ async function main() {
     },
     artifacts: [
       {
-        name: "source_documents",
-        path: "/api/freeverse-public-corpus.jsonl",
-        url: artifactUrl(baseUrl, corpusOutputPath),
-        format: "jsonl",
-        record_count: records.length,
+        ...artifactDescriptors[0],
         bytes: corpusArtifact.bytes,
         sha256: corpusArtifact.sha256,
       },
       {
-        name: "alcove_chunks",
-        path: "/api/freeverse-public-chunks.jsonl",
-        url: artifactUrl(baseUrl, chunksOutputPath),
-        format: "jsonl",
-        record_count: chunks.length,
+        ...artifactDescriptors[1],
         bytes: chunksArtifact.bytes,
         sha256: chunksArtifact.sha256,
       },
@@ -251,6 +313,22 @@ async function main() {
   };
 
   await fs.writeFile(manifestOutputPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
+  await fs.writeFile(
+    discoveryOutputPath,
+    `${JSON.stringify(
+      {
+        manifest_type: "alcove_collection_discovery",
+        schema_version: 1,
+        generated_at: generatedAt,
+        collection: manifest.collection,
+        languages: manifest.languages,
+        artifacts: artifactDescriptors,
+      },
+      null,
+      2,
+    )}\n`,
+    "utf8",
+  );
 
   console.log(`Wrote public Alcove corpus (${records.length} records, ${chunks.length} chunks)`);
 }
