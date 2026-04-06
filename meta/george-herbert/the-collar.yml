@@ -1,0 +1,15 @@
+id: "george-herbert/the-collar"
+slug: "the-collar"
+author: "George Herbert"
+author_slug: "george-herbert"
+title: "The Collar"
+century: 17
+
+text_path: "poems/george-herbert/the-collar.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/The_Temple:_Sacred_Poems_and_Private_Ejaculations/The_Collar"
+public_domain_rationale: "Public domain in the United States: Herbert died 1633 and the Wikisource text is from a public-domain source."
+
+notes: "Orthography preserved from the 1633 text on Wikisource."
