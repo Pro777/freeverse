@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 import poemIndex from "../src/data/poem-index.json" with { type: "json" };
@@ -6,9 +7,14 @@ const siteRoot = process.cwd();
 const repoRoot = path.resolve(siteRoot, "..");
 const publicApiDir = path.join(siteRoot, "public", "api");
 const corpusOutputPath = path.join(publicApiDir, "freeverse-public-corpus.jsonl");
+const chunksOutputPath = path.join(publicApiDir, "freeverse-public-chunks.jsonl");
 const manifestOutputPath = path.join(publicApiDir, "freeverse-public-manifest.json");
 const siteUrl = process.env.SITE_URL || "https://thefreeverse.org";
 const collectionName = "freeverse_public";
+const chunkConfig = {
+  size: 1000,
+  overlap: 150,
+};
 
 function normalizeBaseUrl(value) {
   return value.endsWith("/") ? value : `${value}/`;
@@ -20,6 +26,10 @@ function poemUrl(baseUrl, poemId) {
 
 function authorUrl(baseUrl, authorSlug) {
   return `${normalizeBaseUrl(baseUrl)}author/${encodeURIComponent(authorSlug)}/`;
+}
+
+function artifactUrl(baseUrl, filePath) {
+  return `${normalizeBaseUrl(baseUrl)}api/${path.basename(filePath)}`;
 }
 
 function normalizeText(value) {
@@ -80,10 +90,44 @@ function sanitizeMetadata(poem, baseUrl) {
   };
 }
 
+function chunkText(text, size, overlap) {
+  const normalized = text.replace(/\s+/g, " ").trim();
+  if (!normalized) return [];
+
+  const chunks = [];
+  let start = 0;
+  while (start < normalized.length) {
+    const end = Math.min(normalized.length, start + size);
+    chunks.push({
+      text: normalized.slice(start, end),
+      start,
+      end,
+    });
+    if (end === normalized.length) break;
+    start = Math.max(end - overlap, start + 1);
+  }
+  return chunks;
+}
+
+function sha256(value) {
+  return crypto.createHash("sha256").update(value).digest("hex");
+}
+
+async function writeJsonl(filePath, records) {
+  const body = records.map((record) => JSON.stringify(record)).join("\n");
+  const content = `${body}${body ? "\n" : ""}`;
+  await fs.writeFile(filePath, content, "utf8");
+  return {
+    bytes: Buffer.byteLength(content, "utf8"),
+    sha256: sha256(content),
+  };
+}
+
 async function loadCorpusRecords(baseUrl) {
   const payload = poemIndex;
   const poems = Array.isArray(payload.poems) ? payload.poems : [];
   const records = [];
+  const chunks = [];
   const excluded = [];
 
   for (const poem of poems) {
@@ -98,43 +142,63 @@ async function loadCorpusRecords(baseUrl) {
       continue;
     }
 
+    const metadata = {
+      ...sanitizeMetadata(poem, baseUrl),
+      excerpt: excerptFromText(text),
+    };
+
     records.push({
       source_id: poem.id,
       url: poemUrl(baseUrl, poem.id),
       title: `${poem.title} — ${poem.author}`,
       text,
-      metadata: {
-        ...sanitizeMetadata(poem, baseUrl),
-        excerpt: excerptFromText(text),
-      },
+      metadata,
     });
+
+    for (const [index, chunk] of chunkText(text, chunkConfig.size, chunkConfig.overlap).entries()) {
+      chunks.push({
+        id: `${poem.id}:${index}`,
+        source: poem.id,
+        chunk: chunk.text,
+        metadata: {
+          ...metadata,
+          chunk_index: index,
+          chunk_start: chunk.start,
+          chunk_end: chunk.end,
+          source_document_url: poemUrl(baseUrl, poem.id),
+        },
+      });
+    }
   }
 
   records.sort((a, b) => a.source_id.localeCompare(b.source_id));
+  chunks.sort((a, b) => a.id.localeCompare(b.id));
   excluded.sort((a, b) => a.id.localeCompare(b.id));
-  return { records, excluded };
+  return { records, chunks, excluded };
 }
 
 async function main() {
   const baseUrl = normalizeBaseUrl(siteUrl);
-  const { records, excluded } = await loadCorpusRecords(baseUrl);
+  const { records, chunks, excluded } = await loadCorpusRecords(baseUrl);
   const generatedAt = new Date().toISOString();
 
   await fs.mkdir(publicApiDir, { recursive: true });
-  await fs.writeFile(
-    corpusOutputPath,
-    `${records.map((record) => JSON.stringify(record)).join("\n")}\n`,
-    "utf8",
-  );
+  const corpusArtifact = await writeJsonl(corpusOutputPath, records);
+  const chunksArtifact = await writeJsonl(chunksOutputPath, chunks);
 
   const manifest = {
     generated_at: generatedAt,
     collection: collectionName,
     site_url: baseUrl,
     record_count: records.length,
+    chunk_count: chunks.length,
     excluded_count: excluded.length,
-    format: "jsonl",
     schema_version: 1,
+    chunking: {
+      strategy: "character-window over whitespace-normalized text",
+      size: chunkConfig.size,
+      overlap: chunkConfig.overlap,
+    },
     includes: [
       "public poem text",
       "public metadata",
@@ -155,14 +219,40 @@ async function main() {
       url: "Freeverse poem URL",
       title: "display title",
       text: "full poem text",
-      metadata: "sanitized public metadata for Alcove ingestion",
+      metadata: "sanitized public metadata for source-document ingestion",
     },
+    chunk_record_shape: {
+      id: "stable chunk id",
+      source: "canonical poem id",
+      chunk: "whitespace-normalized text window",
+      metadata: "sanitized public metadata plus chunk coordinates",
+    },
+    artifacts: [
+      {
+        name: "source_documents",
+        path: "/api/freeverse-public-corpus.jsonl",
+        url: artifactUrl(baseUrl, corpusOutputPath),
+        format: "jsonl",
+        record_count: records.length,
+        bytes: corpusArtifact.bytes,
+        sha256: corpusArtifact.sha256,
+      },
+      {
+        name: "alcove_chunks",
+        path: "/api/freeverse-public-chunks.jsonl",
+        url: artifactUrl(baseUrl, chunksOutputPath),
+        format: "jsonl",
+        record_count: chunks.length,
+        bytes: chunksArtifact.bytes,
+        sha256: chunksArtifact.sha256,
+      },
+    ],
     exclusions: excluded,
   };
 
-  await fs.writeFile(`${manifestOutputPath}`, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
+  await fs.writeFile(manifestOutputPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
 
-  console.log(`Wrote public Alcove corpus (${records.length} records)`);
+  console.log(`Wrote public Alcove corpus (${records.length} records, ${chunks.length} chunks)`);
 }
 
 main().catch((error) => {
