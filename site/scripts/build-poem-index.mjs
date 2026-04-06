@@ -16,6 +16,9 @@ const REQUIRED_FIELDS = [
   "public_domain_rationale",
 ];
 
+const LOCALE_RE = /^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/;
+const TEXT_DIRECTIONS = new Set(["ltr", "rtl"]);
+
 const repoRoot = path.resolve(process.cwd(), "..");
 const metaRoot = path.join(repoRoot, "meta");
 const outputPath = path.join(process.cwd(), "src", "data", "poem-index.json");
@@ -75,6 +78,24 @@ function rightsLooksValid(rationale) {
   return hasPd && hasBasis;
 }
 
+function localeLooksValid(value) {
+  return typeof value === "string" && LOCALE_RE.test(value);
+}
+
+function normalizeLocaleMetadata(meta) {
+  const text_locale = typeof meta.text_locale === "string" ? meta.text_locale : "en";
+  const original_language =
+    typeof meta.original_language === "string" ? meta.original_language : text_locale;
+  const text_direction = typeof meta.text_direction === "string" ? meta.text_direction : "ltr";
+
+  return {
+    ...meta,
+    text_locale,
+    original_language,
+    text_direction,
+  };
+}
+
 async function main() {
   const errors = [];
   const metas = [];
@@ -94,7 +115,7 @@ async function main() {
         continue;
       }
 
-      const meta = parsed;
+      const meta = normalizeLocaleMetadata(parsed);
       for (const field of REQUIRED_FIELDS) {
         if (!(field in meta)) errors.push(`${full}: missing required field '${field}'`);
       }
@@ -111,6 +132,21 @@ async function main() {
       }
       if (typeof meta.public_domain_rationale === "string" && !rightsLooksValid(meta.public_domain_rationale)) {
         errors.push(`${full}: public_domain_rationale must mention 'Public domain' and a year/basis`);
+      }
+      if (!localeLooksValid(meta.text_locale)) {
+        errors.push(`${full}: text_locale must be a valid BCP 47-style tag`);
+      }
+      if (!localeLooksValid(meta.original_language)) {
+        errors.push(`${full}: original_language must be a valid BCP 47-style tag`);
+      }
+      if (!TEXT_DIRECTIONS.has(meta.text_direction)) {
+        errors.push(`${full}: text_direction must be 'ltr' or 'rtl'`);
+      }
+      if (meta.translation_of && typeof meta.translation_of !== "string") {
+        errors.push(`${full}: translation_of must be a canonical poem id string when present`);
+      }
+      if (meta.translator && typeof meta.translator !== "string") {
+        errors.push(`${full}: translator must be a string when present`);
       }
 
       let text = "";

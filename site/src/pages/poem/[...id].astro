@@ -78,7 +78,13 @@ const canonicalPath = `${base}poem/${poem.id}/`;
         <p id="poem-reader-instructions" class="sr-only">
           Use Tab to move through poem lines. Press Enter or Space to select a line. Hold Shift while selecting a second line to create a shared range.
         </p>
-        <ol class="poem-lines" aria-label="Poem" aria-describedby="poem-reader-instructions">
+        <ol
+          class="poem-lines"
+          aria-label="Poem"
+          aria-describedby="poem-reader-instructions"
+          lang={poem.text_locale}
+          dir={poem.text_direction}
+        >
         {lines.map((line, idx) => {
           const n = idx + 1;
           const id = `l${n}`;
@@ -97,6 +103,13 @@ const canonicalPath = `${base}poem/${poem.id}/`;
           );
         })}
         </ol>
+        {poem.text_locale !== "en" || poem.original_language !== "en" || poem.translator ? (
+          <p class="muted" style="margin: 0.9rem 0 0;">
+            Text language: <strong>{poem.text_locale}</strong>
+            {poem.original_language !== poem.text_locale ? ` · Original language: ${poem.original_language}` : ""}
+            {poem.translator ? ` · Translator: ${poem.translator}` : ""}
+          </p>
+        ) : null}
       </>
     ) : (
       <div class="card">
