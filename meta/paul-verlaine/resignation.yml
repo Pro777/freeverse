@@ -1,0 +1,16 @@
+id: paul-verlaine/resignation
+slug: resignation
+author: Paul Verlaine
+author_slug: paul-verlaine
+title: Résignation
+century: 19
+text_locale: fr
+original_language: fr
+text_direction: ltr
+text_path: poems/paul-verlaine/resignation.txt
+text_in_repo: true
+source_label: Wikisource
+source_url: https://fr.wikisource.org/wiki/Po%C3%A8mes_saturniens_(1866)/R%C3%A9signation
+public_domain_rationale: 'Public domain in the United States: first published in 1866 (pre-1929) and the author died in 1896; text via French Wikisource.'
+collection_title: Poèmes saturniens (1866)
+collection_source_url: https://fr.wikisource.org/wiki/Po%C3%A8mes_saturniens_(1866)
