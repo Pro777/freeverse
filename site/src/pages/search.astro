@@ -9,6 +9,65 @@ const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
 const locale = normalizeUILocale(Astro.props.locale);
+const copy = {
+  en: {
+    title: "Search · Freeverse",
+    description: "Search poems by title, author, theme, mood, and corpus language.",
+    heading: "Search",
+    lede: "Type a title, author, theme, mood, or language. Instant results from a build-time semantic index.",
+    placeholder: "Try grief, night, sea, prayer, french, or a title...",
+    help: "Search by title, author, theme, mood, or language. Suggestions below fill the search field.",
+    poemsAvailable: (count) => `${count} poems available.`,
+    poemsCount: (count) => `${count} poems`,
+    resultsAvailable: (count) => `${count} result${count === 1 ? "" : "s"} available.`,
+    resultsCount: (count) => `${count} result${count === 1 ? "" : "s"}`,
+    noMatches: "No matches.",
+    curatedPath: "Curated path",
+    textLanguage: "Text",
+    originalLanguage: "Original",
+    translator: "Translator",
+    searchLabel: "Search poems",
+    formTitle: "Search poems",
+  },
+  es: {
+    title: "Buscar · Freeverse",
+    description: "Busca poemas por titulo, autor, tema, estado de animo e idioma del corpus.",
+    heading: "Buscar",
+    lede: "Escribe un titulo, autor, tema, estado de animo o idioma. Resultados instantaneos desde un indice semantico generado en build.",
+    placeholder: "Prueba duelo, noche, mar, plegaria, frances o un titulo...",
+    help: "Busca por titulo, autor, tema, estado de animo o idioma. Las sugerencias rellenan el campo.",
+    poemsAvailable: (count) => `${count} poemas disponibles.`,
+    poemsCount: (count) => `${count} poemas`,
+    resultsAvailable: (count) => `${count} resultado${count === 1 ? "" : "s"} disponibles.`,
+    resultsCount: (count) => `${count} resultado${count === 1 ? "" : "s"}`,
+    noMatches: "Sin coincidencias.",
+    curatedPath: "Ruta editorial",
+    textLanguage: "Texto",
+    originalLanguage: "Original",
+    translator: "Traductor",
+    searchLabel: "Buscar poemas",
+    formTitle: "Buscar poemas",
+  },
+  fr: {
+    title: "Recherche · Freeverse",
+    description: "Chercher des poemes par titre, auteur, theme, humeur et langue du corpus.",
+    heading: "Recherche",
+    lede: "Saisissez un titre, un auteur, un theme, une humeur ou une langue. Resultats instantanes depuis un index semantique genere au build.",
+    placeholder: "Essayez deuil, nuit, mer, priere, francais ou un titre...",
+    help: "Cherchez par titre, auteur, theme, humeur ou langue. Les suggestions remplissent le champ.",
+    poemsAvailable: (count) => `${count} poemes disponibles.`,
+    poemsCount: (count) => `${count} poemes`,
+    resultsAvailable: (count) => `${count} resultat${count === 1 ? "" : "s"} disponibles.`,
+    resultsCount: (count) => `${count} resultat${count === 1 ? "" : "s"}`,
+    noMatches: "Aucun resultat.",
+    curatedPath: "Parcours editorial",
+    textLanguage: "Texte",
+    originalLanguage: "Original",
+    translator: "Traducteur",
+    searchLabel: "Chercher des poemes",
+    formTitle: "Chercher des poemes",
+  },
+}[locale];
 
 const poems = await loadPoemMetas();
 const docs = poems.map((p) => ({
@@ -19,38 +78,42 @@ const docs = poems.map((p) => ({
   century: p.century,
   centuryLabel: formatCenturyLabel(p.century),
   url: poemPath(base, p.id, locale),
+  text_locale: p.text_locale,
+  original_language: p.original_language,
+  text_direction: p.text_direction,
+  translator: p.translator ?? "",
 }));
 ---
 
-<BaseLayout title="Search · Freeverse" description="Search poems by title, author, theme, or mood." currentPath="/search/" locale={locale}>
+<BaseLayout title={copy.title} description={copy.description} currentPath="/search/" locale={locale}>
   <section class="hero">
-    <h1>Search</h1>
-    <p class="lede">Type a title, author, theme, or mood. Instant results from a build-time semantic index.</p>
+    <h1>{copy.heading}</h1>
+    <p class="lede">{copy.lede}</p>
   </section>
 
   <div class="card">
     <form role="search" aria-labelledby="search-form-title">
-      <h2 id="search-form-title" class="sr-only">Search poems</h2>
+      <h2 id="search-form-title" class="sr-only">{copy.formTitle}</h2>
       <div style="display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap;">
-        <label class="sr-only" for="q">Search poems</label>
+        <label class="sr-only" for="q">{copy.searchLabel}</label>
         <input
           id="q"
           type="search"
-          placeholder="Try grief, night, sea, prayer, or a title..."
+          placeholder={copy.placeholder}
           autocomplete="off"
           aria-describedby="search-help search-status"
           aria-controls="results"
           style="flex: 1 1 18rem; padding: 0.6rem 0.75rem; border-radius: 12px; border: 1px solid var(--card-border); background: color-mix(in oklab, var(--paper) 92%, transparent); font-family: var(--sans); font-size: 1rem;"
         />
-        <span class="pill" id="count" aria-hidden="true">{docs.length} poems</span>
+        <span class="pill" id="count" aria-hidden="true">{copy.poemsCount(docs.length)}</span>
       </div>
 
       <p id="search-help" class="muted" style="margin-top:0.75rem;">
-        Search by title, author, theme, or mood. Suggestions below fill the search field.
+        {copy.help}
       </p>
 
       <div aria-label="Suggested searches" style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.75rem;">
-        {['grief', 'love', 'nature', 'night', 'sea', 'faith', 'solitude'].map((term) => (
+        {['grief', 'love', 'nature', 'night', 'sea', 'faith', 'solitude', 'french', 'spanish'].map((term) => (
           <button class="pill" type="button" data-suggestion={term} style="cursor:pointer; border:0;">
             {term}
           </button>
@@ -59,13 +122,13 @@ const docs = poems.map((p) => ({
     </form>
 
     <p id="search-status" class="muted" role="status" aria-live="polite" style="margin-top:0.75rem;">
-      {docs.length} poems available.
+      {copy.poemsAvailable(docs.length)}
     </p>
 
     <ul class="list" id="results" style="margin-top: 0.75rem;"></ul>
   </div>
 
-  <script type="module" define:vars={{ base }}>
+  <script type="module" define:vars={{ base, copy, locale }}>
     import MiniSearch from 'minisearch';
     import { expandSearchTerms, normalizeSearchText } from '../lib/search-taxonomy.mjs';
 
@@ -77,7 +140,7 @@ const docs = poems.map((p) => ({
 
     const mini = new MiniSearch({
       fields: ['title', 'author', 'collections', 'themes', 'semanticTerms', 'keywords', 'excerpt', 'searchText'],
-      storeFields: ['id', 'title', 'author', 'authorUrl', 'url', 'century', 'centuryLabel', 'excerpt', 'themes', 'collections'],
+      storeFields: ['id', 'title', 'author', 'authorUrl', 'url', 'century', 'centuryLabel', 'excerpt', 'themes', 'collections', 'text_locale', 'original_language', 'text_direction', 'translator'],
       searchOptions: {
         boost: { title: 3, author: 2, collections: 4, themes: 5, semanticTerms: 5, keywords: 2, excerpt: 1 },
         fuzzy: 0.2,
@@ -92,13 +155,36 @@ const docs = poems.map((p) => ({
     const statusEl = document.getElementById('search-status');
     const params = new URLSearchParams(window.location.search);
     const suggestions = Array.from(document.querySelectorAll('[data-suggestion]'));
+    const displayNames = typeof Intl.DisplayNames === 'function'
+      ? new Intl.DisplayNames([locale], { type: 'language' })
+      : null;
+
+    const formatLanguage = (code) => {
+      if (!code) return '';
+      return displayNames?.of(code) ?? code;
+    };
+
+    const languageMeta = (r) => {
+      const parts = [];
+      if (r.text_locale && r.text_locale !== 'en') {
+        parts.push(`${copy.textLanguage}: ${formatLanguage(r.text_locale)}`);
+      }
+      if (r.original_language && r.original_language !== r.text_locale) {
+        parts.push(`${copy.originalLanguage}: ${formatLanguage(r.original_language)}`);
+      }
+      if (r.translator) {
+        parts.push(`${copy.translator}: ${r.translator}`);
+      }
+      return parts;
+    };
 
     const render = (items) => {
       resultsEl.innerHTML = '';
-      countEl.textContent = `${items.length} result${items.length === 1 ? '' : 's'}`;
-      if (statusEl) statusEl.textContent = `${items.length} result${items.length === 1 ? '' : 's'} available.`;
+      countEl.textContent = copy.resultsCount(items.length);
+      if (statusEl) statusEl.textContent = copy.resultsAvailable(items.length);
 
       for (const r of items) {
+        const langMeta = languageMeta(r);
         const li = document.createElement('li');
         li.innerHTML = `
           <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:baseline;">
@@ -108,8 +194,9 @@ const docs = poems.map((p) => ({
           <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
             ${r.centuryLabel}
           </div>
-          ${r.excerpt ? `<p class="muted" style="margin-top:0.45rem;">${r.excerpt}</p>` : ''}
-          ${r.collections?.length ? `<div class="muted" style="margin-top:0.45rem; font-family: var(--sans); font-size: 0.9rem;">Curated path: ${r.collections.join(', ')}</div>` : ''}
+          ${langMeta.length ? `<div class="muted" style="margin-top:0.3rem; font-family: var(--sans); font-size: 0.9rem;">${langMeta.join(' · ')}</div>` : ''}
+          ${r.excerpt ? `<p class="muted" style="margin-top:0.45rem;" lang="${r.text_locale || 'en'}" dir="${r.text_direction || 'ltr'}">${r.excerpt}</p>` : ''}
+          ${r.collections?.length ? `<div class="muted" style="margin-top:0.45rem; font-family: var(--sans); font-size: 0.9rem;">${copy.curatedPath}: ${r.collections.join(', ')}</div>` : ''}
           ${r.themes?.length ? `<div style="display:flex; gap:0.35rem; flex-wrap:wrap; margin-top:0.45rem;">${r.themes.map((theme) => `<span class="pill">${theme}</span>`).join('')}</div>` : ''}
         `;
         resultsEl.appendChild(li);
@@ -117,7 +204,7 @@ const docs = poems.map((p) => ({
 
       if (!items.length) {
         const li = document.createElement('li');
-        li.innerHTML = `<span class="muted">No matches.</span>`;
+        li.innerHTML = `<span class="muted">${copy.noMatches}</span>`;
         resultsEl.appendChild(li);
       }
     };
@@ -125,9 +212,9 @@ const docs = poems.map((p) => ({
     const run = () => {
       const q = input.value.trim();
       if (!q) {
-        countEl.textContent = `${docs.length} poems`;
+        countEl.textContent = copy.poemsCount(docs.length);
         resultsEl.innerHTML = '';
-        if (statusEl) statusEl.textContent = `${docs.length} poems available.`;
+        if (statusEl) statusEl.textContent = copy.poemsAvailable(docs.length);
         params.delete('q');
         history.replaceState({}, '', `${window.location.pathname}`);
         return;
