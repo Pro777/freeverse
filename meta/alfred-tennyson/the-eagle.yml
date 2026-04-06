@@ -1,0 +1,15 @@
+id: "alfred-tennyson/the-eagle"
+slug: "the-eagle"
+author: "Alfred Lord Tennyson"
+author_slug: "alfred-tennyson"
+title: "The Eagle"
+century: 19
+text_in_repo: true
+text_path: "poems/alfred-tennyson/the-eagle.txt"
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/8601"
+public_domain_rationale: "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text)."
+collection_title: "The Early Poems of Alfred Lord Tennyson"
+collection_source_url: "https://www.gutenberg.org/ebooks/8601"
+featured: false
+notes: "Rendered from the Gutenberg text without the editor's fragment note or footnote."
