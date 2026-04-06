@@ -14,6 +14,8 @@ site/playwright-report/
 site/src/data/poem-index.json
 site/src/data/dedupe-report.json
 site/public/api/search-index.json
+site/public/api/freeverse-public-corpus.jsonl
+site/public/api/freeverse-public-manifest.json
 
 # local ops
 inbox
