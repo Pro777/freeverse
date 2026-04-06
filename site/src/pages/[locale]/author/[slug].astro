@@ -1,0 +1,37 @@
+---
+import AuthorPage from "../../author/[slug].astro";
+import { loadPoemMetas, type PoemMeta } from "../../../lib/poems";
+import { NON_DEFAULT_UI_LOCALES } from "../../../lib/i18n";
+
+type AuthorPageProps = {
+  author: string;
+  authorSlug: string;
+  poems: PoemMeta[];
+};
+
+export async function getStaticPaths() {
+  const poems = await loadPoemMetas();
+  const byAuthor = new Map<string, { author: string; poems: PoemMeta[] }>();
+
+  for (const poem of poems) {
+    const entry = byAuthor.get(poem.author_slug);
+    if (entry) entry.poems.push(poem);
+    else byAuthor.set(poem.author_slug, { author: poem.author, poems: [poem] });
+  }
+
+  return NON_DEFAULT_UI_LOCALES.flatMap((locale) =>
+    Array.from(byAuthor.entries()).map(([slug, group]) => ({
+      params: { locale, slug },
+      props: {
+        author: group.author,
+        authorSlug: slug,
+        poems: [...group.poems].sort((a, b) => a.title.localeCompare(b.title)),
+      },
+    })),
+  );
+}
+
+const props = Astro.props as AuthorPageProps;
+---
+
+<AuthorPage {...props} locale={Astro.params.locale} />

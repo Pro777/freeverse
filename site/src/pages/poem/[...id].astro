@@ -3,7 +3,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { loadRelatedPoems } from "../../lib/collections";
 import { loadPoemMetas, loadPoemText, type PoemMeta } from "../../lib/poems";
 import { AUTHOR_INFO } from "../../lib/authors";
-import { authorPath } from "../../lib/url";
+import { authorPath, browsePath, poemPath } from "../../lib/url";
+import { normalizeUILocale } from "../../lib/i18n";
 // (tests) line-link hash logic is unit-tested separately in src/lib/lineLinks.ts
 
 export async function getStaticPaths() {
@@ -28,6 +29,7 @@ const description = `Read ${poem.title} by ${poem.author}.`;
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
+const locale = normalizeUILocale(Astro.props.locale);
 const canonicalPath = `${base}poem/${poem.id}/`;
 const canonicalUrl = Astro.site ? new URL(canonicalPath, Astro.site).toString() : undefined;
 const authorUrl = Astro.site ? new URL(authorPath(base, poem.author_slug), Astro.site).toString() : undefined;
@@ -78,7 +80,9 @@ const poemStructuredData = {
 <BaseLayout
   title={title}
   description={description}
-  currentPath={""}
+  currentPath={`/poem/${poem.id}/`}
+  locale={locale}
+  canonicalPath={canonicalPath}
   structuredData={poemStructuredData}
 >
   <article
@@ -115,11 +119,11 @@ const poemStructuredData = {
       </div>
       <p class="reader-byline">
         <span class="muted">by</span>{' '}
-        <a href={authorPath(base, poem.author_slug)}>
+        <a href={authorPath(base, poem.author_slug, locale)}>
           <strong>{poem.author}</strong>
         </a>
         <span class="muted" style="margin: 0 0.35rem;">·</span>
-        <a class="muted" href={`${base}browse/`}>Explore poems</a>
+        <a class="muted" href={browsePath(base, locale)}>Explore poems</a>
       </p>
     </header>
 
@@ -190,12 +194,12 @@ const poemStructuredData = {
           {relatedPoems.map(({ poem: relatedPoem, reason }) => (
             <li>
               <p style="margin: 0;">
-                <a class="list-title" href={`${base}poem/${relatedPoem.id}/`}>
+                <a class="list-title" href={poemPath(base, relatedPoem.id, locale)}>
                   <strong>{relatedPoem.title}</strong>
                 </a>
               </p>
               <p class="muted related-reading-meta">
-                <a href={authorPath(base, relatedPoem.author_slug)}>{relatedPoem.author}</a>
+                <a href={authorPath(base, relatedPoem.author_slug, locale)}>{relatedPoem.author}</a>
                 <span class="related-reading-dot">·</span>
                 <span>{reason}</span>
               </p>

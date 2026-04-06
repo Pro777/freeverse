@@ -3,24 +3,26 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { formatCenturyLabel } from "../lib/authors";
 import { loadPoemMetas } from "../lib/poems";
 import { authorPath } from "../lib/url";
+import { normalizeUILocale, poemPath } from "../lib/i18n";
 
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
+const locale = normalizeUILocale(Astro.props.locale);
 
 const poems = await loadPoemMetas();
 const docs = poems.map((p) => ({
   id: p.id,
   title: p.title,
   author: p.author,
-  authorUrl: authorPath(base, p.author_slug),
+  authorUrl: authorPath(base, p.author_slug, locale),
   century: p.century,
   centuryLabel: formatCenturyLabel(p.century),
-  url: `${base}poem/${p.id}/`,
+  url: poemPath(base, p.id, locale),
 }));
 ---
 
-<BaseLayout title="Search · Freeverse" description="Search poems by title, author, theme, or mood." currentPath="/search">
+<BaseLayout title="Search · Freeverse" description="Search poems by title, author, theme, or mood." currentPath="/search/" locale={locale}>
   <section class="hero">
     <h1>Search</h1>
     <p class="lede">Type a title, author, theme, or mood. Instant results from a build-time semantic index.</p>

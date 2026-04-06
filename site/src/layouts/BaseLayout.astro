@@ -1,23 +1,43 @@
 ---
 import "../styles/global.css";
 import SiteHeader from "../components/SiteHeader.astro";
+import {
+  DEFAULT_UI_LOCALE,
+  UI_LOCALES,
+  type UILocale,
+  localizedPath,
+  normalizeUILocale,
+  UI_MESSAGES,
+} from "../lib/i18n";
 
 type Props = {
   title: string;
   description?: string;
   currentPath?: string;
+  locale?: UILocale;
+  canonicalPath?: string;
   structuredData?: Record<string, unknown> | Record<string, unknown>[];
 };
 
-const { title, description, currentPath, structuredData } = Astro.props;
+const { title, description, currentPath = "/", structuredData, canonicalPath } = Astro.props;
+const locale = normalizeUILocale(Astro.props.locale);
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
 
 const site = Astro.site;
-const canonicalUrl = site ? new URL(Astro.url.pathname, site).toString() : undefined;
+const canonicalUrl = site
+  ? new URL(canonicalPath ?? Astro.url.pathname, site).toString()
+  : undefined;
 const ogImageUrl = site ? new URL(`${base}og.png`, site).toString() : undefined;
 const websiteUrl = site ? new URL(base, site).toString() : undefined;
+const localeMessages = UI_MESSAGES[locale];
+const alternateUrls = site
+  ? UI_LOCALES.map((altLocale) => ({
+      locale: altLocale,
+      href: new URL(localizedPath(base, altLocale, currentPath), site).toString(),
+    }))
+  : [];
 
 function serializeJsonLd(value: Record<string, unknown> | Record<string, unknown>[]) {
   return JSON.stringify(value)
@@ -48,7 +68,7 @@ const jsonLdPayload = [
 ];
 ---
 
-<html lang="en">
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
     <script is:inline>
@@ -80,6 +100,20 @@ const jsonLdPayload = [
     {description ? <meta name="description" content={description} /> : null}
 
     {canonicalUrl ? <link rel="canonical" href={canonicalUrl} /> : null}
+    {alternateUrls.map((alternate) => (
+      <link
+        rel="alternate"
+        hreflang={alternate.locale}
+        href={alternate.href}
+      />
+    ))}
+    {site ? (
+      <link
+        rel="alternate"
+        hreflang="x-default"
+        href={new URL(localizedPath(base, DEFAULT_UI_LOCALE, currentPath), site).toString()}
+      />
+    ) : null}
 
     {/* Social previews (site-level default; poem pages override title/description via props). */}
     <meta property="og:site_name" content="Freeverse" />
@@ -108,15 +142,15 @@ const jsonLdPayload = [
     </a>
     <div class="mx-auto max-w-7xl px-4 pb-10 pt-5 sm:px-6 sm:pt-7 lg:px-8 lg:pt-10">
       <div class="overflow-hidden rounded-[28px] border border-black/10 bg-[var(--shell-bg)] shadow-[0_30px_80px_color-mix(in_oklab,var(--ink)_14%,transparent)] backdrop-blur-xl">
-        <SiteHeader currentPath={currentPath} />
+        <SiteHeader currentPath={currentPath} locale={locale} />
         <main id="main-content" tabindex="-1" class="px-4 py-6 sm:px-6 sm:py-8 lg:px-10 lg:py-10">
           <slot />
         </main>
         <footer class="border-t border-black/10 bg-[var(--footer-bg)] px-4 py-4 text-sm text-[var(--muted)] sm:px-6 lg:px-10">
           <span>
-            Built by <a href="https://github.com/Pro777">Pro777</a> and{' '}
+            {localeMessages.footer.builtBy} <a href="https://github.com/Pro777">Pro777</a> and{' '}
             <a href="https://www.moltbook.com/u/Rowan" target="_blank" rel="noopener noreferrer">Rowan</a><a class="easter-link" href={`${base}easter/`} aria-label="Easter egg" title="Easter egg">.</a>
-            {' '}Source on <a href="https://github.com/Pro777/freeverse">GitHub</a>.
+            {' '}{localeMessages.footer.sourceOn} <a href="https://github.com/Pro777/freeverse">GitHub</a>.
           </span>
         </footer>
       </div>

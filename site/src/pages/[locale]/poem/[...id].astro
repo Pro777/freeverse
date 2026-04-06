@@ -1,0 +1,17 @@
+---
+import PoemPage from "../../poem/[...id].astro";
+import { loadPoemMetas } from "../../../lib/poems";
+import { NON_DEFAULT_UI_LOCALES } from "../../../lib/i18n";
+
+export async function getStaticPaths() {
+  const poems = await loadPoemMetas();
+  return NON_DEFAULT_UI_LOCALES.flatMap((locale) =>
+    poems.map((poem) => ({
+      params: { locale, id: poem.id },
+      props: { poem },
+    })),
+  );
+}
+---
+
+<PoemPage {...Astro.props} locale={Astro.params.locale} />

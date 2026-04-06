@@ -3,11 +3,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { loadPoemMetas } from "../../lib/poems";
 import { authorPath } from "../../lib/url";
 import { AUTHOR_INFO, formatAuthorYears } from "../../lib/authors";
-import { AUTHOR_INFO } from "../../lib/authors";
+import { normalizeUILocale } from "../../lib/i18n";
 
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
+const locale = normalizeUILocale(Astro.props.locale);
 
 const poems = await loadPoemMetas();
 const authors = Array.from(
@@ -25,7 +26,7 @@ const authors = Array.from(
 authors.sort((a, b) => a.name.localeCompare(b.name));
 ---
 
-<BaseLayout title="Authors · Freeverse" description="Browse poets in the Freeverse collection." currentPath={""}>
+<BaseLayout title="Authors · Freeverse" description="Browse poets in the Freeverse collection." currentPath="/authors/" locale={locale}>
   <section class="hero">
     <h1>Authors</h1>
     <p class="lede">Alphabetical index of poets in Freeverse.</p>
@@ -42,7 +43,7 @@ authors.sort((a, b) => a.name.localeCompare(b.name));
         const info = AUTHOR_INFO[a.slug];
         return (
           <li>
-            <a class="list-title" href={authorPath(base, a.slug)}>
+            <a class="list-title" href={authorPath(base, a.slug, locale)}>
               <strong>{a.name}</strong>
             </a>
             <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">

@@ -1,0 +1,17 @@
+---
+import CollectionPage from "../../collections/[slug].astro";
+import { loadCollections } from "../../../lib/collections";
+import { NON_DEFAULT_UI_LOCALES } from "../../../lib/i18n";
+
+export async function getStaticPaths() {
+  const collections = await loadCollections();
+  return NON_DEFAULT_UI_LOCALES.flatMap((locale) =>
+    collections.map((collection) => ({
+      params: { locale, slug: collection.slug },
+      props: { collection },
+    })),
+  );
+}
+---
+
+<CollectionPage {...Astro.props} locale={Astro.params.locale} />

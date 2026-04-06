@@ -1,0 +1,12 @@
+---
+import FavoritesPage from "../../favorites/index.astro";
+import { NON_DEFAULT_UI_LOCALES } from "../../../lib/i18n";
+
+export function getStaticPaths() {
+  return NON_DEFAULT_UI_LOCALES.map((locale) => ({
+    params: { locale },
+  }));
+}
+---
+
+<FavoritesPage locale={Astro.params.locale} />

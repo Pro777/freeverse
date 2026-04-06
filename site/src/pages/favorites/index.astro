@@ -1,11 +1,12 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { loadPoemMetas } from "../../lib/poems";
-import { authorPath } from "../../lib/url";
+import { normalizeUILocale } from "../../lib/i18n";
 
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
+const locale = normalizeUILocale(Astro.props.locale);
 
 // We need poem metadata on the client side so we can render the favorites list.
 // Serialize the minimal fields required into a JSON data island.
@@ -18,7 +19,7 @@ const poemData = poemsAll.map((p) => ({
 }));
 ---
 
-<BaseLayout title="My favorites · Freeverse" description="Your starred poems." currentPath="/favorites">
+<BaseLayout title="My favorites · Freeverse" description="Your starred poems." currentPath="/favorites/" locale={locale}>
   <section class="hero">
     <h1>My favorites</h1>
     <p class="lede" id="fav-lede">
@@ -39,7 +40,7 @@ const poemData = poemsAll.map((p) => ({
     <ul class="list" id="fav-list" hidden></ul>
   </div>
 
-  <script is:inline define:vars={{ poemData, base }}>
+  <script is:inline define:vars={{ poemData, base, locale }}>
     (() => {
       const STORAGE_KEY = 'freeverse-favorites';
 
@@ -81,8 +82,9 @@ const poemData = poemsAll.map((p) => ({
 
         listEl.innerHTML = '';
         found.forEach(p => {
-          const poemHref = `${base}poem/${p.id}/`;
-          const authorHref = `${base}author/${p.author_slug}/`;
+          const prefix = locale === 'en' ? '' : `${locale}/`;
+          const poemHref = `${base}${prefix}poem/${p.id}/`;
+          const authorHref = `${base}${prefix}author/${p.author_slug}/`;
 
           const li = document.createElement('li');
           li.dataset.poemId = p.id;

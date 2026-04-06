@@ -1,0 +1,12 @@
+---
+import AuthorsPage from "../../authors/index.astro";
+import { NON_DEFAULT_UI_LOCALES } from "../../../lib/i18n";
+
+export function getStaticPaths() {
+  return NON_DEFAULT_UI_LOCALES.map((locale) => ({
+    params: { locale },
+  }));
+}
+---
+
+<AuthorsPage locale={Astro.params.locale} />
