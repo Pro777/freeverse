@@ -1,0 +1,13 @@
+id: william-blake/london
+slug: london
+author: William Blake
+author_slug: william-blake
+title: London
+century: 18
+text_path: poems/william-blake/london.txt
+text_in_repo: true
+source_label: Project Gutenberg
+source_url: https://www.gutenberg.org/cache/epub/1934/pg1934.txt
+public_domain_rationale: 'Public domain in the United States: first published 1794 (pre-1929); text via Project Gutenberg eBook #1934.'
+collection_title: Songs of Innocence and of Experience
+collection_source_url: https://www.gutenberg.org/ebooks/1934

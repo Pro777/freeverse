@@ -1,0 +1,13 @@
+id: john-keats/on-the-sea
+slug: on-the-sea
+author: John Keats
+author_slug: john-keats
+title: On the Sea
+century: 19
+text_path: poems/john-keats/on-the-sea.txt
+text_in_repo: true
+source_label: Wikisource
+source_url: https://en.wikisource.org/wiki/The_complete_poetical_works_and_letters_of_John_Keats/On_the_Sea
+public_domain_rationale: 'Public domain in the United States: first published 1817 (pre-1929); text via English Wikisource.'
+collection_title: The Complete Poetical Works and Letters of John Keats
+collection_source_url: https://en.wikisource.org/wiki/The_complete_poetical_works_and_letters_of_John_Keats
