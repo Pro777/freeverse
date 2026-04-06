@@ -1,0 +1,17 @@
+id: arthur-rimbaud/ma-boheme
+slug: ma-boheme
+author: Arthur Rimbaud
+author_slug: arthur-rimbaud
+title: Ma Bohême
+century: 19
+text_locale: fr
+original_language: fr
+text_direction: ltr
+text_path: poems/arthur-rimbaud/ma-boheme.txt
+text_in_repo: true
+source_label: Wikisource
+source_url: https://fr.wikisource.org/wiki/Po%C3%A9sies_(Rimbaud)/%C3%A9d._Vanier,_1895/Ma_Boh%C3%AAme
+public_domain_rationale: 'Public domain in the United States: this edition was published in 1895 (pre-1929) and the author died in 1891; text via French Wikisource.'
+collection_title: Poésies (éd. Vanier, 1895)
+collection_source_url: https://fr.wikisource.org/wiki/Po%C3%A9sies_(Rimbaud)/%C3%A9d._Vanier,_1895
+notes: Octobre 1870.
