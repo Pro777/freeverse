@@ -118,6 +118,8 @@ async function main() {
       title: poem.title,
       author: poem.author,
       century: poem.century,
+      text_locale: poem.text_locale,
+      original_language: poem.original_language,
       excerpt,
       collections: collections.map((collection) => collection.title),
       themes,
@@ -127,6 +129,8 @@ async function main() {
         [
           poem.title,
           poem.author,
+          poem.text_locale,
+          poem.original_language,
           excerpt,
           collections.map((collection) => `${collection.title} ${collection.description}`).join(" "),
           themes.join(" "),
