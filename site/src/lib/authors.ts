@@ -176,6 +176,27 @@ export const AUTHOR_INFO: Record<string, AuthorInfo> = {
     source_label: "Wikipedia",
     source_url: "https://en.wikipedia.org/wiki/Andrew_Marvell",
   },
+  "charlotte-bronte": {
+    birth_year: 1816,
+    death_year: 1855,
+    bio: "English novelist and poet, eldest of the Bronte sisters, whose poetry and fiction combine emotional intensity with moral and psychological drama.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/Charlotte_Bront%C3%AB",
+  },
+  "emily-bronte": {
+    birth_year: 1818,
+    death_year: 1848,
+    bio: "English poet and novelist of the Bronte family whose lyrics are known for moorland solitude, visionary force, and spiritual defiance.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/Emily_Bront%C3%AB",
+  },
+  "anne-bronte": {
+    birth_year: 1820,
+    death_year: 1849,
+    bio: "English novelist and poet, youngest of the Bronte sisters, whose verse joins religious seriousness with reflective domestic and moral themes.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/Anne_Bront%C3%AB",
+  },
   "walt-whitman": {
     birth_year: 1819,
     death_year: 1892,
