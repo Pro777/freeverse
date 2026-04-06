@@ -1,0 +1,16 @@
+id: emily-bronte/stanzas
+slug: stanzas
+author: Emily Bronte
+author_slug: emily-bronte
+title: Stanzas
+century: 19
+text_in_repo: true
+text_path: poems/emily-bronte/stanzas.txt
+source_label: Project Gutenberg
+source_url: https://www.gutenberg.org/ebooks/1019
+public_domain_rationale: >-
+  Public domain (author died 1848; distributed by Project Gutenberg as
+  public-domain text).
+collection_title: Poems by Currer, Ellis, and Acton Bell
+collection_source_url: https://www.gutenberg.org/ebooks/1019
+featured: false
