@@ -6,9 +6,10 @@ type Props = {
   title: string;
   description?: string;
   currentPath?: string;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 };
 
-const { title, description, currentPath } = Astro.props;
+const { title, description, currentPath, structuredData } = Astro.props;
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
@@ -16,6 +17,35 @@ const base = import.meta.env.BASE_URL.endsWith("/")
 const site = Astro.site;
 const canonicalUrl = site ? new URL(Astro.url.pathname, site).toString() : undefined;
 const ogImageUrl = site ? new URL(`${base}og.png`, site).toString() : undefined;
+const websiteUrl = site ? new URL(base, site).toString() : undefined;
+
+function serializeJsonLd(value: Record<string, unknown> | Record<string, unknown>[]) {
+  return JSON.stringify(value)
+    .replace(/</g, "\\u003c")
+    .replace(/\u2028/g, "\\u2028")
+    .replace(/\u2029/g, "\\u2029");
+}
+
+const siteStructuredData = websiteUrl
+  ? {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": `${websiteUrl}#website`,
+      name: "Freeverse",
+      url: websiteUrl,
+      description: "Public-domain poetry. A clean reader with shareable line links.",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: `${websiteUrl}search/?q={search_term_string}`,
+        "query-input": "required name=search_term_string",
+      },
+    }
+  : undefined;
+
+const jsonLdPayload = [
+  ...(siteStructuredData ? [siteStructuredData] : []),
+  ...(structuredData ? (Array.isArray(structuredData) ? structuredData : [structuredData]) : []),
+];
 ---
 
 <html lang="en">
@@ -65,6 +95,9 @@ const ogImageUrl = site ? new URL(`${base}og.png`, site).toString() : undefined;
     {ogImageUrl ? <meta name="twitter:image" content={ogImageUrl} /> : null}
 
     <title>{title}</title>
+    {jsonLdPayload.length > 0 ? (
+      <script type="application/ld+json" set:html={serializeJsonLd(jsonLdPayload)} />
+    ) : null}
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>

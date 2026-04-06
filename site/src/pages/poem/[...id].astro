@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { loadRelatedPoems } from "../../lib/collections";
 import { loadPoemMetas, loadPoemText, type PoemMeta } from "../../lib/poems";
+import { AUTHOR_INFO } from "../../lib/authors";
 import { authorPath } from "../../lib/url";
 // (tests) line-link hash logic is unit-tested separately in src/lib/lineLinks.ts
 
@@ -28,9 +29,51 @@ const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
 const canonicalPath = `${base}poem/${poem.id}/`;
+const canonicalUrl = Astro.site ? new URL(canonicalPath, Astro.site).toString() : undefined;
+const authorUrl = Astro.site ? new URL(authorPath(base, poem.author_slug), Astro.site).toString() : undefined;
+const authorInfo = AUTHOR_INFO[poem.author_slug];
+const excerpt = lines
+  .slice(0, Math.max(lines.findIndex((line) => line === ""), 0) || Math.min(lines.length, 8))
+  .join("\n")
+  .trim();
+const poemStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "Poem",
+  "@id": canonicalUrl ? `${canonicalUrl}#poem` : undefined,
+  name: poem.title,
+  url: canonicalUrl,
+  mainEntityOfPage: canonicalUrl,
+  author: {
+    "@type": "Person",
+    name: poem.author,
+    url: authorUrl,
+    sameAs: authorInfo?.source_url,
+  },
+  inLanguage: poem.text_locale,
+  isAccessibleForFree: true,
+  description,
+  text: excerpt || undefined,
+  translator: poem.translator
+    ? {
+        "@type": "Person",
+        name: poem.translator,
+      }
+    : undefined,
+  isPartOf: poem.translation_of
+    ? {
+        "@type": "CreativeWork",
+        identifier: poem.translation_of,
+      }
+    : undefined,
+};
 ---
 
-<BaseLayout title={title} description={description} currentPath={""}>
+<BaseLayout
+  title={title}
+  description={description}
+  currentPath={""}
+  structuredData={poemStructuredData}
+>
   <article
     class="reader"
     data-poem-id={poem.id}
