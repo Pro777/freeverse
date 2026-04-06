@@ -1,0 +1,13 @@
+id: john-milton/lycidas
+slug: lycidas
+author: John Milton
+author_slug: john-milton
+title: Lycidas
+century: 17
+text_path: poems/john-milton/lycidas.txt
+text_in_repo: true
+source_label: Wikisource
+source_url: https://en.wikisource.org/wiki/Poems_of_Mr._John_Milton,_Both_English_and_Latin,_Compos%27d_at_several_times/Lycidas
+public_domain_rationale: 'Public domain in the United States: first published 1638 (pre-1929); text via English Wikisource.'
+collection_title: Poems of Mr. John Milton, Both English and Latin, Compos'd at several times
+collection_source_url: https://en.wikisource.org/wiki/Poems_of_Mr._John_Milton,_Both_English_and_Latin,_Compos%27d_at_several_times
