@@ -99,15 +99,20 @@ const jsonLdPayload = [
       <script type="application/ld+json" set:html={serializeJsonLd(jsonLdPayload)} />
     ) : null}
   </head>
-  <body>
-    <a class="skip-link" href="#main-content">Skip to main content</a>
-    <div class="container">
-      <div class="shell">
+  <body class="min-h-screen bg-transparent text-[var(--ink)] antialiased">
+    <a
+      class="skip-link fixed left-4 top-4 z-50 rounded-full border border-black/10 bg-[color-mix(in_oklab,var(--paper)_96%,transparent)] px-4 py-2 text-sm font-medium text-[var(--ink)] no-underline shadow-[var(--shadow)] transition-transform duration-150 focus:translate-y-0"
+      href="#main-content"
+    >
+      Skip to main content
+    </a>
+    <div class="mx-auto max-w-7xl px-4 pb-10 pt-5 sm:px-6 sm:pt-7 lg:px-8 lg:pt-10">
+      <div class="overflow-hidden rounded-[28px] border border-black/10 bg-[var(--shell-bg)] shadow-[0_30px_80px_color-mix(in_oklab,var(--ink)_14%,transparent)] backdrop-blur-xl">
         <SiteHeader currentPath={currentPath} />
-        <main id="main-content" tabindex="-1">
+        <main id="main-content" tabindex="-1" class="px-4 py-6 sm:px-6 sm:py-8 lg:px-10 lg:py-10">
           <slot />
         </main>
-        <footer class="footer">
+        <footer class="border-t border-black/10 bg-[var(--footer-bg)] px-4 py-4 text-sm text-[var(--muted)] sm:px-6 lg:px-10">
           <span>
             Built by <a href="https://github.com/Pro777">Pro777</a> and{' '}
             <a href="https://www.moltbook.com/u/Rowan" target="_blank" rel="noopener noreferrer">Rowan</a><a class="easter-link" href={`${base}easter/`} aria-label="Easter egg" title="Easter egg">.</a>
