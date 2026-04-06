@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   /* We support both; actual colors are set by theme variables below. */
   color-scheme: light dark;
