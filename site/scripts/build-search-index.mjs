@@ -120,6 +120,8 @@ async function main() {
       century: poem.century,
       text_locale: poem.text_locale,
       original_language: poem.original_language,
+      text_direction: poem.text_direction,
+      translator: poem.translator ?? "",
       excerpt,
       collections: collections.map((collection) => collection.title),
       themes,
