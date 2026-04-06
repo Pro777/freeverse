@@ -1,0 +1,15 @@
+id: "john-donne/the-sun-rising"
+slug: "the-sun-rising"
+author: "John Donne"
+author_slug: "john-donne"
+title: "The Sun Rising"
+century: 17
+
+text_path: "poems/john-donne/the-sun-rising.txt"
+text_in_repo: true
+
+source_label: "Wikisource"
+source_url: "https://en.wikisource.org/wiki/The_Sun_Rising"
+public_domain_rationale: "Public domain in the United States: Donne died 1631 and the Wikisource text is from a public-domain source."
+
+notes: "Orthography and capitalization preserved from Wikisource."
