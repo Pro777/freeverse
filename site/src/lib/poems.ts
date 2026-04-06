@@ -9,11 +9,16 @@ export type PoemMeta = {
   author_slug: string;
   title: string;
   century: number;
+  text_locale: string;
+  original_language: string;
+  text_direction: 'ltr' | 'rtl';
   text_in_repo: boolean;
   text_path?: string;
   source_label?: string;
   source_url?: string;
   public_domain_rationale?: string;
+  translator?: string;
+  translation_of?: string;
   featured?: boolean;
   notes?: string;
 };

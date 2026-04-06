@@ -25,9 +25,19 @@ featured: false
 collection_title: "TBD"
 collection_source_url: "https://..."
 notes: "Any special formatting notes, alternate titles, etc."
+
+# Optional multilingual groundwork
+text_locale: "en"          # BCP 47 language tag for the text in this file
+original_language: "en"    # BCP 47 language tag for the work's original language
+text_direction: "ltr"      # "ltr" or "rtl"; defaults to "ltr"
+translator: "Translator"   # only when this file is a translation
+translation_of: "catullus/womans-faith-latin" # canonical poem id of the source text, if translated
 ```
 
 ## Notes
 - `id` is the canonical key.
 - If `text_in_repo` is `false`, omit `text_path`.
 - Keep `public_domain_rationale` short but explicit.
+- `text_locale` is the language of the text file itself, not the UI language.
+- `original_language` may differ from `text_locale` when the file is a translation.
+- Keep translation provenance conservative under US copyright law. A foreign-language original can be public domain while a modern translation is still in copyright.
