@@ -239,4 +239,18 @@ export const AUTHOR_INFO: Record<string, AuthorInfo> = {
     source_label: "Wikipedia",
     source_url: "https://en.wikipedia.org/wiki/John_Greenleaf_Whittier",
   },
+  "gustavo-adolfo-becquer": {
+    birth_year: 1836,
+    death_year: 1870,
+    bio: "Spanish poet and writer whose posthumously collected 'Rimas' became a foundational lyric sequence for modern Spanish poetry.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/Gustavo_Adolfo_B%C3%A9cquer",
+  },
+  "louise-labe": {
+    birth_year: 1524,
+    death_year: 1566,
+    bio: "French Renaissance poet from Lyon celebrated for her elegies and sonnets of desire, absence, and emotional contradiction.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/Louise_Lab%C3%A9",
+  },
 };

@@ -83,12 +83,14 @@ const THEME_LOOKUP = new Map(
 
 export function normalizeSearchText(value) {
   return value
+    .normalize("NFKD")
     .toLowerCase()
     .replace(/\r\n?/g, "\n")
+    .replace(/\p{M}+/gu, "")
     .replace(/[‘’]/g, "'")
     .replace(/[“”]/g, '"')
     .replace(/[—–]/g, "-")
-    .replace(/[^a-z0-9\s-]/g, " ")
+    .replace(/[^\p{L}\p{N}\s-]/gu, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
