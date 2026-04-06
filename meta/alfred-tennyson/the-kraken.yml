@@ -1,0 +1,15 @@
+id: "alfred-tennyson/the-kraken"
+slug: "the-kraken"
+author: "Alfred Lord Tennyson"
+author_slug: "alfred-tennyson"
+title: "The Kraken"
+century: 19
+text_in_repo: true
+text_path: "poems/alfred-tennyson/the-kraken.txt"
+source_label: "Project Gutenberg"
+source_url: "https://www.gutenberg.org/ebooks/8601"
+public_domain_rationale: "Public domain (author died 1892; distributed by Project Gutenberg as public-domain text)."
+collection_title: "The Early Poems of Alfred Lord Tennyson"
+collection_source_url: "https://www.gutenberg.org/ebooks/8601"
+featured: false
+notes: "Poem text extracted from the Gutenberg volume; editorial headnotes and commentary omitted."
