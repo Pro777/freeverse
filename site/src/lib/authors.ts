@@ -78,6 +78,13 @@ export const AUTHOR_INFO: Record<string, AuthorInfo> = {
     source_label: "Wikipedia",
     source_url: "https://en.wikipedia.org/wiki/Emma_Lazarus",
   },
+  "paul-verlaine": {
+    birth_year: 1844,
+    death_year: 1896,
+    bio: "French Symbolist poet whose musical, suggestive lyrics helped define fin-de-siecle verse and influenced modern poetry across Europe.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/Paul_Verlaine",
+  },
   "george-gordon-byron": {
     birth_year: 1788,
     death_year: 1824,
