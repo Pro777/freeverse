@@ -2,6 +2,8 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { loadPoemMetas, type PoemMeta } from "../../lib/poems";
 import { AUTHOR_INFO, formatAuthorYears, formatCenturyLabel } from "../../lib/authors";
+import { authorsPath, browsePath, poemPath, searchPath } from "../../lib/url";
+import { normalizeUILocale } from "../../lib/i18n";
 
 type AuthorPageProps = {
   author: string;
@@ -12,6 +14,7 @@ type AuthorPageProps = {
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
+const locale = normalizeUILocale(Astro.props.locale);
 
 export async function getStaticPaths() {
   const poems = await loadPoemMetas();
@@ -71,7 +74,8 @@ const authorPageStructuredData = {
 <BaseLayout
   title={title}
   description={description}
-  currentPath={""}
+  currentPath={`/author/${authorSlug}/`}
+  locale={locale}
   structuredData={[personStructuredData, authorPageStructuredData]}
 >
   <section class="hero">
@@ -103,7 +107,7 @@ const authorPageStructuredData = {
     <ul class="list">
       {poems.map((p) => (
         <li>
-          <a class="list-title" href={`${base}poem/${p.id}/`}>
+          <a class="list-title" href={poemPath(base, p.id, locale)}>
             <strong>{p.title}</strong>
           </a>
           <div class="muted" style="margin-top:0.25rem; font-family: var(--sans); font-size: 0.92rem;">
@@ -114,9 +118,9 @@ const authorPageStructuredData = {
     </ul>
 
     <div class="actions" style="margin-top:1rem;">
-      <a class="action" href={`${base}browse/`}>Back to Browse</a>
-      <a class="action" href={`${base}authors/`}>All authors</a>
-      <a class="action" href={`${base}search/`}>Search</a>
+      <a class="action" href={browsePath(base, locale)}>Back to Browse</a>
+      <a class="action" href={authorsPath(base, locale)}>All authors</a>
+      <a class="action" href={searchPath(base, locale)}>Search</a>
     </div>
   </div>
 </BaseLayout>

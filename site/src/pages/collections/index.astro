@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCollections } from '../../lib/collections';
+import { collectionPath, normalizeUILocale } from '../../lib/i18n';
 
 const base = import.meta.env.BASE_URL.endsWith('/')
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
+const locale = normalizeUILocale(Astro.props.locale);
 
 const collections = await loadCollections();
 ---
@@ -12,7 +14,8 @@ const collections = await loadCollections();
 <BaseLayout
   title="Collections - Freeverse"
   description="Curated reading paths through the Freeverse poetry library."
-  currentPath="/collections"
+  currentPath="/collections/"
+  locale={locale}
 >
   <section class="hero">
     <h1>Collections</h1>
@@ -31,7 +34,7 @@ const collections = await loadCollections();
         <p><strong>{collection.dek}</strong></p>
         <p class="muted">{collection.description}</p>
         <div class="actions">
-          <a class="action primary" href={`${base}collections/${collection.slug}/`}>Open collection</a>
+          <a class="action primary" href={collectionPath(base, collection.slug, locale)}>Open collection</a>
         </div>
       </article>
     ))}

@@ -2,7 +2,8 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { formatCenturyLabel } from "../../lib/authors";
 import { loadPoemMetas } from "../../lib/poems";
-import { authorPath } from "../../lib/url";
+import { authorPath, poemPath } from "../../lib/url";
+import { normalizeUILocale } from "../../lib/i18n";
 
 type AuthorGroup = {
   name: string;
@@ -13,6 +14,7 @@ type AuthorGroup = {
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
+const locale = normalizeUILocale(Astro.props.locale);
 
 const poemsAll = await loadPoemMetas();
 
@@ -42,7 +44,7 @@ const statsLabel = `${poemsAll.length} poems across ${authorGroups.length} autho
 const defaultStatus = `Showing ${statsLabel}. All author groups start collapsed.`;
 ---
 
-<BaseLayout title="Explore poems - Freeverse" description="Explore public-domain poems." currentPath="/browse">
+<BaseLayout title="Explore poems - Freeverse" description="Explore public-domain poems." currentPath="/browse/" locale={locale}>
   <section class="hero">
     <h1>Explore poems</h1>
     <p class="lede">
@@ -111,7 +113,7 @@ const defaultStatus = `Showing ${statsLabel}. All author groups start collapsed.
 
         <div class="browse-group-body">
           <div class="browse-group-meta">
-            <a class="muted" href={authorPath(base, group.slug)}>
+            <a class="muted" href={authorPath(base, group.slug, locale)}>
               View author page
             </a>
           </div>
@@ -125,7 +127,7 @@ const defaultStatus = `Showing ${statsLabel}. All author groups start collapsed.
                 data-search-text={`${group.name} ${poem.title}`.toLowerCase()}
               >
                 <div class="browse-poem-row">
-                  <a class="list-title" href={`${base}poem/${poem.id}/`}>
+                  <a class="list-title" href={poemPath(base, poem.id, locale)}>
                     <strong>{poem.title}</strong>
                   </a>
                   <span class="muted browse-poem-century">

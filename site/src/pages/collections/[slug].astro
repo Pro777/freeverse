@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCollections } from '../../lib/collections';
+import { collectionsPath, poemPath, browsePath } from '../../lib/url';
+import { normalizeUILocale } from '../../lib/i18n';
 
 export async function getStaticPaths() {
   const collections = await loadCollections();
@@ -13,6 +15,7 @@ export async function getStaticPaths() {
 const base = import.meta.env.BASE_URL.endsWith('/')
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
+const locale = normalizeUILocale(Astro.props.locale);
 
 const { collection } = Astro.props;
 ---
@@ -20,7 +23,8 @@ const { collection } = Astro.props;
 <BaseLayout
   title={`${collection.title} - Freeverse`}
   description={collection.description}
-  currentPath="/collections"
+  currentPath={`/collections/${collection.slug}/`}
+  locale={locale}
 >
   <section class="hero">
     <h1>{collection.title}</h1>
@@ -34,7 +38,7 @@ const { collection } = Astro.props;
         <li>
           <p style="margin: 0;">
             <span class="muted">#{index + 1}</span>{' '}
-            <a class="list-title" href={`${base}poem/${poem.id}/`}>
+            <a class="list-title" href={poemPath(base, poem.id, locale)}>
               <strong>{poem.title}</strong>
             </a>
           </p>
@@ -43,8 +47,8 @@ const { collection } = Astro.props;
       ))}
     </ul>
     <div class="actions" style="margin-top: 1rem;">
-      <a class="action" href={`${base}collections/`}>All collections</a>
-      <a class="action" href={`${base}browse/`}>Explore poems</a>
+      <a class="action" href={collectionsPath(base, locale)}>All collections</a>
+      <a class="action" href={browsePath(base, locale)}>Explore poems</a>
     </div>
   </section>
 </BaseLayout>

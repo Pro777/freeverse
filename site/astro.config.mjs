@@ -8,6 +8,14 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://thefreeverse.org/',
   integrations: [sitemap()],
+  i18n: {
+    locales: ['en', 'es', 'fr'],
+    defaultLocale: 'en',
+    routing: {
+      prefixDefaultLocale: false,
+      redirectToDefaultLocale: false,
+    },
+  },
 
   vite: {
     plugins: [tailwindcss()],
