@@ -1,0 +1,135 @@
+---
+type Props = {
+  corpusUrl: string;
+  modelId: string;
+  maxDocs?: number;
+};
+
+const { corpusUrl, modelId, maxDocs = 180 } = Astro.props;
+---
+
+<section
+  class="mx-auto max-w-5xl space-y-8"
+  data-semantic-config
+  data-corpus-url={corpusUrl}
+  data-model-id={modelId}
+  data-max-docs={String(maxDocs)}
+>
+  <header class="rounded-[2rem] border border-black/10 bg-[color-mix(in_oklab,var(--paper)_92%,transparent)] px-6 py-8 shadow-[var(--shadow)] sm:px-8">
+    <p class="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--muted)]">Experimental lab</p>
+    <h1 class="mt-3">Browser-only multilingual semantic search</h1>
+    <p class="mt-4 max-w-3xl text-[var(--muted)]">
+      This page is a proof route. It downloads the public Freeverse corpus export, loads a multilingual embedding model in the browser,
+      builds a client-side semantic index at runtime, and ranks poems by cosine similarity. No server-side search compute is involved.
+    </p>
+    <div class="mt-5 flex flex-wrap gap-2 text-sm text-[var(--muted)]">
+      <span class="rounded-full border border-black/10 bg-[var(--pill-bg)] px-3 py-1">Static corpus input</span>
+      <span class="rounded-full border border-black/10 bg-[var(--pill-bg)] px-3 py-1">Runtime TypeScript</span>
+      <span class="rounded-full border border-black/10 bg-[var(--pill-bg)] px-3 py-1">Multilingual embeddings</span>
+      <span class="rounded-full border border-black/10 bg-[var(--pill-bg)] px-3 py-1">No hosted query API</span>
+    </div>
+  </header>
+
+  <section class="grid gap-6 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)]">
+    <aside class="rounded-[2rem] border border-black/10 bg-[color-mix(in_oklab,var(--paper)_90%,transparent)] p-5 shadow-[var(--shadow)]">
+      <h2 class="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">What this proves</h2>
+      <ul class="mt-4 space-y-3 text-sm text-[var(--muted)]">
+        <li>Freeverse can ship a static semantic-search artifact path without adding a server.</li>
+        <li>Runtime TypeScript can execute multilingual retrieval directly in the browser.</li>
+        <li>The operational cost moves to bandwidth and model download, not backend compute.</li>
+      </ul>
+      <h2 class="mt-6 text-sm font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">Suggested cross-language prompts</h2>
+      <div class="mt-4 flex flex-wrap gap-2">
+        {["sea prayer", "duelo nocturno", "mer et memoire", "solitude and faith", "noche de amor"].map((sample) => (
+          <button
+            type="button"
+            class="rounded-full border border-black/10 bg-[var(--pill-bg)] px-3 py-1 text-sm text-[var(--ink)] transition hover:border-black/20 hover:bg-[color-mix(in_oklab,var(--pill-bg)_78%,var(--paper))]"
+            data-semantic-sample={sample}
+          >
+            {sample}
+          </button>
+        ))}
+      </div>
+    </aside>
+
+    <div class="space-y-6">
+      <form
+        class="rounded-[2rem] border border-black/10 bg-[color-mix(in_oklab,var(--paper)_92%,transparent)] p-5 shadow-[var(--shadow)] sm:p-6"
+        data-semantic-form
+      >
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-end">
+          <div class="min-w-0 flex-1">
+            <label class="mb-2 block text-sm font-medium text-[var(--muted)]" for="semantic-query">Query</label>
+            <input
+              id="semantic-query"
+              data-semantic-query
+              type="search"
+              placeholder="Try grief, mar, nuit, prayer, or a Spanish/French phrase"
+              class="w-full rounded-2xl border border-black/10 bg-[color-mix(in_oklab,var(--paper)_96%,transparent)] px-4 py-3 text-base text-[var(--ink)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[color-mix(in_oklab,var(--accent)_24%,transparent)]"
+            />
+          </div>
+          <div class="w-full lg:w-40">
+            <label class="mb-2 block text-sm font-medium text-[var(--muted)]" for="semantic-limit">Results</label>
+            <select
+              id="semantic-limit"
+              data-semantic-limit
+              class="w-full rounded-2xl border border-black/10 bg-[color-mix(in_oklab,var(--paper)_96%,transparent)] px-4 py-3 text-base text-[var(--ink)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[color-mix(in_oklab,var(--accent)_24%,transparent)]"
+            >
+              <option value="5">Top 5</option>
+              <option value="8" selected>Top 8</option>
+              <option value="12">Top 12</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-wrap gap-3">
+          <button
+            class="rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-semibold text-[var(--accent-ink)] transition hover:opacity-92 disabled:cursor-not-allowed disabled:opacity-60"
+            type="button"
+            data-semantic-boot
+          >
+            Build browser index
+          </button>
+          <button
+            class="rounded-full border border-black/10 bg-[color-mix(in_oklab,var(--paper)_96%,transparent)] px-5 py-2.5 text-sm font-semibold text-[var(--ink)] transition hover:border-black/20"
+            type="submit"
+          >
+            Run semantic search
+          </button>
+        </div>
+
+        <p class="mt-4 text-sm text-[var(--muted)]" data-semantic-status>
+          This route stays idle until you build the in-browser index.
+        </p>
+        <p class="mt-2 text-sm text-[var(--muted)]" data-semantic-metrics>
+          Expected tradeoff: model download plus client CPU or WebGPU time.
+        </p>
+      </form>
+
+      <section
+        class="rounded-[2rem] border border-black/10 bg-[color-mix(in_oklab,var(--paper)_92%,transparent)] p-5 shadow-[var(--shadow)] sm:p-6"
+      >
+        <div class="flex items-center justify-between gap-3">
+          <h2 class="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">Matches</h2>
+          <a class="text-sm text-[var(--muted)]" href={corpusUrl}>Corpus export</a>
+        </div>
+        <div class="mt-4 space-y-4" data-semantic-results>
+          <p class="text-sm text-[var(--muted)]">Results will appear here after the first query.</p>
+        </div>
+      </section>
+    </div>
+  </section>
+</section>
+
+<script>
+  import { setupSemanticSearchLab } from "../lib/browser-semantic-search";
+
+  const config = document.querySelector("[data-semantic-config]");
+  if (config instanceof HTMLElement) {
+    await setupSemanticSearchLab({
+      corpusUrl: config.dataset.corpusUrl ?? "/api/freeverse-public-corpus.jsonl",
+      modelId: config.dataset.modelId ?? "Xenova/paraphrase-multilingual-MiniLM-L12-v2",
+      maxDocs: Number.parseInt(config.dataset.maxDocs ?? "180", 10) || 180,
+    });
+  }
+</script>

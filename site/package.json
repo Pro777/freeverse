@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
+    "@huggingface/transformers": "^4.0.1",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^5.18.1",
     "js-yaml": "^4.1.1",
