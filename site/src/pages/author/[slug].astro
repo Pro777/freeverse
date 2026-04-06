@@ -40,12 +40,40 @@ export async function getStaticPaths() {
 }
 
 const { author, poems } = Astro.props as AuthorPageProps;
-const info = AUTHOR_INFO[(Astro.props as AuthorPageProps).authorSlug];
+const authorSlug = (Astro.props as AuthorPageProps).authorSlug;
+const info = AUTHOR_INFO[authorSlug];
 const title = `${author} · Freeverse`;
 const description = `Read public-domain poems by ${author}.`;
+const canonicalPath = `${base}author/${authorSlug}/`;
+const canonicalUrl = Astro.site ? new URL(canonicalPath, Astro.site).toString() : undefined;
+const personStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": canonicalUrl ? `${canonicalUrl}#person` : undefined,
+  name: author,
+  url: canonicalUrl,
+  description: info?.bio ?? description,
+  sameAs: info?.source_url,
+};
+const authorPageStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": canonicalUrl ? `${canonicalUrl}#webpage` : undefined,
+  url: canonicalUrl,
+  name: title,
+  description,
+  mainEntity: {
+    "@id": canonicalUrl ? `${canonicalUrl}#person` : undefined,
+  },
+};
 ---
 
-<BaseLayout title={title} description={description} currentPath={""}>
+<BaseLayout
+  title={title}
+  description={description}
+  currentPath={""}
+  structuredData={[personStructuredData, authorPageStructuredData]}
+>
   <section class="hero">
     <h1>{author}</h1>
     <p class="lede">
