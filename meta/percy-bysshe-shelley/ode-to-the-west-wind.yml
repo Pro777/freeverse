@@ -1,0 +1,13 @@
+id: percy-bysshe-shelley/ode-to-the-west-wind
+slug: ode-to-the-west-wind
+author: Percy Bysshe Shelley
+author_slug: percy-bysshe-shelley
+title: Ode to the West Wind
+century: 19
+text_path: poems/percy-bysshe-shelley/ode-to-the-west-wind.txt
+text_in_repo: true
+source_label: Project Gutenberg
+source_url: https://www.gutenberg.org/cache/epub/4800/pg4800.txt
+public_domain_rationale: 'Public domain in the United States: first published 1820 (pre-1929); text via Project Gutenberg eBook #4800.'
+collection_title: The Complete Poetical Works of Percy Bysshe Shelley
+collection_source_url: https://www.gutenberg.org/ebooks/4800
