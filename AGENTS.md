@@ -7,7 +7,7 @@ This extends the universal rules in `rowan/templates/AGENTS.md`. Rules here are 
 ## Project Context
 
 - Public-domain poetry corpus + Astro static site.
-- Corpus owner: Rowan/John. Ingest agent: Codex (primary), Campion (as needed).
+- Corpus owner: Rowan/John.
 
 **Directory layout:**
 ```
@@ -90,30 +90,30 @@ These are generated. Add to `.gitignore` if not already present:
 ## Queue Scope
 
 When working inside this repo's mounted worktree, "the queue" means only:
-- the issue implied by the current branch, if the branch is named `codex/<issue>-<slug>`
-- this repo's open GitHub issues labeled `Codex`
+- the issue implied by the current branch, if the branch name contains a leading issue number
+- this repo's open GitHub issues
 
 Do not inspect or act on Rowan/global queue items or on other repositories unless the user explicitly instructs you to switch repos.
 
-If no repo-local Codex issue exists, report that the repo-local queue is empty and stop.
+If no repo-local issue exists, report that the repo-local queue is empty and stop.
 
 ## Queue Resolution Order
 
 Before starting new work, resolve scope in this order:
 1. Current branch assignment
 2. Open PR already associated with the current branch or issue
-3. Open issues in this repo labeled `Codex`
-4. Otherwise: stop and report no repo-local Codex work
+3. Open issues in this repo
+4. Otherwise: stop and report no repo-local work
 
 ## Duplicate Work Guard
 
 Before creating a branch, commit, or PR:
 - check for open PRs in this repo
-- check for open issues in this repo labeled `Codex`
+- check for open issues in this repo
 - check whether the current branch already corresponds to the active issue
 
 If an open PR already exists for the issue, do not create another PR unless the user explicitly asks.
-If another Codex branch or PR already exists for the same issue, stop and report the overlap.
+If another branch or PR already exists for the same issue, stop and report the overlap.
 
 ## Worktree Boundary
 
@@ -138,30 +138,30 @@ If continuing would require changing repos or leaving the current branch assignm
 ## Queue Scope
 
 When working inside this repo's mounted worktree, "the queue" means only:
-- the issue implied by the current branch, if the branch is named `codex/<issue>-<slug>`
-- this repo's open GitHub issues labeled `Codex`
+- the issue implied by the current branch, if the branch name contains a leading issue number
+- this repo's open GitHub issues
 
 Do not inspect or act on Rowan/global queue items or on other repositories unless the user explicitly instructs you to switch repos.
 
-If no repo-local Codex issue exists, report that the repo-local queue is empty and stop.
+If no repo-local issue exists, report that the repo-local queue is empty and stop.
 
 ## Queue Resolution Order
 
 Before starting new work, resolve scope in this order:
 1. Current branch assignment
 2. Open PR already associated with the current branch or issue
-3. Open issues in this repo labeled `Codex`
-4. Otherwise: stop and report no repo-local Codex work
+3. Open issues in this repo
+4. Otherwise: stop and report no repo-local work
 
 ## Duplicate Work Guard
 
 Before creating a branch, commit, or PR:
 - check for open PRs in this repo
-- check for open issues in this repo labeled `Codex`
+- check for open issues in this repo
 - check whether the current branch already corresponds to the active issue
 
 If an open PR already exists for the issue, do not create another PR unless the user explicitly asks.
-If another Codex branch or PR already exists for the same issue, stop and report the overlap.
+If another branch or PR already exists for the same issue, stop and report the overlap.
 
 ## Worktree Boundary
 
@@ -173,12 +173,6 @@ A permanent worktree implies one repo, one branch, one issue unless the user exp
 ## PR Discipline
 
 - **PRs must merge or die.** A PR that sits open is waste — it diverges, conflicts, and the work rots. If you open a PR, drive it to merge in the same session. If it can't merge (blocked, needs review), say so explicitly. Never open a PR and move on.
-
-## Label Lifecycle
-
-- Add `in-progress` label when you pick up an issue.
-- Remove `in-progress` label when you add `ready-for-review`. Do not wait for Rowan to do this — leaving it on blocks the watchdog from dispatching the next issue.
-- Close the issue after the PR is merged.
 
 ## Communication
 
