@@ -155,6 +155,13 @@ export const AUTHOR_INFO: Record<string, AuthorInfo> = {
     source_label: "Wikipedia",
     source_url: "https://en.wikipedia.org/wiki/Ralph_Waldo_Emerson",
   },
+  "arthur-rimbaud": {
+    birth_year: 1854,
+    death_year: 1891,
+    bio: "French poet whose explosive early work reshaped modern lyric through visionary imagery, formal disruption, and radical compression.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/Arthur_Rimbaud",
+  },
   "robert-browning": {
     birth_year: 1812,
     death_year: 1889,
