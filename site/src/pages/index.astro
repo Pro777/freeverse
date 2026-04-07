@@ -13,16 +13,22 @@ const copy = {
     description: "Public-domain poetry — a clean reader with shareable line links.",
     badge: "Public Domain Poetry",
     kicker: "Readable, linkable, and built for actual reading.",
-    heading: "Poetry that reads like a page, not a screenshot.",
+    heading: "Read poems like poems.",
+    subheading: "Not screenshots. Not scraped walls of text. Just a page that stays readable.",
     lede:
       "Freeverse brings public-domain poems into a clean reading surface with shareable line links, author pages, editorial collections, and a growing multilingual corpus.",
     explore: "Explore the library",
     search: "Search poems",
     authors: "Browse authors",
+    stats: [
+      ["Poems", "635 public-domain texts and growing"],
+      ["Languages", "English, Spanish, French, and Italian in the live corpus"],
+      ["Reading", "Line-stable pages built for slow reading, not frantic scrolling"],
+    ],
     cards: [
       ["Reader-first", "Stable line breaks, linkable passages, and typography tuned for long reading instead of skimming."],
       ["Editorial Paths", "Collections and author pages make the library navigable without turning it into a sterile database."],
-      ["Machine-readable", "JSON-LD, sitemap support, and public Alcove exports make the corpus usable beyond the browser."],
+      ["Start anywhere", "Browse by author, search by phrase or theme, or just open the featured poem and keep going."],
     ],
     featured: "Featured Poem",
     featuredSub: "A small daily delight",
@@ -35,24 +41,30 @@ const copy = {
     collectionsBody: "Follow small editorial paths through grief, mortality, Romantic intensity, and future themes.",
     collectionsAction: "Browse collections",
     project: "Project",
-    projectBody: "Public corpus, search index, and static machine-readable exports, all shipped from the same source.",
-    projectAction: "View repository",
+    projectBody: "Built for readers who want public-domain poetry without clutter, friction, or broken formatting.",
+    projectAction: "Meet the authors",
   },
   es: {
     title: "Freeverse",
     description: "Poesia de dominio publico en una interfaz limpia y enlazable.",
     badge: "Poesia de Dominio Publico",
     kicker: "Legible, enlazable y hecha para leer de verdad.",
-    heading: "Poesia que se lee como una pagina, no como una captura.",
+    heading: "Lee poemas como poemas.",
+    subheading: "No capturas. No muros de texto raspado. Solo una pagina que sigue siendo legible.",
     lede:
       "Freeverse lleva poemas de dominio publico a una superficie limpia de lectura con enlaces por linea, paginas de autor, colecciones editoriales y un corpus multilingue en crecimiento.",
     explore: "Explorar biblioteca",
     search: "Buscar poemas",
     authors: "Ver autores",
+    stats: [
+      ["Poemas", "635 textos de dominio publico y creciendo"],
+      ["Idiomas", "Ingles, espanol, frances e italiano en el corpus activo"],
+      ["Lectura", "Paginas con lineas estables hechas para leer despacio, no para deslizar sin parar"],
+    ],
     cards: [
       ["Pensado para leer", "Saltos de linea estables, pasajes enlazables y tipografia ajustada para lectura larga."],
       ["Caminos editoriales", "Las colecciones y paginas de autor vuelven navegable la biblioteca sin convertirla en una base de datos esteril."],
-      ["Legible por maquinas", "JSON-LD, sitemap y exportaciones publicas de Alcove hacen util el corpus mas alla del navegador."],
+      ["Empieza donde quieras", "Explora por autor, busca por frase o tema, o abre el poema destacado y sigue leyendo."],
     ],
     featured: "Poema destacado",
     featuredSub: "Un pequeno deleite diario",
@@ -65,24 +77,30 @@ const copy = {
     collectionsBody: "Sigue pequenos caminos editoriales por el duelo, la mortalidad, la intensidad romantica y otros temas.",
     collectionsAction: "Ver colecciones",
     project: "Proyecto",
-    projectBody: "Corpus publico, indice de busqueda y exportaciones estaticas para maquinas, todo desde la misma fuente.",
-    projectAction: "Ver repositorio",
+    projectBody: "Hecho para lectores que quieren poesia de dominio publico sin desorden, friccion ni formato roto.",
+    projectAction: "Conocer autores",
   },
   fr: {
     title: "Freeverse",
     description: "Poesie du domaine public dans un lecteur net avec liens partageables.",
     badge: "Poesie du Domaine Public",
     kicker: "Lisible, partageable, et concue pour la lecture.",
-    heading: "Une poesie qui se lit comme une page, pas comme une capture d'ecran.",
+    heading: "Lire les poemes comme des poemes.",
+    subheading: "Pas des captures. Pas des murs de texte racle. Juste une page qui reste lisible.",
     lede:
       "Freeverse apporte les poemes du domaine public dans un espace de lecture propre avec liens par ligne, pages d'auteur, collections editoriales et un corpus multilingue en croissance.",
     explore: "Explorer la bibliotheque",
     search: "Chercher des poemes",
     authors: "Voir les auteurs",
+    stats: [
+      ["Poemes", "635 textes du domaine public et ce nombre augmente"],
+      ["Langues", "Anglais, espagnol, francais et italien dans le corpus actif"],
+      ["Lecture", "Des pages aux lignes stables, faites pour lire lentement et non pour defiler"],
+    ],
     cards: [
       ["Concu pour lire", "Retours de ligne stables, passages partageables et typographie faite pour la lecture longue."],
       ["Parcours editoriaux", "Les collections et pages d'auteur rendent la bibliotheque navigable sans en faire une base sterile."],
-      ["Lisible par machine", "JSON-LD, sitemap et export Alcove public rendent le corpus utile au-dela du navigateur."],
+      ["Commencer n'importe ou", "Parcourez par auteur, cherchez une phrase ou un theme, ou ouvrez simplement le poeme mis en avant."],
     ],
     featured: "Poeme mis en avant",
     featuredSub: "Un petit plaisir du jour",
@@ -95,8 +113,8 @@ const copy = {
     collectionsBody: "Suivez de petits parcours editoriaux autour du deuil, de la mortalite, de l'intensite romantique et d'autres themes.",
     collectionsAction: "Voir les collections",
     project: "Projet",
-    projectBody: "Corpus public, index de recherche et exports statiques pour les machines, livres depuis la meme source.",
-    projectAction: "Voir le depot",
+    projectBody: "Concu pour les lecteurs qui veulent de la poesie du domaine public sans encombrement ni mise en page brisee.",
+    projectAction: "Voir les auteurs",
   },
 }[locale];
 
@@ -110,48 +128,61 @@ const featuredStanza = featured ? await loadFirstStanza(featured) : undefined;
   locale={locale}
   currentPath="/"
 >
-  <section class="grid gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(20rem,0.95fr)] lg:items-start">
+  <section class="grid gap-8 xl:grid-cols-[minmax(0,1.35fr)_minmax(22rem,0.95fr)] xl:items-start">
     <div class="space-y-8">
-      <section class="rounded-[2rem] border border-black/10 bg-[color-mix(in_oklab,var(--paper)_94%,transparent)] px-6 py-8 shadow-[var(--shadow)] sm:px-8 sm:py-10">
-        <div class="mb-4 flex flex-wrap items-center gap-3">
+      <section class="rounded-[2rem] border border-black/10 bg-[color-mix(in_oklab,var(--paper)_95%,transparent)] px-6 py-8 shadow-[var(--shadow)] sm:px-8 sm:py-10">
+        <div class="mb-5 flex flex-wrap items-center gap-3">
           <span class="rounded-full border border-amber-950/10 bg-amber-100/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-amber-900">
             {copy.badge}
           </span>
-          <span class="text-sm text-[var(--muted)]">{copy.kicker}</span>
+          <span class="text-base text-[var(--muted)]">{copy.kicker}</span>
         </div>
-        <h1 class="max-w-3xl font-serif text-5xl font-semibold tracking-[-0.04em] text-[var(--ink)] sm:text-6xl lg:text-7xl">
+        <h1 class="max-w-4xl font-serif text-5xl font-semibold tracking-[-0.045em] text-[var(--ink)] sm:text-6xl lg:text-[4.8rem]">
           {copy.heading}
         </h1>
-        <p class="mt-5 max-w-2xl text-lg leading-8 text-[var(--muted)] sm:text-xl">
+        <p class="mt-4 max-w-3xl text-xl leading-8 text-[var(--ink)]/85 sm:text-2xl sm:leading-9">
+          {copy.subheading}
+        </p>
+        <p class="mt-5 max-w-3xl text-lg leading-8 text-[var(--muted)] sm:text-[1.2rem]">
           {copy.lede}
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a
-            class="rounded-full bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-[var(--accent-ink)] no-underline shadow-sm transition hover:brightness-105"
+            class="rounded-full bg-[var(--accent)] px-6 py-3.5 text-base font-semibold text-[var(--accent-ink)] no-underline shadow-sm transition hover:brightness-105"
             href={browsePath(base, locale)}
           >
             {copy.explore}
           </a>
           <a
-            class="rounded-full border border-black/10 bg-[color-mix(in_oklab,var(--paper)_92%,transparent)] px-5 py-3 text-sm font-semibold text-[var(--ink)] no-underline transition hover:border-black/20"
+            class="rounded-full border border-black/10 bg-[color-mix(in_oklab,var(--paper)_92%,transparent)] px-6 py-3.5 text-base font-semibold text-[var(--ink)] no-underline transition hover:border-black/20"
             href={searchPath(base, locale)}
           >
             {copy.search}
           </a>
           <a
-            class="rounded-full border border-transparent px-5 py-3 text-sm font-semibold text-[var(--muted)] no-underline transition hover:text-[var(--ink)]"
+            class="rounded-full border border-transparent px-4 py-3.5 text-base font-semibold text-[var(--muted)] no-underline transition hover:text-[var(--ink)]"
             href={authorsPath(base, locale)}
           >
             {copy.authors}
           </a>
         </div>
+        <div class="mt-8 grid gap-4 lg:grid-cols-3">
+          {copy.stats.map(([label, value]) => (
+          <div class="rounded-[1.5rem] border border-black/10 bg-[color-mix(in_oklab,var(--paper)_92%,transparent)] p-5">
+            <div class="text-sm font-semibold text-[var(--muted)]">{label}</div>
+            <p class="mt-2 text-base leading-7 text-[var(--ink)]/85">
+              {value}
+            </p>
+          </div>
+          ))}
+        </div>
       </section>
 
-      <section class="grid gap-4 sm:grid-cols-3">
+      <section class="grid gap-4 lg:grid-cols-3">
         {copy.cards.map(([title, body]) => (
-        <div class="rounded-[1.75rem] border border-black/10 bg-[color-mix(in_oklab,var(--paper)_90%,transparent)] p-5 shadow-[var(--shadow)]">
-          <div class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">{title}</div>
-          <p class="mt-3 text-sm leading-7 text-[var(--muted)]">
+        <div class="rounded-[1.75rem] border border-black/10 bg-[color-mix(in_oklab,var(--paper)_92%,transparent)] p-6 shadow-[var(--shadow)]">
+          <div class="text-sm font-semibold text-[var(--ink)]">{title}</div>
+          <p class="mt-3 text-base leading-8 text-[var(--muted)]">
             {body}
           </p>
         </div>
@@ -160,13 +191,13 @@ const featuredStanza = featured ? await loadFirstStanza(featured) : undefined;
     </div>
 
     <section class="space-y-4">
-      <div class="rounded-[2rem] border border-black/10 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--paper)_96%,transparent),color-mix(in_oklab,var(--paper)_88%,transparent))] p-6 shadow-[var(--shadow)] sm:p-7">
+      <div class="rounded-[2rem] border border-black/10 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--paper)_98%,transparent),color-mix(in_oklab,var(--paper)_90%,transparent))] p-6 shadow-[var(--shadow)] sm:p-7">
         <div class="mb-5 flex items-center justify-between gap-3">
           <div>
             <div class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">{copy.featured}</div>
-            <div class="mt-1 text-sm italic text-[var(--muted)]">{copy.featuredSub}</div>
+            <div class="mt-1 text-base italic text-[var(--muted)]">{copy.featuredSub}</div>
           </div>
-          <span class="rounded-full border border-amber-950/10 bg-amber-100/75 px-3 py-1 text-xs font-medium text-amber-900">
+          <span class="rounded-full border border-amber-950/10 bg-amber-100/75 px-3 py-1 text-sm font-medium text-amber-900">
             {copy.featuredBadge}
           </span>
         </div>
@@ -174,33 +205,33 @@ const featuredStanza = featured ? await loadFirstStanza(featured) : undefined;
         {featured ? (
           <>
             <a class="block no-underline" href={poemPath(base, featured.id, locale)}>
-              <div class="font-serif text-3xl font-semibold tracking-[-0.03em] text-[var(--ink)]">
+              <div class="font-serif text-[2.2rem] font-semibold leading-tight tracking-[-0.03em] text-[var(--ink)] sm:text-[2.6rem]">
                 {featured.title}
               </div>
-              <div class="mt-2 text-sm uppercase tracking-[0.18em] text-[var(--muted)]">
+              <div class="mt-2 text-base uppercase tracking-[0.18em] text-[var(--muted)]">
                 {featured.author}
               </div>
             </a>
             {featuredStanza ? (
               <a
-                class="mt-6 block rounded-[1.5rem] border border-black/10 bg-[var(--preview-bg)] p-5 no-underline transition hover:border-black/20"
+                class="mt-6 block rounded-[1.5rem] border border-black/10 bg-[var(--preview-bg)] p-6 no-underline transition hover:border-black/20"
                 href={poemPath(base, featured.id, locale)}
                 aria-label={`Read featured poem: ${featured.title} by ${featured.author}`}
               >
-                <pre class="m-0 whitespace-pre-wrap font-serif text-base leading-8 text-[var(--ink)]">{featuredStanza}</pre>
+                <pre class="m-0 whitespace-pre-wrap font-serif text-lg leading-9 text-[var(--ink)] sm:text-[1.2rem]">{featuredStanza}</pre>
               </a>
             ) : (
-              <p class="mt-6 text-sm text-[var(--muted)]">{copy.previewUnavailable}</p>
+              <p class="mt-6 text-base text-[var(--muted)]">{copy.previewUnavailable}</p>
             )}
             <div class="mt-6 flex flex-wrap gap-3">
               <a
-                class="rounded-full bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-[var(--accent-ink)] no-underline transition hover:brightness-105"
+                class="rounded-full bg-[var(--accent)] px-5 py-3 text-base font-semibold text-[var(--accent-ink)] no-underline transition hover:brightness-105"
                 href={poemPath(base, featured.id, locale)}
               >
                 {copy.read}
               </a>
               <a
-                class="rounded-full border border-black/10 bg-[color-mix(in_oklab,var(--paper)_92%,transparent)] px-4 py-2.5 text-sm font-semibold text-[var(--ink)] no-underline transition hover:border-black/20"
+                class="rounded-full border border-black/10 bg-[color-mix(in_oklab,var(--paper)_92%,transparent)] px-5 py-3 text-base font-semibold text-[var(--ink)] no-underline transition hover:border-black/20"
                 href={browsePath(base, locale)}
               >
                 {copy.explorePoems}
@@ -212,22 +243,22 @@ const featuredStanza = featured ? await loadFirstStanza(featured) : undefined;
         )}
       </div>
 
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-        <div class="rounded-[1.75rem] border border-black/10 bg-[color-mix(in_oklab,var(--paper)_92%,transparent)] p-5 shadow-[var(--shadow)]">
-          <div class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">{copy.collections}</div>
-          <p class="mt-3 text-sm leading-7 text-[var(--muted)]">
+      <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
+        <div class="rounded-[1.75rem] border border-black/10 bg-[color-mix(in_oklab,var(--paper)_92%,transparent)] p-6 shadow-[var(--shadow)]">
+          <div class="text-sm font-semibold text-[var(--ink)]">{copy.collections}</div>
+          <p class="mt-3 text-base leading-8 text-[var(--muted)]">
             {copy.collectionsBody}
           </p>
-          <a class="mt-4 inline-flex rounded-full border border-black/10 px-4 py-2 text-sm font-semibold text-[var(--ink)] no-underline" href={collectionsPath(base, locale)}>
+          <a class="mt-5 inline-flex rounded-full border border-black/10 px-5 py-3 text-base font-semibold text-[var(--ink)] no-underline" href={collectionsPath(base, locale)}>
             {copy.collectionsAction}
           </a>
         </div>
-        <div class="rounded-[1.75rem] border border-black/10 bg-[color-mix(in_oklab,var(--paper)_92%,transparent)] p-5 shadow-[var(--shadow)]">
-          <div class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">{copy.project}</div>
-          <p class="mt-3 text-sm leading-7 text-[var(--muted)]">
+        <div class="rounded-[1.75rem] border border-black/10 bg-[color-mix(in_oklab,var(--paper)_92%,transparent)] p-6 shadow-[var(--shadow)]">
+          <div class="text-sm font-semibold text-[var(--ink)]">{copy.project}</div>
+          <p class="mt-3 text-base leading-8 text-[var(--muted)]">
             {copy.projectBody}
           </p>
-          <a class="mt-4 inline-flex rounded-full border border-black/10 px-4 py-2 text-sm font-semibold text-[var(--ink)] no-underline" href="https://github.com/Pro777/freeverse">
+          <a class="mt-5 inline-flex rounded-full border border-black/10 px-5 py-3 text-base font-semibold text-[var(--ink)] no-underline" href={authorsPath(base, locale)}>
             {copy.projectAction}
           </a>
         </div>
