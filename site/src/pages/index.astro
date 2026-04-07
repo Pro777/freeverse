@@ -23,12 +23,12 @@ const copy = {
     stats: [
       ["Poems", "635 public-domain texts and growing"],
       ["Languages", "English, Spanish, French, and Italian in the live corpus"],
-      ["Exports", "Static JSONL and discovery manifests for machine readers"],
+      ["Reading", "Line-stable pages built for slow reading, not frantic scrolling"],
     ],
     cards: [
       ["Reader-first", "Stable line breaks, linkable passages, and typography tuned for long reading instead of skimming."],
       ["Editorial Paths", "Collections and author pages make the library navigable without turning it into a sterile database."],
-      ["Machine-readable", "JSON-LD, sitemap support, and public Alcove exports make the corpus usable beyond the browser."],
+      ["Start anywhere", "Browse by author, search by phrase or theme, or just open the featured poem and keep going."],
     ],
     featured: "Featured Poem",
     featuredSub: "A small daily delight",
@@ -41,8 +41,8 @@ const copy = {
     collectionsBody: "Follow small editorial paths through grief, mortality, Romantic intensity, and future themes.",
     collectionsAction: "Browse collections",
     project: "Project",
-    projectBody: "Public corpus, search index, and static machine-readable exports, all shipped from the same source.",
-    projectAction: "View repository",
+    projectBody: "Built for readers who want public-domain poetry without clutter, friction, or broken formatting.",
+    projectAction: "Meet the authors",
   },
   es: {
     title: "Freeverse",
@@ -59,12 +59,12 @@ const copy = {
     stats: [
       ["Poemas", "635 textos de dominio publico y creciendo"],
       ["Idiomas", "Ingles, espanol, frances e italiano en el corpus activo"],
-      ["Exportaciones", "JSONL estatico y manifiestos de descubrimiento para lectores de maquinas"],
+      ["Lectura", "Paginas con lineas estables hechas para leer despacio, no para deslizar sin parar"],
     ],
     cards: [
       ["Pensado para leer", "Saltos de linea estables, pasajes enlazables y tipografia ajustada para lectura larga."],
       ["Caminos editoriales", "Las colecciones y paginas de autor vuelven navegable la biblioteca sin convertirla en una base de datos esteril."],
-      ["Legible por maquinas", "JSON-LD, sitemap y exportaciones publicas de Alcove hacen util el corpus mas alla del navegador."],
+      ["Empieza donde quieras", "Explora por autor, busca por frase o tema, o abre el poema destacado y sigue leyendo."],
     ],
     featured: "Poema destacado",
     featuredSub: "Un pequeno deleite diario",
@@ -77,8 +77,8 @@ const copy = {
     collectionsBody: "Sigue pequenos caminos editoriales por el duelo, la mortalidad, la intensidad romantica y otros temas.",
     collectionsAction: "Ver colecciones",
     project: "Proyecto",
-    projectBody: "Corpus publico, indice de busqueda y exportaciones estaticas para maquinas, todo desde la misma fuente.",
-    projectAction: "Ver repositorio",
+    projectBody: "Hecho para lectores que quieren poesia de dominio publico sin desorden, friccion ni formato roto.",
+    projectAction: "Conocer autores",
   },
   fr: {
     title: "Freeverse",
@@ -95,12 +95,12 @@ const copy = {
     stats: [
       ["Poemes", "635 textes du domaine public et ce nombre augmente"],
       ["Langues", "Anglais, espagnol, francais et italien dans le corpus actif"],
-      ["Exports", "JSONL statique et manifestes de decouverte pour les lecteurs machine"],
+      ["Lecture", "Des pages aux lignes stables, faites pour lire lentement et non pour defiler"],
     ],
     cards: [
       ["Concu pour lire", "Retours de ligne stables, passages partageables et typographie faite pour la lecture longue."],
       ["Parcours editoriaux", "Les collections et pages d'auteur rendent la bibliotheque navigable sans en faire une base sterile."],
-      ["Lisible par machine", "JSON-LD, sitemap et export Alcove public rendent le corpus utile au-dela du navigateur."],
+      ["Commencer n'importe ou", "Parcourez par auteur, cherchez une phrase ou un theme, ou ouvrez simplement le poeme mis en avant."],
     ],
     featured: "Poeme mis en avant",
     featuredSub: "Un petit plaisir du jour",
@@ -113,8 +113,8 @@ const copy = {
     collectionsBody: "Suivez de petits parcours editoriaux autour du deuil, de la mortalite, de l'intensite romantique et d'autres themes.",
     collectionsAction: "Voir les collections",
     project: "Projet",
-    projectBody: "Corpus public, index de recherche et exports statiques pour les machines, livres depuis la meme source.",
-    projectAction: "Voir le depot",
+    projectBody: "Concu pour les lecteurs qui veulent de la poesie du domaine public sans encombrement ni mise en page brisee.",
+    projectAction: "Voir les auteurs",
   },
 }[locale];
 
@@ -258,7 +258,7 @@ const featuredStanza = featured ? await loadFirstStanza(featured) : undefined;
           <p class="mt-3 text-base leading-8 text-[var(--muted)]">
             {copy.projectBody}
           </p>
-          <a class="mt-5 inline-flex rounded-full border border-black/10 px-5 py-3 text-base font-semibold text-[var(--ink)] no-underline" href="https://github.com/Pro777/freeverse">
+          <a class="mt-5 inline-flex rounded-full border border-black/10 px-5 py-3 text-base font-semibold text-[var(--ink)] no-underline" href={authorsPath(base, locale)}>
             {copy.projectAction}
           </a>
         </div>
