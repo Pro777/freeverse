@@ -45,27 +45,27 @@ const normalized = (p?: string) => {
 const here = normalized(currentPath);
 ---
 
-<header class="border-b border-black/10 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--paper)_72%,transparent),transparent_72%),var(--header-bg)] px-4 py-4 sm:px-6 lg:px-10">
+<header class="border-b border-black/10 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--paper)_72%,transparent),transparent_72%),var(--header-bg)] px-5 py-5 sm:px-6 lg:px-10">
   <div class="flex items-start justify-between gap-4">
-    <div class="max-w-sm">
+    <div class="max-w-md">
       <a class="block no-underline" href={homePath(base, locale)}>
-        <div class="font-serif text-xl font-semibold tracking-[-0.03em] text-[var(--ink)] sm:text-2xl">Freeverse</div>
-        <div class="mt-1 max-w-[22rem] font-sans text-sm leading-5 text-[var(--muted)]">
+        <div class="font-serif text-[1.9rem] font-semibold tracking-[-0.03em] text-[var(--ink)] sm:text-[2.2rem]">Freeverse</div>
+        <div class="mt-1 max-w-[26rem] font-sans text-base leading-6 text-[var(--muted)]">
           {messages.header.tagline}
         </div>
       </a>
-      <div class="mt-2 text-sm italic text-[color-mix(in_oklab,var(--muted)_92%,var(--ink))]">
+      <div class="mt-2 text-base italic text-[color-mix(in_oklab,var(--muted)_92%,var(--ink))]">
         <a class="decoration-[color-mix(in_oklab,var(--accent)_45%,transparent)]" href={localizedPath(base, locale, "/poem/horace/odes-3-30-exegi-monumentum/#l6-l6")}>
           Non omnis moriar
         </a>
       </div>
     </div>
 
-    <nav class="hidden flex-wrap justify-end gap-2 md:flex" aria-label="Primary">
+    <nav class="hidden flex-wrap justify-end gap-2 lg:flex" aria-label="Primary">
     {nav.map((item) => (
       <a
         class:list={[
-          "rounded-full border px-3 py-2 text-sm font-medium no-underline transition",
+          "rounded-full border px-4 py-2.5 text-sm font-medium no-underline transition",
           "border-black/10 bg-[color-mix(in_oklab,var(--paper)_88%,transparent)] text-[var(--ink)] hover:border-black/20",
           here === item.key && "border-black/25 shadow-[0_1px_0_color-mix(in_oklab,var(--ink)_8%,transparent)]",
         ]}
@@ -77,7 +77,7 @@ const here = normalized(currentPath);
     ))}
 
     <button
-      class="rounded-full border border-black/10 bg-[color-mix(in_oklab,var(--paper)_88%,transparent)] px-3 py-2 text-sm font-medium text-[var(--ink)] transition hover:border-black/20"
+      class="rounded-full border border-black/10 bg-[color-mix(in_oklab,var(--paper)_88%,transparent)] px-4 py-2.5 text-sm font-medium text-[var(--ink)] transition hover:border-black/20"
       type="button"
       data-theme-toggle
       aria-label={messages.header.theme}
@@ -88,7 +88,7 @@ const here = normalized(currentPath);
       {UI_LOCALES.map((altLocale) => (
         <a
           class:list={[
-            "rounded-full px-2.5 py-1 text-xs font-medium no-underline transition",
+            "rounded-full px-3 py-1.5 text-xs font-medium no-underline transition",
             altLocale === locale
               ? "bg-[var(--accent)] text-[var(--accent-ink)]"
               : "text-[var(--muted)] hover:text-[var(--ink)]",
@@ -102,9 +102,9 @@ const here = normalized(currentPath);
       ))}
     </div>
     </nav>
-    <div class="md:hidden">
+    <div class="lg:hidden">
       <button
-        class="inline-flex items-center rounded-full border border-black/10 bg-[color-mix(in_oklab,var(--paper)_88%,transparent)] px-3 py-2 text-sm font-medium text-[var(--ink)]"
+        class="inline-flex items-center rounded-full border border-black/10 bg-[color-mix(in_oklab,var(--paper)_88%,transparent)] px-4 py-2.5 text-sm font-medium text-[var(--ink)]"
         type="button"
         id="menu-toggle"
         aria-haspopup="true"
@@ -116,7 +116,7 @@ const here = normalized(currentPath);
     </div>
   </div>
 
-  <div class="relative md:hidden">
+  <div class="relative lg:hidden">
     <div
       class="absolute right-0 top-3 z-20 w-[min(19rem,calc(100vw-2rem))] rounded-3xl border border-black/10 bg-[color-mix(in_oklab,var(--paper)_94%,var(--shell-bg))] p-3 shadow-[var(--shadow)] backdrop-blur-xl"
       id="mobile-menu"
