@@ -1,0 +1,13 @@
+id: alfred-tennyson/locksley-hall
+slug: locksley-hall
+author: Alfred Lord Tennyson
+author_slug: alfred-tennyson
+title: Locksley Hall
+century: 19
+text_path: poems/alfred-tennyson/locksley-hall.txt
+text_in_repo: true
+source_label: Wikisource
+source_url: https://en.wikisource.org/wiki/Poems_(Tennyson,_1843)/Volume_2/Locksley_Hall
+public_domain_rationale: 'Public domain in the United States: first published 1842 (pre-1929); text via English Wikisource.'
+collection_title: Poems (Tennyson, 1843)
+collection_source_url: https://en.wikisource.org/wiki/Poems_(Tennyson,_1843)

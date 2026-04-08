@@ -1,0 +1,13 @@
+id: alfred-tennyson/the-palace-of-art
+slug: the-palace-of-art
+author: Alfred Lord Tennyson
+author_slug: alfred-tennyson
+title: The Palace of Art
+century: 19
+text_path: poems/alfred-tennyson/the-palace-of-art.txt
+text_in_repo: true
+source_label: Wikisource
+source_url: https://en.wikisource.org/wiki/Poems_(Tennyson,_1843)/Volume_1/The_Palace_of_Art
+public_domain_rationale: 'Public domain in the United States: first published 1843 (pre-1929); text via English Wikisource.'
+collection_title: Poems (Tennyson, 1843)
+collection_source_url: https://en.wikisource.org/wiki/Poems_(Tennyson,_1843)
