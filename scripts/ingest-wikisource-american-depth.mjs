@@ -25,6 +25,34 @@ const POEMS = [
     author: "Ralph Waldo Emerson",
     author_slug: "ralph-waldo-emerson",
     century: 19,
+    slug: "the-problem",
+    title: "The Problem",
+    published_year: 1847,
+    source_url: "https://en.wikisource.org/wiki/Poems_(Emerson,_1847)/The_Problem",
+    collection_title: "Poems",
+    collection_source_url: "https://en.wikisource.org/wiki/Poems_(Emerson,_1847)",
+    page_title: "Poems (Emerson, 1847)/The Problem",
+    start_line: "I like a church; I like a cowl;",
+    end_line: "I would not the good bishop be.",
+  },
+  {
+    author: "Ralph Waldo Emerson",
+    author_slug: "ralph-waldo-emerson",
+    century: 19,
+    slug: "uriel",
+    title: "Uriel",
+    published_year: 1847,
+    source_url: "https://en.wikisource.org/wiki/Poems_(Emerson,_1847)/Uriel",
+    collection_title: "Poems",
+    collection_source_url: "https://en.wikisource.org/wiki/Poems_(Emerson,_1847)",
+    page_title: "Poems (Emerson, 1847)/Uriel",
+    start_line: "It fell in the ancient periods,",
+    end_line: "And the gods shook, they knew not why.",
+  },
+  {
+    author: "Ralph Waldo Emerson",
+    author_slug: "ralph-waldo-emerson",
+    century: 19,
     slug: "the-snow-storm",
     title: "The Snow-Storm",
     published_year: 1847,
@@ -34,6 +62,62 @@ const POEMS = [
     page_title: "Poems (Emerson, 1847)/The Snow-Storm",
     start_line: "Announced by all the trumpets of the sky,",
     end_line: "The frolic architecture of the snow.",
+  },
+  {
+    author: "Ralph Waldo Emerson",
+    author_slug: "ralph-waldo-emerson",
+    century: 19,
+    slug: "the-rhodora",
+    title: "The Rhodora",
+    published_year: 1847,
+    source_url: "https://en.wikisource.org/wiki/Poems_(Emerson,_1847)/The_Rhodora",
+    collection_title: "Poems",
+    collection_source_url: "https://en.wikisource.org/wiki/Poems_(Emerson,_1847)",
+    page_title: "Poems (Emerson, 1847)/The Rhodora",
+    start_line: "In May, when sea-winds pierced our solitudes,",
+    end_line: "The self-same Power that brought me there brought you.",
+  },
+  {
+    author: "Ralph Waldo Emerson",
+    author_slug: "ralph-waldo-emerson",
+    century: 19,
+    slug: "the-humble-bee",
+    title: "The Humble-Bee",
+    published_year: 1847,
+    source_url: "https://en.wikisource.org/wiki/Poems_(Emerson,_1847)/The_Humble-Bee",
+    collection_title: "Poems",
+    collection_source_url: "https://en.wikisource.org/wiki/Poems_(Emerson,_1847)",
+    page_title: "Poems (Emerson, 1847)/The Humble-Bee",
+    start_line: "Burly, dozing, humble-bee,",
+    end_line: "Thy sleep makes ridiculous.",
+  },
+  {
+    author: "Ralph Waldo Emerson",
+    author_slug: "ralph-waldo-emerson",
+    century: 19,
+    slug: "woodnotes-1",
+    title: "Woodnotes I",
+    published_year: 1847,
+    source_url: "https://en.wikisource.org/wiki/Poems_(Emerson,_1847)/Woodnotes_1",
+    collection_title: "Poems",
+    collection_source_url: "https://en.wikisource.org/wiki/Poems_(Emerson,_1847)",
+    page_title: "Poems (Emerson, 1847)/Woodnotes 1",
+    start_line: "For this present, hard",
+    end_line: "The clay of their departed lover.",
+  },
+  {
+    author: "Ralph Waldo Emerson",
+    author_slug: "ralph-waldo-emerson",
+    century: 19,
+    slug: "woodnotes-2",
+    title: "Woodnotes II",
+    published_year: 1847,
+    source_url: "https://en.wikisource.org/wiki/Poems_(Emerson,_1847)/Woodnotes_2",
+    collection_title: "Poems",
+    collection_source_url: "https://en.wikisource.org/wiki/Poems_(Emerson,_1847)",
+    page_title: "Poems (Emerson, 1847)/Woodnotes 2",
+    start_line: "As sunbeams stream through liberal space,",
+    end_line: "Than all it holds more deep, more high.'",
   },
   {
     author: "Ralph Waldo Emerson",
@@ -146,12 +230,25 @@ async function fetchRenderedText(pageTitle) {
   const url =
     "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text&page=" +
     encodeURIComponent(pageTitle);
-  const { stdout } = await execFileAsync("curl", ["-L", "--fail", "--silent", url], {
-    maxBuffer: 10 * 1024 * 1024,
-  });
-  const json = JSON.parse(stdout);
-  if (!json.parse?.text) throw new Error(`Wikisource parse failed for ${pageTitle}`);
-  return cleanRenderedText(json.parse.text);
+  let lastError;
+
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    try {
+      const { stdout } = await execFileAsync("curl", ["-L", "--fail", "--silent", url], {
+        maxBuffer: 10 * 1024 * 1024,
+      });
+      const json = JSON.parse(stdout);
+      if (!json.parse?.text) throw new Error(`Wikisource parse failed for ${pageTitle}`);
+      return cleanRenderedText(json.parse.text);
+    } catch (error) {
+      lastError = error;
+      if (attempt < 3) {
+        await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
+      }
+    }
+  }
+
+  throw lastError;
 }
 
 function buildMeta(poem) {
