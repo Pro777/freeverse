@@ -7,6 +7,76 @@ const POEMS = [
     author: "Andrew Marvell",
     author_slug: "andrew-marvell",
     century: 17,
+    slug: "on-a-drop-of-dew",
+    title: "On a Drop of Dew",
+    published_year: 1681,
+    source_url: "https://en.wikisource.org/wiki/Miscellaneous_Poems_(Marvell)/On_a_Drop_of_Dew",
+    collection_title: "Miscellaneous Poems",
+    collection_source_url: "https://en.wikisource.org/wiki/Miscellaneous_Poems_(Marvell)",
+    page_title: "Miscellaneous Poems (Marvell)/On a Drop of Dew",
+    start_line: "See how the Orient Dew,",
+    end_line: "Into the Glories of th' Almighty Sun.",
+  },
+  {
+    author: "Andrew Marvell",
+    author_slug: "andrew-marvell",
+    century: 17,
+    slug: "bermudas",
+    title: "Bermudas",
+    published_year: 1681,
+    source_url: "https://en.wikisource.org/wiki/Miscellaneous_Poems_(Marvell)/Bermudas",
+    collection_title: "Miscellaneous Poems",
+    collection_source_url: "https://en.wikisource.org/wiki/Miscellaneous_Poems_(Marvell)",
+    page_title: "Miscellaneous Poems (Marvell)/Bermudas",
+    start_line: "Where the remote Bermudas ride",
+    end_line: "With falling Oars they kept the time.",
+  },
+  {
+    author: "Andrew Marvell",
+    author_slug: "andrew-marvell",
+    century: 17,
+    slug: "the-coronet",
+    title: "The Coronet",
+    published_year: 1681,
+    source_url: "https://en.wikisource.org/wiki/Miscellaneous_Poems_(Marvell)/The_Coronet",
+    collection_title: "Miscellaneous Poems",
+    collection_source_url: "https://en.wikisource.org/wiki/Miscellaneous_Poems_(Marvell)",
+    page_title: "Miscellaneous Poems (Marvell)/The Coronet",
+    start_line: "When for the Thorns with which I long, too long,",
+    end_line: "May crown thy Feet, that could not crown thy Head.",
+  },
+  {
+    author: "Andrew Marvell",
+    author_slug: "andrew-marvell",
+    century: 17,
+    slug: "eyes-and-tears",
+    title: "Eyes and Tears",
+    published_year: 1681,
+    source_url: "https://en.wikisource.org/wiki/Miscellaneous_Poems_(Marvell)/Eyes_and_Tears",
+    collection_title: "Miscellaneous Poems",
+    collection_source_url: "https://en.wikisource.org/wiki/Miscellaneous_Poems_(Marvell)",
+    page_title: "Miscellaneous Poems (Marvell)/Eyes and Tears",
+    start_line: "How wisely Nature did decree,",
+    end_line: "These weeping Eyes, those seeing Tears.",
+  },
+  {
+    author: "Andrew Marvell",
+    author_slug: "andrew-marvell",
+    century: 17,
+    slug: "the-fair-singer",
+    title: "The Fair Singer",
+    published_year: 1681,
+    source_url: "https://en.wikisource.org/wiki/Miscellaneous_Poems_(Marvell)/The_Fair_Singer",
+    collection_title: "Miscellaneous Poems",
+    collection_source_url: "https://en.wikisource.org/wiki/Miscellaneous_Poems_(Marvell)",
+    page_title: "Miscellaneous Poems (Marvell)/The Fair Singer",
+    start_line: "To make a final conquest of all me,",
+    end_line: "She having gained both the Wind and Sun.",
+  },
+  {
+    author: "Andrew Marvell",
+    author_slug: "andrew-marvell",
+    century: 17,
     slug: "the-garden",
     title: "The Garden",
     published_year: 1681,
@@ -112,7 +182,7 @@ function cleanRenderedText(html) {
 }
 
 function extractPoem(text, startLine, endLine) {
-  const lines = text.split("\n").map((line) => line.trimEnd());
+  const lines = text.split("\n").map((line) => line.trimEnd().replace(/^\*\s+/, ""));
   const start = lines.findIndex((line) => line.trim() === startLine);
   if (start === -1) throw new Error(`Start line not found: ${startLine}`);
 
@@ -124,9 +194,17 @@ function extractPoem(text, startLine, endLine) {
     .filter((line) => !/^[IVXLC]+[.]?$/.test(line.trim()))
     .filter(
       (line) =>
-        !["L'Allegro.", "Lycidas.", "The Garden.", "The Definition of Love."].includes(
-          line.trim(),
-        ),
+        ![
+          "L'Allegro.",
+          "Lycidas.",
+          "Bermudas.",
+          "Eyes and Tears.",
+          "On a Drop of Dew.",
+          "The Coronet.",
+          "The Definition of Love.",
+          "The Fair Singer.",
+          "The Garden.",
+        ].includes(line.trim()),
     )
     .join("\n")
     .replace(/\n{3,}/g, "\n\n")
