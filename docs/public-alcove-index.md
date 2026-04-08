@@ -175,3 +175,4 @@ This keeps Freeverse static and slim while letting external clients own the heav
 
 - Publish a signed manifest if downstream consumers need stricter provenance checks.
 - Add collection-level JSON schema documentation for external integrators.
+- See `docs/hosted-semantic-search.md` for the separate Hetzner-hosted Alcove design and fallback strategy when Freeverse wants live multilingual semantic retrieval instead of static-only exports.
