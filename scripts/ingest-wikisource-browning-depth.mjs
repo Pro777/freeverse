@@ -77,6 +77,76 @@ const POEMS = [
     start_line: "Where the quiet-coloured end of evening smiles",
     end_line: "Love is best!",
   },
+  {
+    author: "Robert Browning",
+    author_slug: "robert-browning",
+    century: 19,
+    slug: "soliloquy-of-the-spanish-cloister",
+    title: "Soliloquy of the Spanish Cloister",
+    published_year: 1842,
+    source_url: "https://en.wikisource.org/wiki/Soliloquy_of_the_Spanish_Cloister",
+    collection_title: "Dramatic Lyrics",
+    collection_source_url: "https://en.wikisource.org/wiki/Bells_and_Pomegranates,_First_Series",
+    page_title: "Bells and Pomegranates, First Series/Cloister (Spanish)",
+    start_line: "Gr-r-r—there go, my heart's abhorrence!",
+    end_line: "Ave, Virgo! Gr-r-r—you swine!",
+  },
+  {
+    author: "Robert Browning",
+    author_slug: "robert-browning",
+    century: 19,
+    slug: "the-pied-piper-of-hamelin",
+    title: "The Pied Piper of Hamelin",
+    published_year: 1842,
+    source_url: "https://en.wikisource.org/wiki/Bells_and_Pomegranates,_First_Series/The_Pied_Piper_of_Hamelin",
+    collection_title: "Dramatic Lyrics",
+    collection_source_url: "https://en.wikisource.org/wiki/Bells_and_Pomegranates,_First_Series",
+    page_title: "Bells and Pomegranates, First Series/The Pied Piper of Hamelin",
+    start_line: "Hamelin Town's in Brunswick,",
+    end_line: "If we've promised them aught, let us keep our promise.",
+  },
+  {
+    author: "Robert Browning",
+    author_slug: "robert-browning",
+    century: 19,
+    slug: "the-lost-mistress",
+    title: "The Lost Mistress",
+    published_year: 1845,
+    source_url: "https://en.wikisource.org/wiki/Bells_and_Pomegranates,_Second_Series/The_Lost_Mistress",
+    collection_title: "Dramatic Romances and Lyrics",
+    collection_source_url: "https://en.wikisource.org/wiki/Bells_and_Pomegranates,_Second_Series",
+    page_title: "Bells and Pomegranates, Second Series/The Lost Mistress",
+    start_line: "All's over, then—does truth sound bitter",
+    end_line: "Or so very little longer!",
+  },
+  {
+    author: "Robert Browning",
+    author_slug: "robert-browning",
+    century: 19,
+    slug: "a-womans-last-word",
+    title: "A Woman's Last Word",
+    published_year: 1855,
+    source_url: "https://en.wikisource.org/wiki/A_Woman%27s_Last_Word",
+    collection_title: "Men and Women",
+    collection_source_url: "https://en.wikisource.org/wiki/Men_and_Women_(Browning)",
+    page_title: "Men and Women (Browning)/Volume 1/A Woman's Last Word",
+    start_line: "Let's contend no more, Love,",
+    end_line: "Loved by thee.",
+  },
+  {
+    author: "Robert Browning",
+    author_slug: "robert-browning",
+    century: 19,
+    slug: "prospice",
+    title: "Prospice",
+    published_year: 1864,
+    source_url: "https://en.wikisource.org/wiki/Dramatis_Person%C3%A6/Prospice",
+    collection_title: "Dramatis Personæ",
+    collection_source_url: "https://en.wikisource.org/wiki/Dramatis_Person%C3%A6",
+    page_title: "Dramatis Personæ/Prospice",
+    start_line: "Fear death?—to feel the fog in my throat,",
+    end_line: "And with God be the rest!",
+  },
 ];
 
 function decodeHtml(value) {
@@ -129,10 +199,19 @@ function cleanRenderedText(html) {
 
 function extractPoem(text, startLine, endLine) {
   const lines = text.split("\n").map((line) => line.trimEnd());
-  const start = lines.findIndex((line) => line.trim() === startLine);
+  const normalizeMatch = (value) =>
+    value
+      .replace(/[’‘]/g, "'")
+      .replace(/[“”]/g, '"')
+      .replace(/\s+/g, " ")
+      .trim();
+
+  const start = lines.findIndex((line) => normalizeMatch(line) === normalizeMatch(startLine));
   if (start === -1) throw new Error(`Start line not found: ${startLine}`);
 
-  const end = lines.findIndex((line, index) => index >= start && line.trim() === endLine);
+  const end = lines.findIndex(
+    (line, index) => index >= start && normalizeMatch(line) === normalizeMatch(endLine),
+  );
   if (end === -1) throw new Error(`End line not found: ${endLine}`);
 
   return lines
