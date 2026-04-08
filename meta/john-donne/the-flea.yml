@@ -1,0 +1,14 @@
+id: john-donne/the-flea
+slug: the-flea
+author: John Donne
+author_slug: john-donne
+title: The Flea
+century: 17
+text_path: poems/john-donne/the-flea.txt
+text_in_repo: true
+source_label: Wikisource
+source_url: https://en.wikisource.org/wiki/Poems_of_John_Donne/Volume_1/The_Flea
+public_domain_rationale: 'Public domain in the United States: Donne died 1631 and the Wikisource text is from a public-domain source.'
+collection_title: Poems of John Donne, Volume 1
+collection_source_url: https://en.wikisource.org/wiki/Poems_of_John_Donne/Volume_1
+notes: Orthography and capitalization preserved from Wikisource.

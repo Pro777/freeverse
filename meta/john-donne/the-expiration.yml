@@ -1,0 +1,14 @@
+id: john-donne/the-expiration
+slug: the-expiration
+author: John Donne
+author_slug: john-donne
+title: The Expiration
+century: 17
+text_path: poems/john-donne/the-expiration.txt
+text_in_repo: true
+source_label: Wikisource
+source_url: https://en.wikisource.org/wiki/The_Expiration
+public_domain_rationale: 'Public domain in the United States: Donne died 1631 and the Wikisource text is from a public-domain source.'
+collection_title: Wikisource
+collection_source_url: https://en.wikisource.org/wiki/Author:John_Donne
+notes: Orthography and capitalization preserved from Wikisource.

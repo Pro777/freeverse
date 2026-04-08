@@ -1,0 +1,14 @@
+id: john-donne/song-go-and-catch-a-falling-star
+slug: song-go-and-catch-a-falling-star
+author: John Donne
+author_slug: john-donne
+title: 'Song: Go and Catch a Falling Star'
+century: 17
+text_path: poems/john-donne/song-go-and-catch-a-falling-star.txt
+text_in_repo: true
+source_label: Wikisource
+source_url: https://en.wikisource.org/wiki/Oxford_Book_of_English_Verse_1250-1900/Song_(Donne)
+public_domain_rationale: 'Public domain in the United States: Donne died 1631 and the Wikisource text is from a public-domain source.'
+collection_title: Oxford Book of English Verse 1250-1900
+collection_source_url: https://en.wikisource.org/wiki/Oxford_Book_of_English_Verse_1250-1900
+notes: Orthography and capitalization preserved from Wikisource.
