@@ -99,6 +99,13 @@ export const AUTHOR_INFO: Record<string, AuthorInfo> = {
     source_label: "Wikipedia",
     source_url: "https://en.wikipedia.org/wiki/Lord_Byron",
   },
+  "jose-maria-de-heredia": {
+    birth_year: 1842,
+    death_year: 1905,
+    bio: "French poet of Cuban birth associated with Parnassian precision and sonorous historical imagery, best known for the sonnet collection 'Les Trophées'.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/Jos%C3%A9-Maria_de_Heredia",
+  },
   "gerard-manley-hopkins": {
     birth_year: 1844,
     death_year: 1889,
