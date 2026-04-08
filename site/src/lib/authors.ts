@@ -190,6 +190,13 @@ export const AUTHOR_INFO: Record<string, AuthorInfo> = {
     source_label: "Wikipedia",
     source_url: "https://en.wikipedia.org/wiki/Robert_Browning",
   },
+  "robert-frost": {
+    birth_year: 1874,
+    death_year: 1963,
+    bio: "American poet whose plainspoken New England lyrics and meditative dramatic monologues include 'Stopping by Woods on a Snowy Evening' and 'Mending Wall'.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/Robert_Frost",
+  },
   "samuel-taylor-coleridge": {
     birth_year: 1772,
     death_year: 1834,
