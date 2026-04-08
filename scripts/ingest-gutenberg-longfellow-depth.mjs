@@ -48,6 +48,36 @@ const EXTRACT_SPECS = [
     start: "THE TIDE RISES, THE TIDE FALLS",
     end: "SONNETS",
   },
+  {
+    slug: "the-arsenal-at-springfield",
+    title: "The Arsenal at Springfield",
+    start: "THE ARSENAL AT SPRINGFIELD",
+    end: "NUREMBERG",
+  },
+  {
+    slug: "the-bridge",
+    title: "The Bridge",
+    start: "THE BRIDGE",
+    end: "TO THE DRIVING CLOUD",
+  },
+  {
+    slug: "the-old-clock-on-the-stairs",
+    title: "The Old Clock on the Stairs",
+    start: "THE OLD CLOCK ON THE STAIRS",
+    end: "THE ARROW AND THE SONG",
+  },
+  {
+    slug: "the-builders",
+    title: "The Builders",
+    start: "THE BUILDERS",
+    end: "SAND OF THE DESERT IN AN HOUR-GLASS",
+  },
+  {
+    slug: "the-cross-of-snow",
+    title: "The Cross of Snow",
+    start: "THE CROSS OF SNOW",
+    end: "BIRDS OF PASSAGE",
+  },
 ];
 
 function normalizeText(raw) {

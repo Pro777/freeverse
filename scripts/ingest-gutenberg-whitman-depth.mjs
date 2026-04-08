@@ -41,6 +41,36 @@ const EXTRACT_SPECS = [
     start: "A Clear Midnight",
     end: "As the Time Draws Nigh",
   },
+  {
+    slug: "when-i-read-the-book",
+    title: "When I Read the Book",
+    start: "When I Read the Book",
+    end: "Beginning My Studies",
+  },
+  {
+    slug: "to-a-stranger",
+    title: "To a Stranger",
+    start: "To a Stranger",
+    end: "This Moment Yearning and Thoughtful",
+  },
+  {
+    slug: "o-you-whom-i-often-and-silently-come",
+    title: "O You Whom I Often and Silently Come",
+    start: "O You Whom I Often and Silently Come",
+    end: "That Shadow My Likeness",
+  },
+  {
+    slug: "i-hear-it-was-charged-against-me",
+    title: "I Hear It Was Charged Against Me",
+    start: "I Hear It Was Charged Against Me",
+    end: "The Prairie-Grass Dividing",
+  },
+  {
+    slug: "miracles",
+    title: "Miracles",
+    start: "Miracles",
+    end: "Sparkles from the Wheel",
+  },
 ];
 
 function normalizeText(raw) {
