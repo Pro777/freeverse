@@ -5,11 +5,15 @@ on:
     branches: [main]
     paths:
       - 'site/**'
+      - 'poems/**'
+      - 'meta/**'
       - '.github/workflows/ci.yml'
   pull_request:
     branches: [main]
     paths:
       - 'site/**'
+      - 'poems/**'
+      - 'meta/**'
       - '.github/workflows/ci.yml'
   workflow_dispatch:
 
