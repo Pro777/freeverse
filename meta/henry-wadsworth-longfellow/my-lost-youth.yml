@@ -1,0 +1,16 @@
+id: henry-wadsworth-longfellow/my-lost-youth
+slug: my-lost-youth
+author: Henry Wadsworth Longfellow
+author_slug: henry-wadsworth-longfellow
+title: My Lost Youth
+century: 19
+text_locale: en
+original_language: en
+text_direction: ltr
+text_path: poems/henry-wadsworth-longfellow/my-lost-youth.txt
+text_in_repo: true
+source_label: Project Gutenberg
+source_url: https://www.gutenberg.org/ebooks/1365
+public_domain_rationale: 'Public domain in the United States: Project Gutenberg ebook sourced from pre-1929 editions and the author died in 1882.'
+collection_title: The Complete Poetical Works of Henry Wadsworth Longfellow
+collection_source_url: https://www.gutenberg.org/ebooks/1365
