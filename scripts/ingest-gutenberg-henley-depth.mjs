@@ -16,6 +16,41 @@ const SOURCE = {
 
 const POEMS = [
   {
+    slug: "the-gods-are-dead",
+    title: "The Gods Are Dead",
+    published_year: 1890,
+    start_line: "THE gods are dead?  Perhaps they are!  Who knows?",
+    end_line: "‘The Gods are Dead!’",
+  },
+  {
+    slug: "when-you-are-old",
+    title: "When You Are Old",
+    published_year: 1890,
+    start_line: "WHEN you are old, and I am passed away—",
+    end_line: "When you are old!",
+  },
+  {
+    slug: "beside-the-idle-summer-sea",
+    title: "Beside the Idle Summer Sea",
+    published_year: 1878,
+    start_line: "BESIDE the idle summer sea",
+    end_line: "Beside the idle summer sea.",
+  },
+  {
+    slug: "we-shall-surely-die",
+    title: "We Shall Surely Die",
+    published_year: 1890,
+    start_line: "WE shall surely die:",
+    end_line: "We shall surely die!",
+  },
+  {
+    slug: "what-is-to-come",
+    title: "What Is to Come",
+    published_year: 1890,
+    start_line: "WHAT is to come we know not.  But we know",
+    end_line: "What is to come?",
+  },
+  {
     slug: "the-sea-is-full-of-wandering-foam",
     title: "The Sea Is Full of Wandering Foam",
     published_year: 1876,
