@@ -1,0 +1,13 @@
+id: robert-browning/the-patriot
+slug: the-patriot
+author: Robert Browning
+author_slug: robert-browning
+title: The Patriot
+century: 19
+text_path: poems/robert-browning/the-patriot.txt
+text_in_repo: true
+source_label: Wikisource
+source_url: https://en.wikisource.org/wiki/Men_and_Women_(Browning)/Volume_1/The_Patriot
+public_domain_rationale: 'Public domain in the United States: first published 1855 (pre-1929); text via English Wikisource.'
+collection_title: Men and Women
+collection_source_url: https://en.wikisource.org/wiki/Men_and_Women_(Browning)
