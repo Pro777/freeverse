@@ -1,0 +1,13 @@
+id: alfred-tennyson/sir-galahad
+slug: sir-galahad
+author: Alfred Lord Tennyson
+author_slug: alfred-tennyson
+title: Sir Galahad
+century: 19
+text_path: poems/alfred-tennyson/sir-galahad.txt
+text_in_repo: true
+source_label: Project Gutenberg
+source_url: https://www.gutenberg.org/ebooks/8601
+public_domain_rationale: 'Public domain in the United States: first published 1842 (pre-1929); text via Project Gutenberg eBook #8601.'
+collection_title: The Early Poems of Alfred Lord Tennyson
+collection_source_url: https://www.gutenberg.org/ebooks/8601
