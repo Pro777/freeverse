@@ -78,6 +78,13 @@ export const AUTHOR_INFO: Record<string, AuthorInfo> = {
     source_label: "Wikipedia",
     source_url: "https://en.wikipedia.org/wiki/Emma_Lazarus",
   },
+  "gerard-de-nerval": {
+    birth_year: 1808,
+    death_year: 1855,
+    bio: "French poet, translator, and prose writer associated with early Romanticism and later Symbolist influence, remembered for the sonnet sequence 'Les Chimères'.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/G%C3%A9rard_de_Nerval",
+  },
   "paul-verlaine": {
     birth_year: 1844,
     death_year: 1896,
@@ -140,6 +147,13 @@ export const AUTHOR_INFO: Record<string, AuthorInfo> = {
     bio: "English poet and polemicist, author of 'Paradise Lost' and major works of early modern English literature.",
     source_label: "Wikipedia",
     source_url: "https://en.wikipedia.org/wiki/John_Milton",
+  },
+  "jose-marti": {
+    birth_year: 1853,
+    death_year: 1895,
+    bio: "Cuban poet, essayist, and independence activist whose 'Versos sencillos' joined intimate lyric with civic urgency and became central to modern Spanish-language literature.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/Jos%C3%A9_Mart%C3%AD",
   },
   "percy-bysshe-shelley": {
     birth_year: 1792,
