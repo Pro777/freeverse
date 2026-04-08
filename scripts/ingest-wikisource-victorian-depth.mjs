@@ -1,6 +1,10 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 import yaml from "../site/node_modules/js-yaml/dist/js-yaml.mjs";
+
+const execFileAsync = promisify(execFile);
 
 const POEMS = [
   {
@@ -21,6 +25,34 @@ const POEMS = [
     author: "Gerard Manley Hopkins",
     author_slug: "gerard-manley-hopkins",
     century: 19,
+    slug: "the-starlight-night",
+    title: "The Starlight Night",
+    published_year: 1918,
+    source_url: "https://en.wikisource.org/wiki/Poems_of_Gerard_Manley_Hopkins/The_Starlight_Night",
+    collection_title: "Poems of Gerard Manley Hopkins",
+    collection_source_url: "https://en.wikisource.org/wiki/Poems_of_Gerard_Manley_Hopkins",
+    page_title: "Poems of Gerard Manley Hopkins/The Starlight Night",
+    start_line: "Look at the stars! look, look up at the skies!",
+    end_line: "Christ home, Christ and his mother and all his hallows.",
+  },
+  {
+    author: "Gerard Manley Hopkins",
+    author_slug: "gerard-manley-hopkins",
+    century: 19,
+    slug: "spring",
+    title: "Spring",
+    published_year: 1918,
+    source_url: "https://en.wikisource.org/wiki/Poems_of_Gerard_Manley_Hopkins/Spring",
+    collection_title: "Poems of Gerard Manley Hopkins",
+    collection_source_url: "https://en.wikisource.org/wiki/Poems_of_Gerard_Manley_Hopkins",
+    page_title: "Poems of Gerard Manley Hopkins/Spring",
+    start_line: "Nothing is so beautiful as spring—",
+    end_line: "Most, O maid's child, thy choice and worthy the winning.",
+  },
+  {
+    author: "Gerard Manley Hopkins",
+    author_slug: "gerard-manley-hopkins",
+    century: 19,
     slug: "the-windhover",
     title: "The Windhover",
     published_year: 1918,
@@ -30,6 +62,48 @@ const POEMS = [
     page_title: "Poems of Gerard Manley Hopkins/The Windhover",
     start_line: "I caught this morning morning's minion, king-",
     end_line: "Fall, gall themselves, and gash gold-vermillion.",
+  },
+  {
+    author: "Gerard Manley Hopkins",
+    author_slug: "gerard-manley-hopkins",
+    century: 19,
+    slug: "binsey-poplars",
+    title: "Binsey Poplars",
+    published_year: 1918,
+    source_url: "https://en.wikisource.org/wiki/Poems_of_Gerard_Manley_Hopkins/Binsey_Poplars",
+    collection_title: "Poems of Gerard Manley Hopkins",
+    collection_source_url: "https://en.wikisource.org/wiki/Poems_of_Gerard_Manley_Hopkins",
+    page_title: "Poems of Gerard Manley Hopkins/Binsey Poplars",
+    start_line: "My aspens dear, whose airy cages quelled,",
+    end_line: "Sweet especial rural scene.",
+  },
+  {
+    author: "Gerard Manley Hopkins",
+    author_slug: "gerard-manley-hopkins",
+    century: 19,
+    slug: "spring-and-fall",
+    title: "Spring and Fall",
+    published_year: 1918,
+    source_url: "https://en.wikisource.org/wiki/Poems_of_Gerard_Manley_Hopkins/Spring_and_Fall",
+    collection_title: "Poems of Gerard Manley Hopkins",
+    collection_source_url: "https://en.wikisource.org/wiki/Poems_of_Gerard_Manley_Hopkins",
+    page_title: "Poems of Gerard Manley Hopkins/Spring and Fall",
+    start_line: "Márgarét, are you gríeving",
+    end_line: "It is Margaret you mourn for.",
+  },
+  {
+    author: "Gerard Manley Hopkins",
+    author_slug: "gerard-manley-hopkins",
+    century: 19,
+    slug: "inversnaid",
+    title: "Inversnaid",
+    published_year: 1918,
+    source_url: "https://en.wikisource.org/wiki/Poems_of_Gerard_Manley_Hopkins/Inversnaid",
+    collection_title: "Poems of Gerard Manley Hopkins",
+    collection_source_url: "https://en.wikisource.org/wiki/Poems_of_Gerard_Manley_Hopkins",
+    page_title: "Poems of Gerard Manley Hopkins/Inversnaid",
+    start_line: "This darksome burn, horseback brown,",
+    end_line: "Long live the weeds and the wilderness yet.",
   },
 ];
 
@@ -98,12 +172,25 @@ async function fetchPoemText(pageTitle, startLine, endLine) {
   const url =
     "https://en.wikisource.org/w/api.php?action=parse&format=json&formatversion=2&prop=text&page=" +
     encodeURIComponent(pageTitle);
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Failed to fetch Wikisource page ${pageTitle} (${response.status})`);
+  let lastError;
 
-  const json = await response.json();
-  if (!json.parse?.text) throw new Error(`Wikisource parse failed for ${pageTitle}`);
-  return extractPoem(cleanRenderedText(json.parse.text), startLine, endLine);
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    try {
+      const { stdout } = await execFileAsync("curl", ["-L", "--fail", "--silent", url], {
+        maxBuffer: 10 * 1024 * 1024,
+      });
+      const json = JSON.parse(stdout);
+      if (!json.parse?.text) throw new Error(`Wikisource parse failed for ${pageTitle}`);
+      return extractPoem(cleanRenderedText(json.parse.text), startLine, endLine);
+    } catch (error) {
+      lastError = error;
+      if (attempt < 3) {
+        await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
+      }
+    }
+  }
+
+  throw lastError;
 }
 
 function buildMeta(poem) {
