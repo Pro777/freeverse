@@ -211,6 +211,13 @@ export const AUTHOR_INFO: Record<string, AuthorInfo> = {
     source_label: "Wikipedia",
     source_url: "https://en.wikipedia.org/wiki/Charlotte_Bront%C3%AB",
   },
+  "giosue-carducci": {
+    birth_year: 1835,
+    death_year: 1907,
+    bio: "Italian poet, critic, and Nobel laureate whose classical rhetoric and historical imagination shaped modern Italian verse, especially in collections such as 'Odi barbare'.",
+    source_label: "Wikipedia",
+    source_url: "https://en.wikipedia.org/wiki/Giosu%C3%A8_Carducci",
+  },
   "emily-bronte": {
     birth_year: 1818,
     death_year: 1848,
