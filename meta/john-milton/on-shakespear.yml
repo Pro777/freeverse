@@ -1,0 +1,13 @@
+id: john-milton/on-shakespear
+slug: on-shakespear
+author: John Milton
+author_slug: john-milton
+title: On Shakespear
+century: 17
+text_path: poems/john-milton/on-shakespear.txt
+text_in_repo: true
+source_label: Wikisource
+source_url: https://en.wikisource.org/wiki/Poems_of_Mr._John_Milton,_Both_English_and_Latin,_Compos%27d_at_several_times/On_Shakespear
+public_domain_rationale: 'Public domain in the United States: first published 1630 (pre-1929); text via English Wikisource.'
+collection_title: Poems of Mr. John Milton, Both English and Latin, Compos'd at several times
+collection_source_url: https://en.wikisource.org/wiki/Poems_of_Mr._John_Milton,_Both_English_and_Latin,_Compos%27d_at_several_times
