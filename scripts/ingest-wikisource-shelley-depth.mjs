@@ -73,6 +73,73 @@ const POEMS = [
     start_line: "The sun is warm, the sky is clear,",
     end_line: "Will linger, though enjoyed, like joy in memory yet.",
   },
+  {
+    author: "Percy Bysshe Shelley",
+    author_slug: "percy-bysshe-shelley",
+    century: 19,
+    slug: "england-in-1819",
+    title: "England in 1819",
+    published_year: 1839,
+    source_url:
+      "https://en.wikisource.org/wiki/The_Complete_Poetical_Works_of_Percy_Bysshe_Shelley_(ed._Hutchinson,_1914)/Sonnet:_England_in_1819",
+    page_title: "The Complete Poetical Works of Percy Bysshe Shelley (ed. Hutchinson, 1914)/Sonnet: England in 1819",
+    start_line: "An old, mad, blind, despised, and dying king,—",
+    end_line: "Burst, to illumine our tempestuous day.",
+  },
+  {
+    author: "Percy Bysshe Shelley",
+    author_slug: "percy-bysshe-shelley",
+    century: 19,
+    slug: "lift-not-the-painted-veil",
+    title: "Lift not the painted veil",
+    published_year: 1824,
+    source_url:
+      "https://en.wikisource.org/wiki/The_Complete_Poetical_Works_of_Percy_Bysshe_Shelley_(ed._Hutchinson,_1914)/Sonnet:_%27Lift_not_the_painted_veil%27",
+    page_title: "The Complete Poetical Works of Percy Bysshe Shelley (ed. Hutchinson, 1914)/Sonnet: 'Lift not the painted veil'",
+    start_line: "Lift not the painted veil which those who live",
+    end_line: "For truth, and like the Preacher found it not.",
+  },
+  {
+    author: "Percy Bysshe Shelley",
+    author_slug: "percy-bysshe-shelley",
+    century: 19,
+    slug: "one-word-is-too-often-profaned",
+    title: "One Word Is Too Often Profaned",
+    published_year: 1824,
+    source_url:
+      "https://en.wikisource.org/wiki/The_Complete_Poetical_Works_of_Percy_Bysshe_Shelley_(ed._Hutchinson,_1914)/To_%E2%80%94%E2%80%94%E2%80%94._%27One_word_is_too_often_profaned%27",
+    page_title:
+      "The Complete Poetical Works of Percy Bysshe Shelley (ed. Hutchinson, 1914)/To ——. 'One word is too often profaned'",
+    start_line: "One word is too often profaned",
+    end_line: "From the sphere of our sorrow?",
+  },
+  {
+    author: "Percy Bysshe Shelley",
+    author_slug: "percy-bysshe-shelley",
+    century: 19,
+    slug: "ode-to-liberty",
+    title: "Ode to Liberty",
+    published_year: 1820,
+    source_url:
+      "https://en.wikisource.org/wiki/The_Complete_Poetical_Works_of_Percy_Bysshe_Shelley_(ed._Hutchinson,_1914)/Ode_to_Liberty",
+    page_title: "The Complete Poetical Works of Percy Bysshe Shelley (ed. Hutchinson, 1914)/Ode to Liberty",
+    start_line: "A glorious people vibrated again",
+    end_line: "Hiss round a drowner's head in their tempestuous play.",
+  },
+  {
+    author: "Percy Bysshe Shelley",
+    author_slug: "percy-bysshe-shelley",
+    century: 19,
+    slug: "lines-written-among-the-euganean-hills",
+    title: "Lines Written among the Euganean Hills",
+    published_year: 1819,
+    source_url:
+      "https://en.wikisource.org/wiki/The_Complete_Poetical_Works_of_Percy_Bysshe_Shelley_(ed._Hutchinson,_1914)/Lines_written_among_the_Euganean_Hills",
+    page_title:
+      "The Complete Poetical Works of Percy Bysshe Shelley (ed. Hutchinson, 1914)/Lines written among the Euganean Hills",
+    start_line: "Many a green isle needs must be",
+    end_line: "And the earth grow young again.",
+  },
 ];
 
 function decodeHtml(value) {
@@ -87,6 +154,7 @@ function decodeHtml(value) {
     .replace(/&gt;/g, ">")
     .replace(/&amp;/g, "&")
     .replace(/&#160;/g, " ")
+    .replace(/&#8195;/g, "    ")
     .replace(/&#91;/g, "[")
     .replace(/&#93;/g, "]")
     .replace(/&#95;/g, "_")
