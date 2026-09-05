@@ -129,7 +129,8 @@ export function authorPath(base: string, slug: string, locale: UILocale = DEFAUL
 }
 
 export function poemPath(base: string, id: string, locale: UILocale = DEFAULT_UI_LOCALE): string {
-  return localizedPath(base, locale, `/poem/${encodeURIComponent(id)}/`);
+  const encodedId = id.split("/").map(encodeURIComponent).join("/");
+  return localizedPath(base, locale, `/poem/${encodedId}/`);
 }
 
 export function browsePath(base: string, locale: UILocale = DEFAULT_UI_LOCALE): string {
